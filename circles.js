@@ -40,10 +40,10 @@ function setup() {
 function draw() {
 	clear();
 	blendMode(DIFFERENCE); // set blend mode to DIFFERENCE
-    // background(255, 200); // set background color with transparency
+    // background(0, 500); // set background color with transparency
 
     // Colors 
-	textSize(windowHeight/10);
+	textSize(windowHeight/15);
     noStroke();
 
     let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100;
@@ -70,17 +70,24 @@ function draw() {
     // Create moving objects if not already created
     if (!window.movingObjs) {
         window.movingObjs = [
-            new movingObject(100, 200, fontSize, 'design'),
-            new movingObject(300, 400, fontSize, 'photos'),
-            new movingObject(300, 700, fontSize, 'other'),
-            new movingObject(500, 600, fontSize, 'p5'),
-            new movingObject(100, 600, fontSize, 'about'),
+            new movingObject(random(1000), random(1000), fontSize, 'design'),
+            new movingObject(random(1000), random(1000), fontSize, 'photos'),
+            new movingObject(random(1000), random(1000), fontSize, 'other'),
+            new movingObject(random(1000), random(1000), fontSize, 'p5'),
+            new movingObject(random(1000), random(1000), fontSize, 'about'),
         ];
     }
 
-    // Update and display each moving object
+    // Update each moving object
     for (let obj of window.movingObjs) {
         obj.update();
+    }
+
+    // Separate overlapping objects
+    movingObject.separateAll(window.movingObjs);
+
+    // Display each moving object
+    for (let obj of window.movingObjs) {
         obj.display();
     }
 
@@ -88,6 +95,35 @@ function draw() {
 }
 
 class movingObject{
+    // Check and separate overlapping objects
+    static separateAll(objs) {
+        let maxTries = 10; // Prevent infinite loops
+        for (let tries = 0; tries < maxTries; tries++) {
+            let moved = false;
+            for (let i = 0; i < objs.length; i++) {
+                for (let j = i + 1; j < objs.length; j++) {
+                    let a = objs[i];
+                    let b = objs[j];
+                    let dx = a.x - b.x;
+                    let dy = a.y - b.y;
+                    let dist = Math.sqrt(dx*dx + dy*dy);
+                    let minDist = (a.size + b.size) * 0.45; // 0.45: text is not a circle, but this works visually
+                    if (dist < minDist && dist > 0.1) {
+                        // Move each object away from the other
+                        let overlap = (minDist - dist) / 2;
+                        let nx = dx / dist;
+                        let ny = dy / dist;
+                        a.x += nx * overlap;
+                        a.y += ny * overlap;
+                        b.x -= nx * overlap;
+                        b.y -= ny * overlap;
+                        moved = true;
+                    }
+                }
+            }
+            if (!moved) break;
+        }
+    }
     constructor(xNoiseSeed, yNoiseSeed, size, label) {
         this.xNoiseSeed = xNoiseSeed;
         this.yNoiseSeed = yNoiseSeed;
