@@ -40,7 +40,7 @@ function setup() {
 function draw() {
 	clear();
 	blendMode(DIFFERENCE); // set blend mode to DIFFERENCE
-    background(0, 200); // set background color with transparency
+    // background(255, 200); // set background color with transparency
 
     // Colors 
 	textSize(windowHeight/10);
@@ -63,15 +63,18 @@ function draw() {
 
     // Moving texts
     let tx, ty;
+    let fontSize = height/10;
     fill(255, 200);
 
     tx = constrain(noise(100 + frameCount * 0.0006) * width, 0, width);
     // Create moving objects if not already created
     if (!window.movingObjs) {
         window.movingObjs = [
-            new movingObject(100, 200, 100, 'design'),
-            new movingObject(300, 400, 100, 'photos'),
-            new movingObject(500, 600, 100, 'p5')
+            new movingObject(100, 200, fontSize, 'design'),
+            new movingObject(300, 400, fontSize, 'photos'),
+            new movingObject(300, 700, fontSize, 'other'),
+            new movingObject(500, 600, fontSize, 'p5'),
+            new movingObject(100, 600, fontSize, 'about'),
         ];
     }
 
@@ -81,7 +84,7 @@ function draw() {
         obj.display();
     }
 
-    // addFuzzyNoise(0.08); // Adjust the amount (0.01 - 0.2) for more/less noise
+    addFuzzyNoise(0.01); // Adjust the amount (0.01 - 0.2) for more/less noise
 }
 
 class movingObject{
@@ -124,13 +127,20 @@ function windowResized() {
 }
 
 function addFuzzyNoise(amount = 0.1) {
+    loadPixels();
     let numPixels = width * height * amount;
-    noStroke();
     for (let i = 0; i < numPixels; i++) {
-        let x = random(width);
-        let y = random(height);
-        let alpha = random(30, 80);
-        fill(255, alpha);
-        rect(x, y, 1, 1);
+        let x = floor(random(width));
+        let y = floor(random(height));
+        let idx = 4 * (y * width + x);
+        let val = random(180, 255); // white-ish noise
+        let alpha = random(30, 80); // transparency
+
+        // Blend with existing pixel (simple alpha blend)
+        pixels[idx]   = lerp(pixels[idx], val, alpha/255);
+        pixels[idx+1] = lerp(pixels[idx+1], val, alpha/255);
+        pixels[idx+2] = lerp(pixels[idx+2], val, alpha/255);
+        // Optionally, you can set pixels[idx+3] = 255;
     }
+    updatePixels();
 }
