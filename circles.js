@@ -11,6 +11,8 @@ H.pixelDensity(0.3) // 2x = retina, set <= 1 if laggy
 
 let random1, random2, random3;
 
+let maxCircle, minCircle;
+
 s0.initP5() // send p5 to hydra
 P5.toggle(0) // hide p5
 
@@ -21,7 +23,7 @@ src(s0)
 // sandbox - end
 
 function setup() {
-	createCanvas(windowWidth - 10, windowHeight - 10);
+	createCanvas(windowWidth, windowHeight);
     background(0);
     frameRate(20);
 
@@ -31,6 +33,8 @@ function setup() {
     random1 = random(width/3);
     random2 = random(width/3);
     random3 = random(width/3);
+
+    maxCircle = windowWidth/5;
 }
 
 function draw() {
@@ -52,7 +56,7 @@ function draw() {
     }
     
     // Middle Circle
-    let rSize = (sin(frameCount * 0.0025) * 0.5 + 0.5) * 330;
+    let rSize = (sin(frameCount * 0.025) * 0.5 + 0.5) * maxCircle;
     fill(100,0,b, 100);
     noStroke();
     circle(width/2, height/2, height/2 + rSize);
@@ -60,12 +64,7 @@ function draw() {
     // Moving texts
     let tx, ty;
     fill(255, 200);
-    // text('design', tx , ty );   
-    // noFill();
-    // stroke(255);
-    // strokeWeight(1);
-
-    // DESIGN
+    
     tx = constrain(noise(100 + frameCount * 0.0006) * width, 0, width);
     // Create moving objects if not already created
     if (!window.movingObjs) {
