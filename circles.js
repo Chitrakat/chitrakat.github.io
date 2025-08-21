@@ -34,7 +34,7 @@ function setup() {
     random2 = random(width/3);
     random3 = random(width/3);
 
-    maxCircle = windowWidth/5;
+    maxCircle = windowHeight/5;
 }
 
 function draw() {
@@ -56,7 +56,7 @@ function draw() {
     }
     
     // Middle Circle
-    let rSize = (sin(frameCount * 0.025) * 0.5 + 0.5) * maxCircle;
+    let rSize = (sin(frameCount * 0.025)) * maxCircle;
     fill(100,0,b, 100);
     noStroke();
     circle(width/2, height/2, height/2 + rSize);
@@ -80,6 +80,8 @@ function draw() {
         obj.update();
         obj.display();
     }
+
+    // addFuzzyNoise(0.08); // Adjust the amount (0.01 - 0.2) for more/less noise
 }
 
 class movingObject{
@@ -119,4 +121,16 @@ function windowResized() {
     H.pixelDensity(0.3);
     // Optionally, re-calculate any values that depend on width/height
     // e.g., update random1, random2, random3 if needed
+}
+
+function addFuzzyNoise(amount = 0.1) {
+    let numPixels = width * height * amount;
+    noStroke();
+    for (let i = 0; i < numPixels; i++) {
+        let x = random(width);
+        let y = random(height);
+        let alpha = random(30, 80);
+        fill(255, alpha);
+        rect(x, y, 1, 1);
+    }
 }
