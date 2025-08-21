@@ -10,20 +10,30 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hubot+Sans:ital,wght@0,200..900;1,200..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/header.css">
 </head>
 <body>
-  <!-- Hero Section -->
-  <main class="hero">
-    <section class="hero-content">
-      <h1 class="hero-title">Suyash Chitrakar</h1>
-      <p class="hero-tagline"> </p>
-      <a href="#portfolio" class="hero-button">View Portfolio</a>
-    <!-- p5/hydra sketch container below the button -->
-    <div class="p5-hydra-container">
-      <!-- The p5 canvas will be injected here by the sketch -->
+  <!-- Fixed Header -->
+  <!--#include virtual="assets/header.html" -->
+  <header class="main-header">
+    <div class="header-left">
+      <span class="site-title">SUYASH CHITRAKAR</span>
     </div>
-    </section>
-  </main>
+    <div class="header-right">
+      <div class="dropdown">
+        <button class="dropdown-toggle" id="dropdownMenuButton">Menu &#x25BC;</button>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="#" class="dropdown-item">Option 1</a>
+          <a href="#" class="dropdown-item">Option 2</a>
+          <a href="#" class="dropdown-item">Option 3</a>
+          <a href="#" class="dropdown-item">Option 4</a>
+          <a href="#" class="dropdown-item">Option 5</a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <script src="assets/js/header-dropdown.js"></script>
+
   <!-- p5.js library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
   <!-- hydra-synth and hy5.js for shader integration -->

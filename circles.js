@@ -43,10 +43,10 @@ function draw() {
     background(0, 200); // set background color with transparency
 
     // Colors 
-	textSize(height/10);
+	textSize(windowHeight/10);
     noStroke();
 
-    let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 150;
+    let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100;
     fill(b, 0, 190-b, 150); 
     
     // Mouse Circles
@@ -64,7 +64,7 @@ function draw() {
     // Moving texts
     let tx, ty;
     fill(255, 200);
-    
+
     tx = constrain(noise(100 + frameCount * 0.0006) * width, 0, width);
     // Create moving objects if not already created
     if (!window.movingObjs) {
