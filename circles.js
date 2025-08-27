@@ -34,19 +34,19 @@ function setup() {
     random2 = random(width/3);
     random3 = random(width/3);
 
-    maxCircle = windowWidth/5;
+    maxCircle = windowHeight/5;
 }
 
 function draw() {
 	clear();
 	blendMode(DIFFERENCE); // set blend mode to DIFFERENCE
-    background(0, 200); // set background color with transparency
+    // background(0, 500); // set background color with transparency
 
     // Colors 
-	textSize(height/10);
+	textSize(windowHeight/15);
     noStroke();
 
-    let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 150;
+    let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100;
     fill(b, 0, 190-b, 150); 
     
     // Mouse Circles
@@ -56,33 +56,74 @@ function draw() {
     }
     
     // Middle Circle
-    let rSize = (sin(frameCount * 0.025) * 0.5 + 0.5) * maxCircle;
+    let rSize = (sin(frameCount * 0.025)) * maxCircle;
     fill(100,0,b, 100);
     noStroke();
     circle(width/2, height/2, height/2 + rSize);
 
     // Moving texts
     let tx, ty;
+    let fontSize = height/10;
     fill(255, 200);
-    
+
     tx = constrain(noise(100 + frameCount * 0.0006) * width, 0, width);
     // Create moving objects if not already created
     if (!window.movingObjs) {
         window.movingObjs = [
-            new movingObject(100, 200, 100, 'design'),
-            new movingObject(300, 400, 100, 'photos'),
-            new movingObject(500, 600, 100, 'p5')
+            new movingObject(random(1000), random(1000), fontSize, 'design'),
+            new movingObject(random(1000), random(1000), fontSize, 'photos'),
+            new movingObject(random(1000), random(1000), fontSize, 'other'),
+            new movingObject(random(1000), random(1000), fontSize, 'p5'),
+            new movingObject(random(1000), random(1000), fontSize, 'about'),
         ];
     }
 
-    // Update and display each moving object
+    // Update each moving object
     for (let obj of window.movingObjs) {
         obj.update();
+    }
+
+    // Separate overlapping objects
+    movingObject.separateAll(window.movingObjs);
+
+    // Display each moving object
+    for (let obj of window.movingObjs) {
         obj.display();
     }
+
+    addFuzzyNoise(0.01); // Adjust the amount (0.01 - 0.2) for more/less noise
 }
 
 class movingObject{
+    // Check and separate overlapping objects
+    static separateAll(objs) {
+        let maxTries = 10; // Prevent infinite loops
+        for (let tries = 0; tries < maxTries; tries++) {
+            let moved = false;
+            for (let i = 0; i < objs.length; i++) {
+                for (let j = i + 1; j < objs.length; j++) {
+                    let a = objs[i];
+                    let b = objs[j];
+                    let dx = a.x - b.x;
+                    let dy = a.y - b.y;
+                    let dist = Math.sqrt(dx*dx + dy*dy);
+                    let minDist = (a.size + b.size) * 0.45; // 0.45: text is not a circle, but this works visually
+                    if (dist < minDist && dist > 0.1) {
+                        // Move each object away from the other
+                        let overlap = (minDist - dist) / 2;
+                        let nx = dx / dist;
+                        let ny = dy / dist;
+                        a.x += nx * overlap;
+                        a.y += ny * overlap;
+                        b.x -= nx * overlap;
+                        b.y -= ny * overlap;
+                        moved = true;
+                    }
+                }
+            }
+            if (!moved) break;
+        }
+    }
     constructor(xNoiseSeed, yNoiseSeed, size, label) {
         this.xNoiseSeed = xNoiseSeed;
         this.yNoiseSeed = yNoiseSeed;
@@ -119,4 +160,23 @@ function windowResized() {
     H.pixelDensity(0.3);
     // Optionally, re-calculate any values that depend on width/height
     // e.g., update random1, random2, random3 if needed
+}
+
+function addFuzzyNoise(amount = 0.1) {
+    loadPixels();
+    let numPixels = width * height * amount;
+    for (let i = 0; i < numPixels; i++) {
+        let x = floor(random(width));
+        let y = floor(random(height));
+        let idx = 4 * (y * width + x);
+        let val = random(180, 255); // white-ish noise
+        let alpha = random(30, 80); // transparency
+
+        // Blend with existing pixel (simple alpha blend)
+        pixels[idx]   = lerp(pixels[idx], val, alpha/255);
+        pixels[idx+1] = lerp(pixels[idx+1], val, alpha/255);
+        pixels[idx+2] = lerp(pixels[idx+2], val, alpha/255);
+        // Optionally, you can set pixels[idx+3] = 255;
+    }
+    updatePixels();
 }
