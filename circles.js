@@ -38,9 +38,12 @@ function setup() {
 }
 
 function draw() {
-	clear();
+    if(!mouseIsPressed){
+        clear();
+        // frameCount *= 10;
+    }
 	blendMode(DIFFERENCE); // set blend mode to DIFFERENCE
-    // background(0, 500); // set background color with transparency
+    background(0, 500); // set background color with transparency
 
     // Colors 
 	textSize(windowHeight/15);
@@ -63,7 +66,7 @@ function draw() {
 
     // Moving texts
     let tx, ty;
-    let fontSize = height/10;
+    let fontSize = height/5;
     fill(255, 200);
 
     tx = constrain(noise(100 + frameCount * 0.0006) * width, 0, width);
@@ -71,10 +74,10 @@ function draw() {
     if (!window.movingObjs) {
         window.movingObjs = [
             new movingObject(random(1000), random(1000), fontSize, 'design'),
-            new movingObject(random(1000), random(1000), fontSize, 'photos'),
-            new movingObject(random(1000), random(1000), fontSize, 'other'),
-            new movingObject(random(1000), random(1000), fontSize, 'p5'),
-            new movingObject(random(1000), random(1000), fontSize, 'about'),
+            new movingObject(random(1000), random(1000), fontSize, 'photography'),
+            new movingObject(random(1000), random(1000), fontSize/1.1, 'creative \n coding'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'drawing'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'game\n design'),
         ];
     }
 
@@ -91,7 +94,7 @@ function draw() {
         obj.display();
     }
 
-    addFuzzyNoise(0.01); // Adjust the amount (0.01 - 0.2) for more/less noise
+    // addFuzzyNoise(0.01); // Adjust the amount (0.01 - 0.2) for more/less noise
 }
 
 class movingObject{
