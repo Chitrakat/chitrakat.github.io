@@ -28,7 +28,6 @@ body {
 	margin: 0;
 	padding: 0;
 	min-height: 100vh;
-	/* font-family: 'Montserrat', Arial, sans-serif; */
 	font-family: 'Hubot Sans', Arial, sans-serif;
 	background: var(--primary-bg);
 	color: var(--text);
@@ -41,6 +40,7 @@ body {
 	display: block;
 	background: var(--primary-bg);
 	padding: 4vh 0 0 4vw; /* Top and left padding only */
+	font-family: 'Hubot Sans', Arial, sans-serif;
 }
 
 .hero-content {
@@ -51,6 +51,7 @@ body {
 	padding: 0;
 	max-width: 40rem;
 	width: 100%;
+	font-family: 'Hubot Sans', Arial, sans-serif;
 }
 
 .hero-title {
@@ -60,6 +61,7 @@ body {
 	letter-spacing: 0.02em;
 	color: var(--text);
 	text-align: left;
+	font-family: 'Hubot Sans', Arial, sans-serif;
 }
 
 .hero-tagline {
@@ -69,6 +71,7 @@ body {
 	margin-bottom: 0.5rem;
 	line-height: 1.4;
 	text-align: left;
+	font-family: 'Hubot Sans', Arial, sans-serif;
 }
 
 .hero-button {
@@ -85,6 +88,7 @@ body {
 	box-shadow: 0 4px 24px 0 rgba(79, 140, 255, 0.08);
 	letter-spacing: 0.05em;
 	align-self: flex-start;
+	font-family: 'Hubot Sans', Arial, sans-serif;
 }
 
 .hero-button:hover,

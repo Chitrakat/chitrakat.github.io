@@ -7,7 +7,7 @@
 let libs = ['https://unpkg.com/hydra-synth', 'includes/libs/hydra-synth.js', 'https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js', 'includes/libs/hy5.js']
 
 // sandbox - start
-H.pixelDensity(0.3) // 2x = retina, set <= 1 if laggy
+H.pixelDensity(0.25) // 2x = retina, set <= 1 if laggy
 
 let random1, random2, random3;
 
@@ -38,9 +38,9 @@ function setup() {
 }
 
 function draw() {
-    if(!mouseIsPressed){
+    if(mouseIsPressed){
+        frameCount *= 1;
         clear();
-        // frameCount *= 10;
     }
 	blendMode(DIFFERENCE); // set blend mode to DIFFERENCE
     background(0, 500); // set background color with transparency
@@ -74,10 +74,11 @@ function draw() {
     if (!window.movingObjs) {
         window.movingObjs = [
             new movingObject(random(1000), random(1000), fontSize, 'design'),
-            new movingObject(random(1000), random(1000), fontSize, 'photography'),
-            new movingObject(random(1000), random(1000), fontSize/1.1, 'creative \n coding'),
+            new movingObject(random(1000), random(1000), fontSize/1.1, 'photography'),
+            new movingObject(random(1000), random(1000), fontSize/1.1, 'creative\ncoding'),
             new movingObject(random(1000), random(1000), fontSize/2, 'drawing'),
-            new movingObject(random(1000), random(1000), fontSize/2, 'game\n design'),
+            new movingObject(random(1000), random(1000), fontSize/1.5, 'game\n design'),
+            new movingObject(random(1000), random(1000), fontSize/1.1, 'plotter'),
         ];
     }
 
@@ -94,7 +95,7 @@ function draw() {
         obj.display();
     }
 
-    // addFuzzyNoise(0.01); // Adjust the amount (0.01 - 0.2) for more/less noise
+    // addFuzzyNoise(0.00001); // Adjust the amount (0.01 - 0.2) for more/less noise
 }
 
 class movingObject{
@@ -113,7 +114,8 @@ class movingObject{
                     let minDist = (a.size + b.size) * 0.45; // 0.45: text is not a circle, but this works visually
                     if (dist < minDist && dist > 0.1) {
                         // Move each object away from the other
-                        let overlap = (minDist - dist) / 2;
+                        let repulsionStrength = 2; // Increase for stronger repulsion
+                        let overlap = (minDist - dist) / 2 * repulsionStrength;
                         let nx = dx / dist;
                         let ny = dy / dist;
                         a.x += nx * overlap;
