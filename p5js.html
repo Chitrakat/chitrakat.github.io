@@ -26,6 +26,112 @@
       </div>
     </div>
   </header>
+  <div class="design-layout">
+    <aside class="design-sidebar">
+      <ul>
+        <li class="sidebar-item active" data-file="p5js/p5js1.html">p5.js Project 1</li>
+        <li class="sidebar-item" data-file="p5js/p5js2.html">p5.js Project 2</li>
+        <li class="sidebar-item" data-file="p5js/p5js3.html">p5.js Project 3</li>
+        <li class="sidebar-item" data-file="p5js/p5js4.html">p5.js Project 4</li>
+        <li class="sidebar-item" data-file="p5js/p5js5.html">p5.js Project 5</li>
+      </ul>
+    </aside>
+    <section class="design-content" id="design-content">
+      <!-- Content will be loaded here -->
+    </section>
+  </div>
+
   <script src="assets/js/header-dropdown.js"></script>
+  <script>
+    async function loadP5jsContent(file) {
+      const contentArea = document.getElementById('design-content');
+      contentArea.innerHTML = 'Loading...';
+      try {
+        const res = await fetch(file);
+        if (!res.ok) throw new Error('Not found');
+        const html = await res.text();
+        contentArea.innerHTML = html;
+      } catch (e) {
+        contentArea.innerHTML = '<div style="color:#f66">Could not load content.</div>';
+      }
+    }
+    document.querySelectorAll('.sidebar-item').forEach(item => {
+      item.addEventListener('click', function() {
+        document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+        loadP5jsContent(this.getAttribute('data-file'));
+      });
+    });
+    loadP5jsContent(document.querySelector('.sidebar-item.active').getAttribute('data-file'));
+  </script>
+  <style>
+    .design-layout {
+      display: flex;
+      margin-top: 48px;
+      height: calc(100vh - 48px);
+    }
+    .design-sidebar {
+      width: 180px;
+      background: #181818;
+      padding: 0;
+      border-right: 1px solid #222;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .design-sidebar ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .sidebar-item {
+      padding: 18px 20px;
+      cursor: pointer;
+      color: #eee;
+      font-size: 1.08rem;
+      border-bottom: 1px solid #232323;
+      transition: background 0.18s, color 0.18s;
+    }
+    .sidebar-item.active, .sidebar-item:hover {
+      background: #232323;
+      color: #fff;
+    }
+    .design-content {
+      flex: 1;
+      padding: 40px 32px;
+      font-size: 1.2rem;
+      color: #fff;
+      background: #111;
+      min-height: 100%;
+    }
+    @media (max-width: 700px) {
+      .design-layout {
+        flex-direction: column;
+      }
+      .design-sidebar {
+        width: 100%;
+        flex-direction: row;
+        border-right: none;
+        border-bottom: 1px solid #222;
+      }
+      .design-sidebar ul {
+        display: flex;
+        flex-direction: row;
+      }
+      .sidebar-item {
+        flex: 1;
+        border-bottom: none;
+        border-right: 1px solid #232323;
+        text-align: center;
+        padding: 14px 0;
+      }
+      .sidebar-item:last-child {
+        border-right: none;
+      }
+      .design-content {
+        padding: 24px 10px;
+      }
+    }
+  </style>
 </body>
 </html>
