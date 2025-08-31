@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Game Design | Suyash Chitrakar</title>
+  <title>Design | Suyash Chitrakar</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/header.css">
 </head>
@@ -30,8 +30,11 @@
   <div class="design-layout">
     <aside class="design-sidebar">
       <ul>
-  <li class="sidebar-item active" data-file="gamedesign/game1.html">Game 1</li>
-  <li class="sidebar-item" data-file="gamedesign/game2.html">Game 2</li>
+  <li class="sidebar-item active" data-file="design/vol55-2.html">Catch Magazine: VOL. 55 NO. 2</li>
+  <li class="sidebar-item" data-file="design/vol56-1.html">Catch Magazine: VOL. 56 NO. 1</li>
+  <li class="sidebar-item" data-file="design/vol56-2.html">Catch Magazine: VOL. 56 NO. 2</li>
+  <li class="sidebar-item" data-file="design/vol57-double.html">Catch Magazine: VOL. 57 NO. 1 + 2</li>
+  <li class="sidebar-item" data-file="design/x-journal.html">X-Journal</li>
       </ul>
     </aside>
     <section class="design-content" id="design-content">
@@ -41,7 +44,8 @@
 
   <script src="assets/js/header-dropdown.js"></script>
   <script>
-    async function loadGameContent(file) {
+    // Sidebar click logic with dynamic HTML loading
+    async function loadDesignContent(file) {
       const contentArea = document.getElementById('design-content');
       contentArea.innerHTML = 'Loading...';
       try {
@@ -57,10 +61,11 @@
       item.addEventListener('click', function() {
         document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
         this.classList.add('active');
-        loadGameContent(this.getAttribute('data-file'));
+        loadDesignContent(this.getAttribute('data-file'));
       });
     });
-  loadGameContent(document.querySelector('.sidebar-item.active').getAttribute('data-file'));
+    // Load first item by default
+    loadDesignContent(document.querySelector('.sidebar-item.active').getAttribute('data-file'));
   </script>
   <style>
     .design-layout {

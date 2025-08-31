@@ -7,7 +7,7 @@
 let libs = ['https://unpkg.com/hydra-synth', 'includes/libs/hydra-synth.js', 'https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js', 'includes/libs/hy5.js']
 
 // sandbox - start
-H.pixelDensity(0.3) // 2x = retina, set <= 1 if laggy
+H.pixelDensity(0.4) // 2x = retina, set <= 1 if laggy
 
 let random1, random2, random3;
 
