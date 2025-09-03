@@ -1,3 +1,8 @@
+// Utility to enable/disable pointer events on the canvas
+function setCanvasPointerEvents(enabled) {
+  let c = document.querySelector('canvas');
+  if (c) c.style.pointerEvents = enabled ? 'auto' : 'none';
+}
 let frameWidth = 200;
 let frameHeight = 280;
 let frameGap = 80;
@@ -182,6 +187,7 @@ function showPopup(type) {
   if (popup && content) {
     content.innerHTML = getPopupContent(type);
     popup.style.display = 'block';
+    setCanvasPointerEvents(false); // Disable canvas interaction when popup is open
   }
 }
 
@@ -189,6 +195,7 @@ function hidePopup() {
   popupVisible = false;
   let popup = document.getElementById('custom-popup');
   if (popup) popup.style.display = 'none';
+  setCanvasPointerEvents(true); // Enable canvas interaction when popup is closed
 }
 
 function getPopupContent(type) {
@@ -204,16 +211,16 @@ function getPopupContent(type) {
       img: '<img src="assets/img/design-cover/vol55-2.png" alt="VOL. 55 NO. 2" style="width:100%;margin-bottom:12px;border-radius:8px;">'
     },
     {
-      title: 'VOL. 56 NO. 1',
+      title: 'Catch Magazine: VOL. 56 NO. 1',
       year: '2023',
       kind: 'Book Design, Spread Design, Typography, Layout',
-      tools: 'Figma',
-      collaborators: 'Charlie',
+      tools: 'InDesign, Photoshop, Illustrator',
+      collaborators: 'none',
       website: '<a href="https://www.knoxcatch.org/vol-56-no-1" target="_blank">link</a>',
       img: '<img src="assets/img/design-cover/vol56-1.png" alt="VOL. 56 NO. 1" style="width:100%;margin-bottom:12px;border-radius:8px;">'
     },
     {
-      title: 'VOL. 56 NO. 2',
+      title: 'Catch Magazine: VOL. 56 NO. 2',
       year: '2024',
       kind: 'Book Design, Spread Design, Typography, Layout,',
       tools: 'InDesign, Photoshop, Illustrator',
@@ -222,27 +229,27 @@ function getPopupContent(type) {
       img: '<img src="assets/img/design-cover/vol56-2.png" alt="VOL. 56 NO. 2" style="width:100%;margin-bottom:12px;border-radius:8px;">'
     },
     {
-      title: 'VOL. 57 NO. 1 and VOL. 57 NO. 2',
+      title: 'Catch Magazine: VOL. 57 NO. 1 and VOL. 57 NO. 2',
       year: '2025',
       kind: 'Layout Design, Typography',
-      tools: 'InDesign',
+      tools: 'InDesign, Photoshop, Illustrator',
       collaborators: 'Eve',
-      website: '<a href="https://example.com/3" target="_blank">example.com/3</a>',
+      website: '<a href="https://www.knoxcatch.org/vol-57-no-1" target="_blank">link</a>',
       img: '<img src="assets/img/design-cover/vol57-1.png" alt="VOL. 57 DOUBLE" style="width:100%;margin-bottom:12px;border-radius:8px;">'
     },
     {
       title: 'X-JOURNAL',
       year: '2025',
-      kind: 'App UI',
-      tools: 'Sketch',
-      collaborators: 'Frank',
+      kind: 'Art Photographer, Book Design, Spread Design, Typography, Layout',
+      tools: 'InDesign, Photoshop, Illustrator',
+      collaborators: 'none',
       website: '<a href="https://example.com/4" target="_blank">example.com/4</a>',
       img: '<img src="assets/img/design-cover/x.png" alt="X-JOURNAL" style="width:100%;margin-bottom:12px;border-radius:8px;">'
     },
     {
       title: 'Lines in The Shed, Ryan Tracy',
       year: '2025',
-      kind: 'Book Design, Logo Design, Typography, Product Photography',
+      kind: 'Typography, Book Design, Product Photography',
       tools: 'InDesign, Photoshop, Illustrator',
       collaborators: 'none',
       website: '<a href="https://www.ryantracy.com/books" target="_blank">link</a>',
