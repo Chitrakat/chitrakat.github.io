@@ -22,97 +22,162 @@
       <!-- Content will be injected here -->
     </div>
   </div>
-  <link rel="stylesheet" href="assets/css/carousel.css">
+  <style>
+    .design-main-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 32px;
+      margin-top: 48px;
+      padding: 24px;
+      background: transparent;
+    }
+    .carousel-flex {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 32px;
+    }
+    .design-image {
+      flex: 0 0 400px;
+      max-width: 400px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 500px;
+    }
+    .design-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .design-table-container {
+      background: #222;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border-radius: 8px;
+      padding: 32px 40px;
+      min-width: 400px;
+      max-width: 500px;
+      color: #fff;
+    }
+    .design-table-container h2 {
+      margin-top: 0;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #fff;
+    }
+    .design-table-container table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+    .design-table-container td {
+      padding: 6px 10px;
+      border-bottom: 1px solid #444;
+      color: #fff;
+    }
+    .design-table-container td:first-child {
+      font-weight: bold;
+      color: #fff;
+      width: 120px;
+    }
+    .design-table-container a {
+      color: #6a4cff;
+      text-decoration: underline;
+    }
+    .carousel-btn {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #fff;
+      color: #222;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      font-size: 2rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      transition: background 0.1s, color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .carousel-btn#carousel-left {
+      left: 40px;
+    }
+    .carousel-btn#carousel-right {
+      right: 40px;
+    }
+    .carousel-btn:hover {
+      background: #eee;
+      color: #000;
+    }
+  </style>
 
-  <div class="carousel-container">
-    <div class="carousel" id="carousel"></div>
-    <div class="carousel-nav">
-      <button id="carousel-left">&#8592;</button>
-      <button id="carousel-right">&#8594;</button>
-    </div>
-  </div>
-
-  <!-- Popup Modal for Carousel Clicks -->
-  <div id="custom-popup">
-    <div id="popup-content">
-      <span class="close-btn" id="popup-close">&times;</span>
-      <!-- Content will be injected here -->
+  <button class="carousel-btn" id="carousel-left" title="Previous">&#8226;</button>
+  <button class="carousel-btn" id="carousel-right" title="Next">&#8226;</button>
+  <div class="design-main-container">
+    <div class="carousel-flex">
+      <div class="design-image">
+        <img id="design-img" src="assets/img/design-cover/vol55-2.png" alt="Design Cover">
+      </div>
+      <div class="design-table-container">
+        <h2 id="design-title">Catch Magazine: VOL. 55 NO. 2</h2>
+        <table>
+          <tr><td>Year</td><td id="design-year">2023</td></tr>
+          <tr><td>Kind</td><td id="design-kind">Book Design, Spread Design, Typography, Layout, Stickers</td></tr>
+          <tr><td>Tools</td><td id="design-tools">InDesign, Photoshop, Illustrator</td></tr>
+          <tr><td>Collaborators</td><td id="design-collaborators">none</td></tr>
+          <tr><td>Website</td><td id="design-website"><a href="https://www.knoxcatch.org/vol-55-no-2" target="_blank">https://www.knoxcatch.org/vol-55-no-2</a></td></tr>
+        </table>
+        <div id="design-desc">A magazine project with various design elements.</div>
+      </div>
     </div>
   </div>
 
   <script>
-  let carouselData = [];
-  let currentIdx = 0;
-  // Load JSON data
-  fetch('design-popup/carousel-data.json')
-    .then(r => r.json())
-    .then(data => {
-      carouselData = data;
-      renderCarousel();
-    });
+    let carouselData = [];
+    let currentIdx = 0;
+    // Load JSON data
+    fetch('design-popup/carousel-data.json')
+      .then(r => r.json())
+      .then(data => {
+        carouselData = data;
+        renderDesign();
+      });
 
-  function renderCarousel() {
-    const carousel = document.getElementById('carousel');
-    carousel.innerHTML = '';
-    for (let i = 0; i < carouselData.length; i++) {
-      const item = document.createElement('div');
-      item.className = 'carousel-item';
-      if (i === currentIdx) item.classList.add('active');
-      else if (Math.abs(i - currentIdx) === 1 || Math.abs(i - currentIdx) === carouselData.length-1) item.classList.add('near');
-      const img = document.createElement('img');
-      img.src = carouselData[i].img;
-      img.alt = carouselData[i].title;
-      item.appendChild(img);
-      item.onclick = () => showPopup(i);
-      carousel.appendChild(item);
+    function renderDesign() {
+      if (!carouselData.length) return;
+      const d = carouselData[currentIdx];
+      document.getElementById('design-img').src = d.img;
+      document.getElementById('design-img').alt = d.title + ' Cover';
+      document.getElementById('design-title').textContent = d.title;
+      document.getElementById('design-year').textContent = d.year;
+      document.getElementById('design-kind').textContent = d.kind;
+      document.getElementById('design-tools').textContent = d.tools;
+      document.getElementById('design-collaborators').textContent = d.collaborators;
+      document.getElementById('design-website').innerHTML = `<a href="${d.website}" target="_blank">${d.website}</a>`;
+      // Add a description if you want, or leave blank
+      document.getElementById('design-desc').textContent = d.title === 'Catch Magazine: VOL. 55 NO. 2' ? 'A magazine project with various design elements.' : '';
     }
-    // Center carousel horizontally in viewport, not container
-    const active = document.querySelector('.carousel-item.active');
-    if (active) {
-      const rect = active.getBoundingClientRect();
-      const viewportCenter = window.innerWidth / 2;
-      const activeCenter = rect.left + rect.width / 2;
-      const offset = viewportCenter - activeCenter;
-      carousel.style.transform = `translateX(${offset}px)`;
-    }
-  }
 
-  document.getElementById('carousel-left').onclick = function() {
-    currentIdx = (currentIdx - 1 + carouselData.length) % carouselData.length;
-    renderCarousel();
-  };
-  document.getElementById('carousel-right').onclick = function() {
-    currentIdx = (currentIdx + 1) % carouselData.length;
-    renderCarousel();
-  };
-
-  function showPopup(idx) {
-    const d = carouselData[idx];
-    const popup = document.getElementById('custom-popup');
-    const content = document.getElementById('popup-content');
-    content.innerHTML = `
-      <span class="close-btn" id="popup-close">&times;</span>
-      <div class="popup-table">
-        <h2>${d.title}</h2>
-        <table>
-          <tr><td style='font-weight:bold;'>year</td><td>${d.year}</td></tr>
-          <tr><td style='font-weight:bold;'>kind</td><td>${d.kind}</td></tr>
-          <tr><td style='font-weight:bold;'>tools</td><td>${d.tools}</td></tr>
-          <tr><td style='font-weight:bold;'>collaborators</td><td>${d.collaborators}</td></tr>
-          <tr><td style='font-weight:bold;'>website</td><td><a href='${d.website}' target='_blank'>${d.website}</a></td></tr>
-        </table>
-      </div>
-      <div class="popup-image">
-        <img src="${d.img}" alt="${d.title}">
-      </div>
-    `;
-    popup.classList.add('active');
-    document.getElementById('popup-close').onclick = hidePopup;
-    popup.onclick = function(e) { if (e.target === popup) hidePopup(); };
-  }
-  function hidePopup() {
-    document.getElementById('custom-popup').classList.remove('active');
-  }
+    document.getElementById('carousel-left').onclick = function() {
+      if (!carouselData.length) return;
+      currentIdx = (currentIdx - 1 + carouselData.length) % carouselData.length;
+      renderDesign();
+    };
+    document.getElementById('carousel-right').onclick = function() {
+      if (!carouselData.length) return;
+      currentIdx = (currentIdx + 1) % carouselData.length;
+      renderDesign();
+    };
   </script>
 </body>
 </html>
