@@ -32,9 +32,6 @@
       <ul>
   <li class="sidebar-item active" data-file="gamedesign/game1.html">Game 1</li>
   <li class="sidebar-item" data-file="gamedesign/game2.html">Game 2</li>
-  <li class="sidebar-item" data-file="gamedesign/game3.html">Game 3</li>
-  <li class="sidebar-item" data-file="gamedesign/game4.html">Game 4</li>
-  <li class="sidebar-item" data-file="gamedesign/game5.html">Game 5</li>
       </ul>
     </aside>
     <section class="design-content" id="design-content">
@@ -63,7 +60,7 @@
         loadGameContent(this.getAttribute('data-file'));
       });
     });
-    loadGameContent(document.querySelector('.sidebar-item.active').getAttribute('data-file'));
+  loadGameContent(document.querySelector('.sidebar-item.active').getAttribute('data-file'));
   </script>
   <style>
     .design-layout {
