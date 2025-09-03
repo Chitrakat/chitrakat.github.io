@@ -10,8 +10,9 @@ let frameGap = 80;
 let offsetX = 0;
 let offsetY = 0;
 
-const edgeMargin = 300;
-const scrollSpeed = 3;
+// Remove mouse interaction, use smooth button navigation
+const scrollSpeed = 0.15; // for lerp
+let targetOffsetX = 0;
 
 
 // Infinite grid: no rectangles array, draw on the fly
@@ -83,45 +84,85 @@ function randomColor(seed, alpha = 128) {
 
 function draw() {
   background(255);
+  // Smoothly animate offsetX toward targetOffsetX
+  offsetX = lerp(offsetX, targetOffsetX, scrollSpeed);
 
-  // Infinite horizontal row, centered vertically
+  // Infinite horizontal row, centered vertically, with dynamic spacing
   let coversCount = coverImages.length;
+  let minScale = 0.5;
+  let maxScale = 2.2; // much larger center
+  let minAlpha = 60;
+  let maxAlpha = 255;
+  let centerY = height / 2;
+  let centerX = width / 2;
+
+  // How many covers to show (enough to fill screen)
+  let visibleCovers = 9;
   let totalWidth = frameWidth + frameGap;
-  let cols = ceil(width / totalWidth) + 2;
-  let startCol = floor(offsetX / totalWidth);
-  let centerY = height / 2 - frameHeight / 2;
+  let centerCol = Math.round(targetOffsetX / totalWidth);
+
+  // Compute positions dynamically so no overlap
+  let positions = [];
+  let scales = [];
+  let alphas = [];
+  // Center cover
+  positions[0] = centerX;
+  scales[0] = maxScale;
+  alphas[0] = maxAlpha;
+  // To the right
+  for (let i = 1; i <= Math.floor(visibleCovers/2); i++) {
+    let norm = i / (visibleCovers/2);
+    let scale = lerp(maxScale, minScale, norm);
+    let alpha = lerp(maxAlpha, minAlpha, norm);
+    let prevX = positions[i-1];
+    let prevW = frameWidth * scales[i-1];
+    let thisW = frameWidth * scale;
+    let gap = frameGap * lerp(1, 0.7, norm);
+    positions[i] = prevX + (prevW/2) + gap + (thisW/2);
+    scales[i] = scale;
+    alphas[i] = alpha;
+  }
+  // To the left
+  for (let i = 1; i <= Math.floor(visibleCovers/2); i++) {
+    let norm = i / (visibleCovers/2);
+    let scale = lerp(maxScale, minScale, norm);
+    let alpha = lerp(maxAlpha, minAlpha, norm);
+    let prevX = positions[-(i-1)] !== undefined ? positions[-(i-1)] : positions[0];
+    let prevW = frameWidth * (scales[-(i-1)] !== undefined ? scales[-(i-1)] : scales[0]);
+    let thisW = frameWidth * scale;
+    let gap = frameGap * lerp(1, 0.7, norm);
+    positions[-i] = prevX - (prevW/2) - gap - (thisW/2);
+    scales[-i] = scale;
+    alphas[-i] = alpha;
+  }
 
   imageMode(CENTER);
-  for (let col = 0; col < cols; col++) {
-    let gridCol = col + startCol;
-    let gridX = gridCol * totalWidth - offsetX;
-    let imgIdx = ((gridCol % coversCount) + coversCount) % coversCount; // serial, wrap around
+  for (let i = -Math.floor(visibleCovers/2); i <= Math.floor(visibleCovers/2); i++) {
+    let gridCol = centerCol + i;
+    let imgIdx = ((gridCol % coversCount) + coversCount) % coversCount;
     let img = coverImages[imgIdx];
-    let boxCenterX = gridX + frameWidth / 2;
-    let boxCenterY = centerY + frameHeight / 2;
-    // Draw box background
-    // fill(255);
-    noFill();
-    rect(gridX, centerY, frameWidth, frameHeight);
-    // Draw image centered in box, not stretched
-    if (img) {
-      let scale = Math.min(frameWidth / img.width, frameHeight / img.height, 1);
-      let drawW = img.width * scale;
-      let drawH = img.height * scale;
-      image(img, boxCenterX, boxCenterY, drawW, drawH);
-    }
-    // Optionally, draw a border
+    let scale = scales[i];
+    let alpha = alphas[i];
+    let boxW = frameWidth * scale;
+    let boxH = frameHeight * scale;
+    let boxCenterY = centerY;
+    let boxCenterX = positions[i];
+    if (boxCenterX + boxW/2 < 0 || boxCenterX - boxW/2 > width) continue;
+    // Draw box
     noFill();
     noStroke();
-    rect(gridX, centerY, frameWidth, frameHeight);
-
-    // Draw a vertical line after the last cover (X-JOURNAL)
-    if (imgIdx === coversCount - 1) {
-      stroke(180);
-      strokeWeight(2);
-      let lineX = gridX + frameWidth + frameGap / 2;
-      line(lineX, centerY, lineX, centerY + frameHeight);
-      noStroke();
+    rectMode(CENTER);
+    rect(boxCenterX, boxCenterY, boxW, boxH);
+    rectMode(CORNER);
+    // Draw image
+    if (img) {
+      let imgScale = Math.min(boxW / img.width, boxH / img.height, 1);
+      let drawW = img.width * imgScale;
+      let drawH = img.height * imgScale;
+      push();
+      tint(255, alpha);
+      image(img, boxCenterX, boxCenterY, drawW, drawH);
+      pop();
     }
   }
   imageMode(CORNER);
@@ -134,15 +175,26 @@ function draw() {
   }
 }
 
-function mousePressed() {
-  // Only check the row in the center, and only if below header
-  if (mouseY < 0) return; // p5 mouseY is relative to canvas, so 0 is top of canvas
-  let totalWidth = frameWidth + frameGap;
-  let col = floor((mouseX + offsetX) / totalWidth);
-  let coversCount = coverImages.length;
-  let imgIdx = ((col % coversCount) + coversCount) % coversCount;
-  showPopup(imgIdx);
+// Remove mouse interaction for carousel
+// Add button event listeners for carousel navigation
+if (typeof window !== 'undefined') {
+  window.addEventListener('DOMContentLoaded', function() {
+    const leftBtn = document.getElementById('carousel-left');
+    const rightBtn = document.getElementById('carousel-right');
+    let totalWidth = frameWidth + frameGap;
+    if (leftBtn) {
+      leftBtn.onclick = function() {
+        targetOffsetX -= totalWidth;
+      };
+    }
+    if (rightBtn) {
+      rightBtn.onclick = function() {
+        targetOffsetX += totalWidth;
+      };
+    }
+  });
 }
+
 
 // Make popup scrollable and prevent event propagation to canvas
 if (typeof window !== 'undefined') {

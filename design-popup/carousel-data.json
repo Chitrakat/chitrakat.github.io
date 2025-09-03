@@ -1,0 +1,56 @@
+[
+  {
+    "title": "Catch Magazine: VOL. 55 NO. 2",
+    "year": "2023",
+    "kind": "Book Design, Spread Design, Typography, Layout, Stickers",
+    "tools": "InDesign, Photoshop, Illustrator",
+    "collaborators": "none",
+    "website": "https://www.knoxcatch.org/vol-55-no-2",
+    "img": "assets/img/design-cover/vol55-2.png"
+  },
+  {
+    "title": "Catch Magazine: VOL. 56 NO. 1",
+    "year": "2023",
+    "kind": "Book Design, Spread Design, Typography, Layout",
+    "tools": "InDesign, Photoshop, Illustrator",
+    "collaborators": "none",
+    "website": "https://www.knoxcatch.org/vol-56-no-1",
+    "img": "assets/img/design-cover/vol56-1.png"
+  },
+  {
+    "title": "Catch Magazine: VOL. 56 NO. 2",
+    "year": "2024",
+    "kind": "Book Design, Spread Design, Typography, Layout",
+    "tools": "InDesign, Photoshop, Illustrator",
+    "collaborators": "Kevin Kox, 26",
+    "website": "https://www.knoxcatch.org/vol-56-no-2",
+    "img": "assets/img/design-cover/vol56-2.png"
+  },
+  {
+    "title": "Catch Magazine: VOL. 57 NO. 1 and VOL. 57 NO. 2",
+    "year": "2025",
+    "kind": "Layout Design, Typography",
+    "tools": "InDesign",
+    "collaborators": "Eve",
+    "website": "https://example.com/3",
+    "img": "assets/img/design-cover/vol57-1.png"
+  },
+  {
+    "title": "X-JOURNAL",
+    "year": "2025",
+    "kind": "App UI",
+    "tools": "Sketch",
+    "collaborators": "Frank",
+    "website": "https://example.com/4",
+    "img": "assets/img/design-cover/x.png"
+  },
+  {
+    "title": "Lines in The Shed, Ryan Tracy",
+    "year": "2023",
+    "kind": "Book Design, Logo Design, Typography, Product Photography",
+    "tools": "InDesign, Photoshop, Illustrator",
+    "collaborators": "none",
+    "website": "https://www.ryantracy.com/books",
+    "img": "assets/img/design-cover/lines.jpg"
+  }
+]
