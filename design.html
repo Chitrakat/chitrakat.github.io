@@ -12,31 +12,176 @@
     <div class="header-left">
       <a href="index.html" class="site-title">suyash chitrakar</a>
     </div>
-    <div class="header-right">
-      <div class="dropdown">
-        <button class="dropdown-toggle" id="dropdownMenuButton">my work &#x25BC;</button>
-        <div class="dropdown-menu" id="dropdownMenu">
-          <a href="design.html" class="dropdown-item">design</a>
-          <a href="photography.html" class="dropdown-item">photography</a>
-          <a href="p5js.html" class="dropdown-item">p5.js</a>
-          <a href="plotter.html" class="dropdown-item">plotter</a>
-          <a href="gamedesign.html" class="dropdown-item">game design</a>
-          <a href="drawing.html" class="dropdown-item">drawing</a>
-        </div>
-      </div>
-    </div>
+  <!-- Dropdown menu removed -->
   </header>
 
-  <!-- Popup Modal for Rectangle Clicks -->
-  <div id="custom-popup" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;">
-  <div style="background:#fff;padding:32px 24px;width:75vw;max-width:900px;margin:100px auto;border-radius:12px;box-shadow:0 4px 32px #0008;position:relative;color:#111; font-family:sans-serif;">
-      <span style="position:absolute;top:8px;right:16px;font-size:2em;cursor:pointer;color:#111;" onclick="hidePopup()">&times;</span>
-      <div id="popup-content" style="color:#111;"></div>
+  <!-- Popup Modal for Carousel Clicks -->
+  <div id="custom-popup">
+    <div id="popup-content">
+      <span class="close-btn" id="popup-close">&times;</span>
+      <!-- Content will be injected here -->
+    </div>
+  </div>
+  <style>
+    .design-main-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 32px;
+      background: transparent;
+      z-index: 10;
+    }
+    .carousel-flex {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 32px;
+    }
+    .design-image {
+      flex: 0 0 400px;
+      max-width: 400px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 500px;
+    }
+    .design-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .design-table-container {
+      background: #222;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border-radius: 8px;
+      padding: 32px 40px;
+      min-width: 400px;
+      max-width: 500px;
+      color: #fff;
+    }
+    .design-table-container h2 {
+      margin-top: 0;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #fff;
+    }
+    .design-table-container table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+    .design-table-container td {
+      padding: 6px 10px;
+      border-bottom: 1px solid #444;
+      color: #fff;
+    }
+    .design-table-container td:first-child {
+      font-weight: bold;
+      color: #fff;
+      width: 120px;
+    }
+    .design-table-container a {
+      color: #6a4cff;
+      text-decoration: underline;
+    }
+    .carousel-btn {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #fff;
+      color: #222;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      font-size: 2rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      transition: background 0.1s, color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .carousel-btn#carousel-left {
+      left: 40px;
+    }
+    .carousel-btn#carousel-right {
+      right: 40px;
+    }
+    .carousel-btn:hover {
+      background: #eee;
+      color: #000;
+    }
+  </style>
+
+  <button class="carousel-btn" id="carousel-left" title="Previous">&#8226;</button>
+  <button class="carousel-btn" id="carousel-right" title="Next">&#8226;</button>
+  <div class="design-main-container">
+    <div class="carousel-flex">
+      <div class="design-image">
+        <img id="design-img" src="assets/img/design-cover/vol55-2.png" alt="Design Cover">
+      </div>
+      <div class="design-table-container">
+        <h2 id="design-title">Catch Magazine: VOL. 55 NO. 2</h2>
+        <table>
+          <tr><td>Year</td><td id="design-year">2023</td></tr>
+          <tr><td>Kind</td><td id="design-kind">Book Design, Spread Design, Typography, Layout, Stickers</td></tr>
+          <tr><td>Tools</td><td id="design-tools">InDesign, Photoshop, Illustrator</td></tr>
+          <tr><td>Collaborators</td><td id="design-collaborators">none</td></tr>
+          <tr><td>Website</td><td id="design-website"><a href="https://www.knoxcatch.org/vol-55-no-2" target="_blank">https://www.knoxcatch.org/vol-55-no-2</a></td></tr>
+        </table>
+        <div id="design-desc">A magazine project with various design elements.</div>
+      </div>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
-  <script src="assets/js/header-dropdown.js"></script>
-  <script src="design.js"></script>
+  <script>
+    let carouselData = [];
+    let currentIdx = 0;
+    // Load JSON data
+    fetch('design-popup/carousel-data.json')
+      .then(r => r.json())
+      .then(data => {
+        carouselData = data;
+        renderDesign();
+      });
+
+    function renderDesign() {
+      if (!carouselData.length) return;
+      const d = carouselData[currentIdx];
+      document.getElementById('design-img').src = d.img;
+      document.getElementById('design-img').alt = d.title + ' Cover';
+      document.getElementById('design-title').textContent = d.title;
+      document.getElementById('design-year').textContent = d.year;
+      document.getElementById('design-kind').textContent = d.kind;
+      document.getElementById('design-tools').textContent = d.tools;
+      document.getElementById('design-collaborators').textContent = d.collaborators;
+      document.getElementById('design-website').innerHTML = `<a href="${d.website}" target="_blank">${d.website}</a>`;
+      // Add a description if you want, or leave blank
+      document.getElementById('design-desc').textContent = d.title === 'Catch Magazine: VOL. 55 NO. 2' ? 'A magazine project with various design elements.' : '';
+    }
+
+    document.getElementById('carousel-left').onclick = function() {
+      if (!carouselData.length) return;
+      currentIdx = (currentIdx - 1 + carouselData.length) % carouselData.length;
+      renderDesign();
+    };
+    document.getElementById('carousel-right').onclick = function() {
+      if (!carouselData.length) return;
+      currentIdx = (currentIdx + 1) % carouselData.length;
+      renderDesign();
+    };
+  </script>
 </body>
 </html>
