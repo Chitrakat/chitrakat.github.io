@@ -42,6 +42,40 @@
       align-items: center;
       gap: 32px;
     }
+    .image-grid-row {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0 4px;
+      margin-top: 24px;
+      width: 100%;
+      max-width: 500px;
+    }
+    .image-grid-col {
+      flex: 25%;
+      max-width: 25%;
+      padding: 0 4px;
+      box-sizing: border-box;
+    }
+    .image-grid-col img {
+      margin-top: 8px;
+      vertical-align: middle;
+      width: 100%;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+      background: #222;
+    }
+    @media screen and (max-width: 800px) {
+      .image-grid-col {
+        flex: 50%;
+        max-width: 50%;
+      }
+    }
+    @media screen and (max-width: 600px) {
+      .image-grid-col {
+        flex: 100%;
+        max-width: 100%;
+      }
+    }
     .design-image {
       flex: 0 0 400px;
       max-width: 400px;
@@ -142,6 +176,7 @@
           <tr><td>Website</td><td id="design-website"><a href="https://www.knoxcatch.org/vol-55-no-2" target="_blank">https://www.knoxcatch.org/vol-55-no-2</a></td></tr>
         </table>
         <div id="design-desc">A magazine project with various design elements.</div>
+        <div id="image-grid" class="image-grid-row"></div>
       </div>
     </div>
   </div>
@@ -157,6 +192,57 @@
         renderDesign();
       });
 
+    // Helper: get folder name for each project (based on image path or title)
+    function getProjectFolder(d) {
+      // Try to extract folder from img path, fallback to title
+      if (d.img && d.img.includes('vol55-2')) return 'vol55-2';
+      if (d.img && d.img.includes('vol56-1')) return 'vol56-1';
+      if (d.img && d.img.includes('vol56-2')) return 'vol56-2';
+      if (d.img && d.img.includes('vol57-1')) return 'vol57-1';
+      if (d.img && d.img.includes('x.png')) return 'x-journal';
+      if (d.img && d.img.includes('lines')) return 'lines';
+      return '';
+    }
+
+    // Helper: get all images in a folder (sync, for demo; in production, use server-side or manifest)
+    function getImageGrid(folder) {
+      // For now, just try 1.jpg, 2.jpg, 3.jpg, 4.jpg, 5.jpg as placeholders
+      // In production, you could fetch a manifest or use server-side code to list files
+      const exts = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+      let images = [];
+      for (let i = 1; i <= 8; i++) {
+        for (let ext of exts) {
+          images.push(`design-popup/${folder}/${i}.${ext}`);
+        }
+      }
+      return images;
+    }
+
+    function renderImageGrid(folder) {
+      const grid = document.getElementById('image-grid');
+      grid.innerHTML = '';
+      if (!folder) return;
+      // Try to load up to 20 images (4 columns x 5 rows)
+      const images = getImageGrid(folder);
+      // Split into 4 columns
+      const cols = [[], [], [], []];
+      let colIdx = 0;
+      for (let img of images) {
+        // Only show if image actually exists (try loading, hide broken)
+        const imgElem = document.createElement('img');
+        imgElem.src = img;
+        imgElem.onerror = function() { this.style.display = 'none'; };
+        cols[colIdx].push(imgElem);
+        colIdx = (colIdx + 1) % 4;
+      }
+      for (let col of cols) {
+        const colDiv = document.createElement('div');
+        colDiv.className = 'image-grid-col';
+        for (let imgElem of col) colDiv.appendChild(imgElem);
+        grid.appendChild(colDiv);
+      }
+    }
+
     function renderDesign() {
       if (!carouselData.length) return;
       const d = carouselData[currentIdx];
@@ -168,8 +254,9 @@
       document.getElementById('design-tools').textContent = d.tools;
       document.getElementById('design-collaborators').textContent = d.collaborators;
       document.getElementById('design-website').innerHTML = `<a href="${d.website}" target="_blank">${d.website}</a>`;
-      // Add a description if you want, or leave blank
       document.getElementById('design-desc').textContent = d.title === 'Catch Magazine: VOL. 55 NO. 2' ? 'A magazine project with various design elements.' : '';
+      // Render image grid for this project
+      renderImageGrid(getProjectFolder(d));
     }
 
     document.getElementById('carousel-left').onclick = function() {
