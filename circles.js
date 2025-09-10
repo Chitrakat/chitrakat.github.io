@@ -13,11 +13,16 @@ let random1, random2, random3;
 
 let maxCircle, minCircle;
 
+let randShade, opacity;
+let value = 100;
+let o1 = 40;
+
+
 s0.initP5() // send p5 to hydra
 P5.toggle(0) // hide p5
 
 src(s0)
-.add(src(o0).scale(0.91), .9)
+.add(src(o0).scale(0.91), 0.85)
 .modulateScale(noize(1), 0.1) // 1, 0.1, (0.05), 0.08, 1 and 1 is sick 
 .out()
 // sandbox - end
@@ -35,50 +40,61 @@ function setup() {
     random3 = random(width/3);
 
     maxCircle = windowHeight/5;
+
+    // randShade = random(0, 150);
+    randShade = 0;
+
+    opacity = o1;
+
+    // noMouseCursor();
 }
 
 function draw() {
     if(mouseIsPressed){
-        frameCount *= 1;
+        value = 255;
+        opacity = 255;
+        // frameCount *= 1;
         clear();
     }
 	blendMode(DIFFERENCE); // set blend mode to DIFFERENCE
-    background(0, 500); // set background color with transparency
+    background(0); // set background color with transparency
+    opacity = o1; // reset opacity
+    value = 100;
 
     // Colors 
 	textSize(windowHeight/15);
     noStroke();
 
-    let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100;
-    fill(b, 0, 190-b, 150); 
+    let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100 + randShade;
+    fill(b, 0, 190-b, 20); 
     
     // Mouse Circles
     if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
         circle(mouseX, mouseY, height/5);
-        circle(width-mouseX, height-mouseY, height/3);
+        // circle(width-mouseX, height-mouseY, height/3);
     }
     
     // Middle Circle
     let rSize = (sin(frameCount * 0.025)) * maxCircle;
-    fill(100,0,b, 100);
+    fill(100,0,b, 20);
     noStroke();
     circle(width/2, height/2, height/2 + rSize);
 
     // Moving texts
     let tx, ty;
     let fontSize = height/5;
-    fill(255, 200);
+    // fill(200);
 
     tx = constrain(noise(100 + frameCount * 0.0006) * width, 0, width);
     // Create moving objects if not already created
     if (!window.movingObjs) {
         window.movingObjs = [
-            new movingObject(random(1000), random(1000), fontSize, 'design'),
-            new movingObject(random(1000), random(1000), fontSize/1.1, 'photography'),
-            new movingObject(random(1000), random(1000), fontSize/1.1, 'creative\ncoding'),
-            new movingObject(random(1000), random(1000), fontSize/2, 'drawing'),
-            new movingObject(random(1000), random(1000), fontSize/1.5, 'game\n design'),
-            new movingObject(random(1000), random(1000), fontSize/1.1, 'plotter'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'design'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'photography'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'creative\ncoding'),
+            // new movingObject(random(1000), random(1000), fontSize/2, 'drawing'),
+            // new movingObject(random(1000), random(1000), fontSize/1.5, 'game\n design'),
+            // new movingObject(random(1000), random(1000), fontSize/1.1, 'plotter'),
         ];
     }
 
@@ -140,7 +156,7 @@ class movingObject{
 
     update() {
         // Use the same logic as the text movement
-        this.x = constrain(noise(this.xNoiseSeed + frameCount * 0.006) * width, 0, width);
+        this.x = constrain(noise(this.xNoiseSeed + frameCount * 0.06) * width, 0, width);
         this.y = constrain(noise(this.yNoiseSeed + frameCount * 0.0065) * height, 0, height);
     }
 
@@ -153,7 +169,10 @@ class movingObject{
         let th = this.size;
 
         // Draw text
-        rectMode(CENTER);fill(255);
+        rectMode(CENTER);
+        fill(100, opacity);
+        // stroke(0)
+        // strokeWeight(2);
         textAlign(CENTER, CENTER);
         text(this.label, this.x, this.y);
     }
@@ -165,23 +184,4 @@ function windowResized() {
     H.pixelDensity(0.3);
     // Optionally, re-calculate any values that depend on width/height
     // e.g., update random1, random2, random3 if needed
-}
-
-function addFuzzyNoise(amount = 0.1) {
-    loadPixels();
-    let numPixels = width * height * amount;
-    for (let i = 0; i < numPixels; i++) {
-        let x = floor(random(width));
-        let y = floor(random(height));
-        let idx = 4 * (y * width + x);
-        let val = random(180, 255); // white-ish noise
-        let alpha = random(30, 80); // transparency
-
-        // Blend with existing pixel (simple alpha blend)
-        pixels[idx]   = lerp(pixels[idx], val, alpha/255);
-        pixels[idx+1] = lerp(pixels[idx+1], val, alpha/255);
-        pixels[idx+2] = lerp(pixels[idx+2], val, alpha/255);
-        // Optionally, you can set pixels[idx+3] = 255;
-    }
-    updatePixels();
 }
