@@ -95,7 +95,7 @@ function draw() {
     }
     
     // Middle Circle
-    let rSize = (sin(frameCount * 0.025)) * maxCircle + minCircle;
+    let rSize = (sin(frameCount * 0.025/1.5)) * maxCircle + minCircle;
     fill(100,0,b, 20);
     noStroke();
     circle(width/2, height/2, height/2 + rSize);
