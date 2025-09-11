@@ -1,7 +1,7 @@
 /*
-	_HY5_p5_hydra // cc teddavis.org 2024
-	pass p5 with type into hydra
-	docs: https://github.com/ffd8/hy5
+_HY5_p5_hydra // cc teddavis.org 2024
+pass p5 with type into hydra
+docs: https://github.com/ffd8/hy5
 */
 
 let libs = ['https://unpkg.com/hydra-synth', 'includes/libs/hydra-synth.js', 'https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js', 'includes/libs/hy5.js']
@@ -17,20 +17,26 @@ let randShade, opacity;
 let value = 100;
 let o1 = 40;
 
+let n1;
 
 s0.initP5() // send p5 to hydra
 P5.toggle(0) // hide p5
 
+function preload() {
+    n1 = random(0,1,0.1);
+}
+
 src(s0)
 .add(src(o0).scale(0.91), 0.85)
-.modulateScale(noize(1), 0.1) // 1, 0.1, (0.05), 0.08, 1 and 1 is sick 
+.modulateScale(noize(1), 0.2) // 1, 0.1, (0.05), 0.08, 1 and 1 is sick 
 .out()
 // sandbox - end
+
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
     background(0);
-    frameRate(30);
+    frameRate(14);
     noCursor();
 
     rectMode(CENTER);
@@ -40,22 +46,26 @@ function setup() {
     random2 = random(width/3);
     random3 = random(width/3);
 
-    maxCircle = windowHeight/5;
+    maxCircle = windowHeight/4;
+    minCircle = windowHeight/10;
 
     randShade = random(-20, 150);
     // randShade = 0;
 
     opacity = o1;
-
     // noMouseCursor();
 }
 
 
+
 function draw() {
-    frameRate(10);
+    frameRate(14);
+    opacity = o1; // reset opacity
+    value = 100;
+
     if(mouseIsPressed){
         value = 255;
-        opacity = 255;
+        opacity = 500;
         // frameCount *= 10;
         frameRate(2);
         randShade = random(-20, 150);
@@ -70,8 +80,6 @@ function draw() {
     // }
 	blendMode(DIFFERENCE); // set blend mode to DIFFERENCE
     background(0, 40); // set background color with transparency
-    opacity = o1; // reset opacity
-    value = 100;
 
     // Colors 
 	textSize(windowHeight/15);
@@ -87,7 +95,7 @@ function draw() {
     }
     
     // Middle Circle
-    let rSize = (sin(frameCount * 0.025)) * maxCircle;
+    let rSize = (sin(frameCount * 0.025)) * maxCircle + minCircle;
     fill(100,0,b, 20);
     noStroke();
     circle(width/2, height/2, height/2 + rSize);
