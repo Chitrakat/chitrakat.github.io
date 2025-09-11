@@ -1,140 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Design | Suyash Chitrakar</title>
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="assets/css/header.css">
-</head>
-<body>
-  <header class="main-header">
-    <div class="header-left">
-      <a href="index.html" class="site-title">suyash chitrakar</a>
-    </div>
-    <div class="header-right">
-      <div class="dropdown">
-        <button class="dropdown-toggle" id="dropdownMenuButton">my work &#x25BC;</button>
-        <div class="dropdown-menu" id="dropdownMenu">
-          <a href="design.html" class="dropdown-item">design</a>
-          <a href="photography.html" class="dropdown-item">photography</a>
-          <a href="p5js.html" class="dropdown-item">p5.js</a>
-          <a href="plotter.html" class="dropdown-item">plotter</a>
-          <a href="gamedesign.html" class="dropdown-item">game design</a>
-          <a href="drawing.html" class="dropdown-item">drawing</a>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/addons/p5.sound.min.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="header-left">
+        <a href="index.html" class="site-title">suyash chitrakar</a>
+      </div>
+      <div class="header-right">
+        <div class="dropdown">
+          <button id="dropdownMenuButton" class="dropdown-toggle">menu</button>
+          <div id="dropdownMenu" class="dropdown-menu">
+            <a href="design.html">Design</a>
+            <a href="drawing.html">Drawing</a>
+            <a href="gamedesign.html">Game Design</a>
+            <a href="p5js.html">p5.js</a>
+            <a href="photography.html">Photography</a>
+            <a href="plotter.html">Plotter</a>
+          </div>
         </div>
       </div>
-    </div>
-  </header>
-
-  <div class="design-layout">
-    <aside class="design-sidebar">
-      <ul>
-  <li class="sidebar-item active" data-file="design/vol55-2.html">Catch Magazine: VOL. 55 NO. 2</li>
-  <li class="sidebar-item" data-file="design/vol56-1.html">Catch Magazine: VOL. 56 NO. 1</li>
-  <li class="sidebar-item" data-file="design/vol56-2.html">Catch Magazine: VOL. 56 NO. 2</li>
-  <li class="sidebar-item" data-file="design/vol57-double.html">Catch Magazine: VOL. 57 NO. 1 + 2</li>
-  <li class="sidebar-item" data-file="design/x-journal.html">X-Journal</li>
-      </ul>
-    </aside>
-    <section class="design-content" id="design-content">
-  <!-- Content will be loaded here -->
-    </section>
-  </div>
-
+    </header>
+    <main>
+    </main>
   <script src="assets/js/header-dropdown.js"></script>
-  <script>
-    // Sidebar click logic with dynamic HTML loading
-    async function loadDesignContent(file) {
-      const contentArea = document.getElementById('design-content');
-      contentArea.innerHTML = 'Loading...';
-      try {
-        const res = await fetch(file);
-        if (!res.ok) throw new Error('Not found');
-        const html = await res.text();
-        contentArea.innerHTML = html;
-      } catch (e) {
-        contentArea.innerHTML = '<div style="color:#f66">Could not load content.</div>';
-      }
-    }
-    document.querySelectorAll('.sidebar-item').forEach(item => {
-      item.addEventListener('click', function() {
-        document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
-        this.classList.add('active');
-        loadDesignContent(this.getAttribute('data-file'));
-      });
-    });
-    // Load first item by default
-    loadDesignContent(document.querySelector('.sidebar-item.active').getAttribute('data-file'));
-  </script>
-  <style>
-    .design-layout {
-      display: flex;
-      margin-top: 48px;
-      height: calc(100vh - 48px);
-    }
-    .design-sidebar {
-      width: 180px;
-      background: #181818;
-      padding: 0;
-      border-right: 1px solid #222;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-    }
-    .design-sidebar ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    .sidebar-item {
-      padding: 18px 20px;
-      cursor: pointer;
-      color: #eee;
-      font-size: 1.08rem;
-      border-bottom: 1px solid #232323;
-      transition: background 0.18s, color 0.18s;
-    }
-    .sidebar-item.active, .sidebar-item:hover {
-      background: #232323;
-      color: #fff;
-    }
-    .design-content {
-      flex: 1;
-      padding: 40px 32px;
-      font-size: 1.2rem;
-      color: #fff;
-      background: #111;
-      min-height: 100%;
-    }
-    @media (max-width: 700px) {
-      .design-layout {
-        flex-direction: column;
-      }
-      .design-sidebar {
-        width: 100%;
-        flex-direction: row;
-        border-right: none;
-        border-bottom: 1px solid #222;
-      }
-      .design-sidebar ul {
-        display: flex;
-        flex-direction: row;
-      }
-      .sidebar-item {
-        flex: 1;
-        border-bottom: none;
-        border-right: 1px solid #232323;
-        text-align: center;
-        padding: 14px 0;
-      }
-      .sidebar-item:last-child {
-        border-right: none;
-      }
-      .design-content {
-        padding: 24px 10px;
-      }
-    }
-  </style>
-</body>
+  <script src="design-idea2.js"></script>
+  </body>
 </html>
