@@ -30,7 +30,8 @@ src(s0)
 function setup() {
 	createCanvas(windowWidth, windowHeight);
     background(0);
-    frameRate(20);
+    frameRate(30);
+    noCursor();
 
     rectMode(CENTER);
 	textAlign(CENTER, CENTER);
@@ -41,23 +42,34 @@ function setup() {
 
     maxCircle = windowHeight/5;
 
-    // randShade = random(0, 150);
-    randShade = 0;
+    randShade = random(-20, 150);
+    // randShade = 0;
 
     opacity = o1;
 
     // noMouseCursor();
 }
 
+
 function draw() {
+    frameRate(10);
     if(mouseIsPressed){
         value = 255;
         opacity = 255;
-        // frameCount *= 1;
+        // frameCount *= 10;
+        frameRate(2);
+        randShade = random(-20, 150);
         clear();
     }
+    // if(mouseReleased){
+    //     frameRate(10);
+    // }
+    // else{
+    //     value = 100;
+    //     opacity = o1;
+    // }
 	blendMode(DIFFERENCE); // set blend mode to DIFFERENCE
-    background(0); // set background color with transparency
+    background(0, 40); // set background color with transparency
     opacity = o1; // reset opacity
     value = 100;
 
@@ -66,7 +78,7 @@ function draw() {
     noStroke();
 
     let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100 + randShade;
-    fill(b, 0, 190-b, 20); 
+    fill(b, 0, 190-b, 40); 
     
     // Mouse Circles
     if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {

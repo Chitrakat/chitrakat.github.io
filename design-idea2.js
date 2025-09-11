@@ -1,21 +1,11 @@
-let frameWidth = 200/2;
-let frameHeight = 280/2;
-let frameGap = 100;
+let frameWidth = 100;
+let frameHeight = 140;
+let frameGap = 24;
 
-let offsetX = 0;
-let offsetY = 0;
-
-const edgeMargin = 300;
-const scrollSpeed = 10;
-
-
-// Infinite grid: no rectangles array, draw on the fly
-function getRectType(col, row) {
-  // Deterministic pseudo-random type based on col/row
-  // Use a simple hash for repeatability
-  let n = (col * 928371 + row * 123457) % 5;
-  return ((n + 5) % 5); // always 0-4
-}
+const gridCols = 7;
+const gridRows = 3;
+let gridRects = [];
+let fadeAmounts = [];
 let popupVisible = false;
 let popupContent = '';
 
@@ -44,13 +34,32 @@ function preload() {
   }
 }
 
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  background(0);
   noFill();
+  // Center grid
+  let totalWidth = gridCols * frameWidth + (gridCols - 1) * frameGap;
+  let totalHeight = gridRows * frameHeight + (gridRows - 1) * frameGap;
+  let startX = (width - totalWidth) / 2;
+  let startY = (height - totalHeight) / 2;
+  gridRects = [];
+  fadeAmounts = [];
+  for (let row = 0; row < gridRows; row++) {
+    for (let col = 0; col < gridCols; col++) {
+      let x = startX + col * (frameWidth + frameGap);
+      let y = startY + row * (frameHeight + frameGap);
+      gridRects.push({x, y, col, row, imgIdx: Math.floor(Math.random() * coverImages.length)});
+      fadeAmounts.push(255); // fully black
+    }
+  }
 }
+
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+  setup(); // recalculate grid positions
 }
 
 function randomColor(seed, alpha = 128) {
@@ -62,72 +71,38 @@ function randomColor(seed, alpha = 128) {
 
 // No need for generateRectangles
 
+
 function draw() {
-  background(0, 30);
-
-  let cols = ceil(width / (frameWidth + frameGap)) + 2;
-  let rows = ceil(height / (frameHeight + frameGap)) + 2;
-  let startCol = floor(offsetX / (frameWidth + frameGap));
-  let startRow = floor(offsetY / (frameHeight + frameGap));
-
-  for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
-      let gridCol = col + startCol;
-      let gridRow = row + startRow;
-      let gridX = gridCol * (frameWidth + frameGap) - offsetX;
-      let gridY = gridRow * (frameHeight + frameGap) - offsetY;
-      let type = getRectType(gridCol, gridRow);
-      let img = coverImages[type];
-      if (img) {
-        image(img, gridX, gridY, frameWidth, frameHeight);
-      } else {
-        // fallback: colored rect if image not loaded
-        switch (type) {
-          case 0:
-            fill(255, 100, 100, 60);
-            break;
-          case 1:
-            fill(100, 255, 100, 60);
-            break;
-          case 2:
-            fill(100, 100, 255, 60);
-            break;
-          case 3:
-            fill(255, 255, 100, 60);
-            break;
-          case 4:
-            fill(255, 100, 255, 60);
-            break;
-        }
-        rect(gridX, gridY, frameWidth, frameHeight);
-        noFill();
-      }
-
-      noFill();
-      noStroke();
-      rect(gridX, gridY, frameWidth, frameHeight);
+  background(0);
+  for (let i = 0; i < gridRects.length; i++) {
+    let r = gridRects[i];
+    let hovered = mouseX > r.x && mouseX < r.x + frameWidth && mouseY > r.y && mouseY < r.y + frameHeight;
+    // Fade out black if hovered
+    if (hovered) {
+      fadeAmounts[i] = max(0, fadeAmounts[i] - 60); // fade out much faster
+    } else {
+      fadeAmounts[i] = min(255, fadeAmounts[i] + 10); // fade in
     }
-  }
-
-  // Infinite grid navigation with mouse near edges
-  if (mouseX < edgeMargin) {
-    offsetX = max(0, offsetX - scrollSpeed);
-  } else if (mouseX > width - edgeMargin) {
-    offsetX += scrollSpeed;
-  }
-  if (mouseY < edgeMargin) {
-    offsetY = max(0, offsetY - scrollSpeed);
-  } else if (mouseY > height - edgeMargin) {
-    offsetY += scrollSpeed;
+    // Draw image
+    if (coverImages[r.imgIdx]) {
+      image(coverImages[r.imgIdx], r.x, r.y, frameWidth, frameHeight);
+    }
+    // Draw black overlay
+    fill(0, fadeAmounts[i]);
+    noStroke();
+    rect(r.x, r.y, frameWidth, frameHeight);
   }
 }
 
 function mousePressed() {
   // Find which rectangle was clicked
-  let col = floor((mouseX + offsetX) / (frameWidth + frameGap));
-  let row = floor((mouseY + offsetY) / (frameHeight + frameGap));
-  let type = getRectType(col, row);
-  showPopup(type);
+  for (let i = 0; i < gridRects.length; i++) {
+    let r = gridRects[i];
+    if (mouseX > r.x && mouseX < r.x + frameWidth && mouseY > r.y && mouseY < r.y + frameHeight) {
+      showPopup(r.imgIdx);
+      break;
+    }
+  }
 }
 // Make popup scrollable and prevent event propagation to canvas
 if (typeof window !== 'undefined') {
