@@ -28,7 +28,7 @@ function preload() {
 
 src(s0)
 .add(src(o0).scale(0.91), 0.85)
-.modulateScale(noize(1), 0.2) // 1, 0.1, (0.05), 0.08, 1 and 1 is sick 
+.modulateScale(noize(0.1), 0.2, ) // 1, 0.1, (0.05), 0.08, 1 and 1 is sick 
 .out()
 // sandbox - end
 
@@ -46,7 +46,7 @@ function setup() {
     random2 = random(width/3);
     random3 = random(width/3);
 
-    maxCircle = windowHeight/4;
+    maxCircle = windowHeight/5;
     minCircle = windowHeight/10;
 
     randShade = random(-20, 150);
@@ -67,7 +67,7 @@ function draw() {
         value = 255;
         opacity = 500;
         // frameCount *= 10;
-        frameRate(2);
+        frameRate(3);
         randShade = random(-20, 150);
         clear();
     }

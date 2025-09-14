@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Photography | Suyash Chitrakar</title>
+  <title>p5.js | Suyash Chitrakar</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/header.css">
 </head>
@@ -26,25 +26,24 @@
       </div>
     </div>
   </header>
-
   <div class="design-layout">
     <aside class="design-sidebar">
       <ul>
-  <li class="sidebar-item active" data-file="photography/photo1.html">Photo 1</li>
-  <li class="sidebar-item" data-file="photography/photo2.html">Photo 2</li>
-  <li class="sidebar-item" data-file="photography/photo3.html">Photo 3</li>
-  <li class="sidebar-item" data-file="photography/photo4.html">Photo 4</li>
-  <li class="sidebar-item" data-file="photography/photo5.html">Photo 5</li>
+        <li class="sidebar-item active" data-file="p5js/p5js1.html">p5.js Project 1</li>
+        <li class="sidebar-item" data-file="p5js/p5js2.html">p5.js Project 2</li>
+        <li class="sidebar-item" data-file="p5js/p5js3.html">p5.js Project 3</li>
+        <li class="sidebar-item" data-file="p5js/p5js4.html">p5.js Project 4</li>
+        <li class="sidebar-item" data-file="p5js/p5js5.html">p5.js Project 5</li>
       </ul>
     </aside>
     <section class="design-content" id="design-content">
-  <!-- Content will be loaded here -->
+      <!-- Content will be loaded here -->
     </section>
   </div>
 
   <script src="assets/js/header-dropdown.js"></script>
   <script>
-    async function loadPhotoContent(file) {
+    async function loadP5jsContent(file) {
       const contentArea = document.getElementById('design-content');
       contentArea.innerHTML = 'Loading...';
       try {
@@ -60,10 +59,10 @@
       item.addEventListener('click', function() {
         document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
         this.classList.add('active');
-        loadPhotoContent(this.getAttribute('data-file'));
+        loadP5jsContent(this.getAttribute('data-file'));
       });
     });
-    loadPhotoContent(document.querySelector('.sidebar-item.active').getAttribute('data-file'));
+    loadP5jsContent(document.querySelector('.sidebar-item.active').getAttribute('data-file'));
   </script>
   <style>
     .design-layout {
