@@ -13,7 +13,19 @@
     <div class="header-left">
       <a href="index.html" class="site-title">suyash chitrakar</a>
     </div>
-  <!-- Dropdown menu removed -->
+    <div class="header-right">
+      <div class="dropdown">
+        <button id="dropdownMenuButton" class="dropdown-toggle">menu</button>
+        <div id="dropdownMenu" class="dropdown-menu">
+          <a href="design.html">Design</a>
+          <a href="drawing.html">Drawing</a>
+          <a href="gamedesign.html">Game Design</a>
+          <a href="p5js.html">p5.js</a>
+          <a href="photography.html">Photography</a>
+          <a href="plotter.html">Plotter</a>
+        </div>
+      </div>
+    </div>
   </header>
       .carousel-btn {
         width: 32px;
@@ -22,7 +34,6 @@
         left: 4px !important;
         right: 4px !important;
       }
-    }
   </style>
 
   <button class="carousel-btn" id="carousel-left" title="Previous">&#8226;</button>
@@ -47,6 +58,12 @@
     </div>
   </div>
 
+  <!-- Modal for image preview -->
+  <div id="img-modal" style="display:none; position:fixed; top:38px; left:0; width:100vw; height:calc(100vh - 38px); background:rgba(0,0,0,0.92); z-index:2000; align-items:center; justify-content:center;">
+    <button id="img-modal-close" style="position:absolute; top:48px; right:32px; background:rgba(30,30,30,0.95); color:#fff; border:none; font-size:2.2rem; border-radius:50%; width:48px; height:48px; cursor:pointer; z-index:2010; display:flex; align-items:center; justify-content:center;">&times;</button>
+    <img id="img-modal-img" src="" alt="" style="max-width:90vw; max-height:80vh; border-radius:12px; box-shadow:0 4px 32px rgba(0,0,0,0.25); display:block; margin:auto;">
+  </div>
+  <script src="assets/js/header-dropdown.js"></script>
   <script>
     let carouselData = [];
     let currentIdx = 0;
@@ -58,45 +75,22 @@
         renderDesign();
       });
 
-    // Helper: get folder name for each project (based on image path or title)
-    function getProjectFolder(d) {
-      // Try to extract folder from img path, fallback to title
-      if (d.img && d.img.includes('vol55-2')) return 'vol55-2';
-      if (d.img && d.img.includes('vol56-1')) return 'vol56-1';
-      if (d.img && d.img.includes('vol56-2')) return 'vol56-2';
-      if (d.img && d.img.includes('vol57-1')) return 'vol57-1';
-      if (d.img && d.img.includes('x.png')) return 'x-journal';
-      if (d.img && d.img.includes('lines')) return 'lines';
-      return '';
-    }
-
-    // Helper: get all images in a folder (sync, for demo; in production, use server-side or manifest)
-    function getImageGrid(folder) {
-      // For now, just try 1.jpg, 2.jpg, 3.jpg, 4.jpg, 5.jpg as placeholders
-      // In production, you could fetch a manifest or use server-side code to list files
-      const exts = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-      let images = [];
-      for (let i = 1; i <= 8; i++) {
-        for (let ext of exts) {
-          images.push(`design-popup/${folder}/${i}.${ext}`);
-        }
-      }
-      return images;
-    }
-
-    function renderImageGrid(folder) {
+    // Render image grid using images array from JSON
+    function renderImageGrid(images) {
       const grid = document.getElementById('image-grid');
       grid.innerHTML = '';
-      if (!folder) return;
-      // Try to load up to 20 images (4 columns x 5 rows)
-      const images = getImageGrid(folder);
+      if (!images || !images.length) return;
       // Split into 4 columns
       const cols = [[], [], [], []];
       let colIdx = 0;
       for (let img of images) {
-        // Only show if image actually exists (try loading, hide broken)
         const imgElem = document.createElement('img');
         imgElem.src = img;
+        imgElem.style.cursor = 'pointer';
+        imgElem.onclick = function(e) {
+          e.stopPropagation();
+          showImgModal(img);
+        };
         imgElem.onerror = function() { this.style.display = 'none'; };
         cols[colIdx].push(imgElem);
         colIdx = (colIdx + 1) % 4;
@@ -108,6 +102,18 @@
         grid.appendChild(colDiv);
       }
     }
+
+    // Modal logic
+    function showImgModal(src) {
+      const modal = document.getElementById('img-modal');
+      const modalImg = document.getElementById('img-modal-img');
+      modalImg.src = src;
+      modal.style.display = 'flex';
+    }
+    document.getElementById('img-modal-close').onclick = function() {
+      document.getElementById('img-modal').style.display = 'none';
+      document.getElementById('img-modal-img').src = '';
+    };
 
     function renderDesign() {
       if (!carouselData.length) return;
@@ -121,8 +127,8 @@
       document.getElementById('design-collaborators').textContent = d.collaborators;
       document.getElementById('design-website').innerHTML = `<a href="${d.website}" target="_blank">${d.website}</a>`;
       document.getElementById('design-desc').textContent = d.title === 'Catch Magazine: VOL. 55 NO. 2' ? 'A magazine project with various design elements.' : '';
-      // Render image grid for this project
-      renderImageGrid(getProjectFolder(d));
+  // Render image grid for this project
+  renderImageGrid(d.images);
     }
 
     document.getElementById('carousel-left').onclick = function() {

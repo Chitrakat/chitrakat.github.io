@@ -6,7 +6,15 @@
     "tools": "InDesign, Photoshop, Illustrator",
     "collaborators": "none",
     "website": "https://www.knoxcatch.org/vol-55-no-2",
-    "img": "assets/img/design-cover/vol55-2.png"
+    "img": "assets/img/design-cover/vol55-2.png",
+    "images": [
+      "assets/img/design-popup/vol55-2/vol55-2-01.jpg",
+      "assets/img/design-popup/vol55-2/vol55-2-02.jpg",
+      "assets/img/design-popup/vol55-2/vol55-2-03.jpg",
+      "assets/img/design-popup/vol55-2/vol55-2-04.jpg",
+      "assets/img/design-popup/vol55-2/vol55-2-05.jpg",
+      "assets/img/design-popup/vol55-2/vol55-2-06.jpg"
+    ]
   },
   {
     "title": "Catch Magazine: VOL. 56 NO. 1",
@@ -15,7 +23,18 @@
     "tools": "InDesign, Photoshop, Illustrator",
     "collaborators": "none",
     "website": "https://www.knoxcatch.org/vol-56-no-1",
-    "img": "assets/img/design-cover/vol56-1.png"
+    "img": "assets/img/design-cover/vol56-1.png",
+    "images": [
+      "assets/img/design-popup/vol56-1/vol56-1-01.jpg",
+      "assets/img/design-popup/vol56-1/vol56-1-02.jpg",
+      "assets/img/design-popup/vol56-1/vol56-1-03.jpg",
+      "assets/img/design-popup/vol56-1/vol56-1-04.jpg",
+      "assets/img/design-popup/vol56-1/vol56-1-05.jpg",
+      "assets/img/design-popup/vol56-1/vol56-1-06.jpg",
+      "assets/img/design-popup/vol56-1/vol56-1-07.jpg",
+      "assets/img/design-popup/vol56-1/vol56-1-08.jpg",
+      "assets/img/design-popup/vol56-1/vol56-1-09.jpg"
+    ]
   },
   {
     "title": "Catch Magazine: VOL. 56 NO. 2",
@@ -24,7 +43,14 @@
     "tools": "InDesign, Photoshop, Illustrator",
     "collaborators": "Kevin Kox, 26",
     "website": "https://www.knoxcatch.org/vol-56-no-2",
-    "img": "assets/img/design-cover/vol56-2.png"
+    "img": "assets/img/design-cover/vol56-2.png",
+    "images": [
+      "assets/img/design-popup/vol56-2/vol56-2-01.jpg",
+      "assets/img/design-popup/vol56-2/vol56-2-02.jpg",
+      "assets/img/design-popup/vol56-2/vol56-2-03.jpg",
+      "assets/img/design-popup/vol56-2/vol56-2-04.jpg",
+      "assets/img/design-popup/vol56-2/vol56-2-05.jpg"
+    ]
   },
   {
     "title": "Catch Magazine: VOL. 57 NO. 1 and VOL. 57 NO. 2",
@@ -33,7 +59,11 @@
     "tools": "InDesign",
     "collaborators": "Eve",
     "website": "https://example.com/3",
-    "img": "assets/img/design-cover/vol57-1.png"
+    "img": "assets/img/design-cover/vol57-1.png",
+    "images": [
+      "assets/img/design-popup/vol57-1/vol57-1-01.jpg",
+      "assets/img/design-popup/vol57-1/vol57-1-02.jpg"
+    ]
   },
   {
     "title": "X-JOURNAL",
@@ -42,7 +72,8 @@
     "tools": "Sketch",
     "collaborators": "urvi bohra '26, drishti shrestha '26, sania '26",
     "website": "",
-    "img": "assets/img/design-cover/x.png"
+  "img": "assets/img/design-cover/x.png",
+  "images": []
   },
   {
     "title": "Lines in The Shed, Ryan Tracy",
@@ -51,6 +82,16 @@
     "tools": "InDesign, Photoshop, Illustrator",
     "collaborators": "none",
     "website": "https://www.ryantracy.com/books",
-    "img": "assets/img/design-cover/lines.jpg"
+    "img": "assets/img/design-cover/lines.jpg",
+    "images": [
+      "assets/img/design-popup/lines/lines (1).JPG",
+      "assets/img/design-popup/lines/lines (2).JPG",
+      "assets/img/design-popup/lines/lines (3).JPG",
+      "assets/img/design-popup/lines/lines (4).JPG",
+      "assets/img/design-popup/lines/lines (5).JPG",
+      "assets/img/design-popup/lines/lines (6).JPG",
+      "assets/img/design-popup/lines/lines (7).JPG",
+      "assets/img/design-popup/lines/lines (8).JPG"
+    ]
   }
 ]
