@@ -12,6 +12,7 @@ H.pixelDensity(0.4) // 2x = retina, set <= 1 if laggy
 let random1, random2, random3;
 
 let maxCircle, minCircle;
+let mouseCircleSize;
 
 let randShade, opacity;
 let value = 100;
@@ -34,13 +35,13 @@ src(s0)
 
 
 function setup() {
-	createCanvas(windowWidth, windowHeight);
+    createCanvas(windowWidth, windowHeight);
     background(0);
     frameRate(14);
     noCursor();
 
     rectMode(CENTER);
-	textAlign(CENTER, CENTER);
+    textAlign(CENTER, CENTER);
 
     random1 = random(width/3);
     random2 = random(width/3);
@@ -48,6 +49,7 @@ function setup() {
 
     maxCircle = windowHeight/5;
     minCircle = windowHeight/10;
+    mouseCircleSize = height/5;
 
     randShade = random(-20, 150);
     // randShade = 0;
@@ -56,7 +58,12 @@ function setup() {
     // noMouseCursor();
 }
 
-
+// Change mouse circle size with scroll wheel
+function mouseWheel(event) {
+    mouseCircleSize += event.deltaY > 0 ? -10 : 10;
+    mouseCircleSize = constrain(mouseCircleSize, 20, height/1.2);
+    return false; // prevent page scroll
+}
 
 function draw() {
     frameRate(14);
@@ -90,12 +97,13 @@ function draw() {
     
     // Mouse Circles
     if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
-        circle(mouseX, mouseY, height/5);
+        circle(mouseX, mouseY, mouseCircleSize);
         // circle(width-mouseX, height-mouseY, height/3);
     }
+
     
     // Middle Circle
-    let rSize = (sin(frameCount * 0.025/1.5)) * maxCircle + minCircle;
+    let rSize = (sin(frameCount * 0.025)) * maxCircle + minCircle;
     fill(100,0,b, 20);
     noStroke();
     circle(width/2, height/2, height/2 + rSize);
