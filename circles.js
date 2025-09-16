@@ -28,7 +28,7 @@ function preload() {
 }
 
 src(s0)
-.add(src(o0).scale(0.91), 0.85)
+.add(src(o0).scale(0.91), 0.91) // controls the "glow"
 .modulateScale(noize(0.1), 0.2, ) // 1, 0.1, (0.05), 0.08, 1 and 1 is sick 
 .out()
 // sandbox - end
@@ -61,11 +61,12 @@ function setup() {
 // Change mouse circle size with scroll wheel
 function mouseWheel(event) {
     mouseCircleSize += event.deltaY > 0 ? -10 : 10;
-    mouseCircleSize = constrain(mouseCircleSize, 20, height/1.2);
+    mouseCircleSize = constrain(mouseCircleSize, 50, height/2);
     return false; // prevent page scroll
 }
 
 function draw() {
+
     frameRate(14);
     opacity = o1; // reset opacity
     value = 100;
@@ -78,13 +79,6 @@ function draw() {
         randShade = random(-20, 150);
         clear();
     }
-    // if(mouseReleased){
-    //     frameRate(10);
-    // }
-    // else{
-    //     value = 100;
-    //     opacity = o1;
-    // }
 	blendMode(DIFFERENCE); // set blend mode to DIFFERENCE
     background(0, 40); // set background color with transparency
 
@@ -93,7 +87,8 @@ function draw() {
     noStroke();
 
     let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100 + randShade;
-    fill(b, 0, 190-b, 40); 
+    let b2 = (sin(frameCount * 0.05) * 0.5 + 0.5) * 100 ;
+    fill(b, 0, 190-b, 20); 
     
     // Mouse Circles
     if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
@@ -103,8 +98,8 @@ function draw() {
 
     
     // Middle Circle
-    let rSize = (sin(frameCount * 0.025)) * maxCircle + minCircle;
-    fill(100,0,b, 20);
+    let rSize = (sin(frameCount * 0.25)) * maxCircle + minCircle;
+    fill(100,0,b2, 10);
     noStroke();
     circle(width/2, height/2, height/2 + rSize);
 
@@ -199,6 +194,9 @@ class movingObject{
         // Draw text
         rectMode(CENTER);
         fill(100, opacity);
+        if(mouseIsPressed){
+            fill(255, 500);
+        }
         // stroke(0)
         // strokeWeight(2);
         textAlign(CENTER, CENTER);
