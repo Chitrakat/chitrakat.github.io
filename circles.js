@@ -12,6 +12,7 @@ H.pixelDensity(0.4) // 2x = retina, set <= 1 if laggy
 let random1, random2, random3;
 
 let maxCircle, minCircle;
+let mouseCircleSize;
 
 let randShade, opacity;
 let value = 100;
@@ -27,27 +28,28 @@ function preload() {
 }
 
 src(s0)
-.add(src(o0).scale(0.91), 0.85)
-.modulateScale(noize(1), 0.2) // 1, 0.1, (0.05), 0.08, 1 and 1 is sick 
+.add(src(o0).scale(0.91), 0.91) // controls the "glow"
+.modulateScale(noize(0.1), 0.2, ) // 1, 0.1, (0.05), 0.08, 1 and 1 is sick 
 .out()
 // sandbox - end
 
 
 function setup() {
-	createCanvas(windowWidth, windowHeight);
+    createCanvas(windowWidth, windowHeight);
     background(0);
     frameRate(14);
     noCursor();
 
     rectMode(CENTER);
-	textAlign(CENTER, CENTER);
+    textAlign(CENTER, CENTER);
 
     random1 = random(width/3);
     random2 = random(width/3);
     random3 = random(width/3);
 
-    maxCircle = windowHeight/4;
+    maxCircle = windowHeight/5;
     minCircle = windowHeight/10;
+    mouseCircleSize = height/5;
 
     randShade = random(-20, 150);
     // randShade = 0;
@@ -56,9 +58,15 @@ function setup() {
     // noMouseCursor();
 }
 
-
+// Change mouse circle size with scroll wheel
+function mouseWheel(event) {
+    mouseCircleSize += event.deltaY > 0 ? -10 : 10;
+    mouseCircleSize = constrain(mouseCircleSize, 50, height/2);
+    return false; // prevent page scroll
+}
 
 function draw() {
+
     frameRate(14);
     opacity = o1; // reset opacity
     value = 100;
@@ -67,17 +75,10 @@ function draw() {
         value = 255;
         opacity = 500;
         // frameCount *= 10;
-        frameRate(2);
+        frameRate(3);
         randShade = random(-20, 150);
         clear();
     }
-    // if(mouseReleased){
-    //     frameRate(10);
-    // }
-    // else{
-    //     value = 100;
-    //     opacity = o1;
-    // }
 	blendMode(DIFFERENCE); // set blend mode to DIFFERENCE
     background(0, 40); // set background color with transparency
 
@@ -86,17 +87,19 @@ function draw() {
     noStroke();
 
     let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100 + randShade;
-    fill(b, 0, 190-b, 40); 
+    let b2 = (sin(frameCount * 0.05) * 0.5 + 0.5) * 100 ;
+    fill(b, 0, 190-b, 20); 
     
     // Mouse Circles
     if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
-        circle(mouseX, mouseY, height/5);
+        circle(mouseX, mouseY, mouseCircleSize);
         // circle(width-mouseX, height-mouseY, height/3);
     }
+
     
     // Middle Circle
-    let rSize = (sin(frameCount * 0.025)) * maxCircle + minCircle;
-    fill(100,0,b, 20);
+    let rSize = (sin(frameCount * 0.25)) * maxCircle + minCircle;
+    fill(100,0,b2, 10);
     noStroke();
     circle(width/2, height/2, height/2 + rSize);
 
@@ -191,6 +194,9 @@ class movingObject{
         // Draw text
         rectMode(CENTER);
         fill(100, opacity);
+        if(mouseIsPressed){
+            fill(255, 500);
+        }
         // stroke(0)
         // strokeWeight(2);
         textAlign(CENTER, CENTER);
