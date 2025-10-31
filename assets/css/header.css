@@ -50,6 +50,7 @@
   border-radius: 6px;
   transition: background 0.2s;
   font-family: 'Hubot Sans', Arial, sans-serif;
+  outline: none;
 }
 .dropdown-toggle:hover, .dropdown-toggle:focus {
   background: rgba(255,255,255,0.08);
@@ -81,6 +82,7 @@
   font-size: 1rem;
   transition: background 0.18s;
   font-family: 'Hubot Sans', Arial, sans-serif;
+  outline: none;
 }
 .dropdown-item:hover {
   background: #333;
