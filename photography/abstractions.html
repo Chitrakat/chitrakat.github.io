@@ -1,1 +1,83 @@
-<div class="photo-detail"><h2>Photo 4</h2><p>Description and images for Photo 4.</p></div>
+<div class="photo-detail">
+  <h2>Abstractions</h2>
+  <p>Abstract photographic compositions and artistic interpretations.</p>
+  
+  <div class="photo-carousel">
+    <div class="carousel-container">
+      <div class="carousel-track" id="carousel-track">
+        <img src="../assets/img/photography/abstractions/sammy-018.jpg" alt="Abstractions 1" class="carousel-image active">
+        <img src="../assets/img/photography/abstractions/sammy-023.jpg" alt="Abstractions 2" class="carousel-image">
+        <img src="../assets/img/photography/abstractions/sammy-024.jpg" alt="Abstractions 3" class="carousel-image">
+        <img src="../assets/img/photography/abstractions/sammy-026.jpg" alt="Abstractions 4" class="carousel-image">
+        <img src="../assets/img/photography/abstractions/sammy-027.jpg" alt="Abstractions 5" class="carousel-image">
+        <img src="../assets/img/photography/abstractions/sammy-028.jpg" alt="Abstractions 6" class="carousel-image">
+        <img src="../assets/img/photography/abstractions/sammy-029.jpg" alt="Abstractions 7" class="carousel-image">
+        <img src="../assets/img/photography/abstractions/sammy-030.jpg" alt="Abstractions 8" class="carousel-image">
+        <img src="../assets/img/photography/abstractions/sammy-031.jpg" alt="Abstractions 9" class="carousel-image">
+        <img src="../assets/img/photography/abstractions/sammy-032.jpg" alt="Abstractions 10" class="carousel-image">
+        <img src="../assets/img/photography/abstractions/sammy-033.jpg" alt="Abstractions 11" class="carousel-image">
+        <img src="../assets/img/photography/abstractions/sammy-034.jpg" alt="Abstractions 12" class="carousel-image">
+      </div>
+      <button class="carousel-btn prev-btn" id="prev-btn">&#8249;</button>
+      <button class="carousel-btn next-btn" id="next-btn">&#8250;</button>
+    </div>
+    <div class="carousel-counter">
+      <span id="current-slide">1</span> / <span id="total-slides">12</span>
+    </div>
+  </div>
+</div>
+
+<style>
+.photo-carousel {
+  max-width: 1000px;
+  margin: 20px auto;
+}
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #222;
+}
+.carousel-track {
+  display: flex;
+  transition: transform 0.3s ease;
+}
+.carousel-image {
+  width: 100%;
+  height: 70vh;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: none;
+}
+.carousel-image.active {
+  display: block;
+}
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.7);
+  color: white;
+  border: none;
+  padding: 15px 20px;
+  font-size: 24px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+.carousel-btn:hover {
+  background: rgba(0,0,0,0.9);
+}
+.prev-btn {
+  left: 10px;
+}
+.next-btn {
+  right: 10px;
+}
+.carousel-counter {
+  text-align: center;
+  margin-top: 15px;
+  color: #ccc;
+  font-size: 16px;
+}
+</style>

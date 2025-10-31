@@ -30,9 +30,10 @@
     <aside class="design-sidebar">
       <ul>
         <li class="sidebar-item active" data-file="photography/gai-jatra.html">gai jatra</li>
-        <li class="sidebar-item" data-file="photography/kathmandu.html">kathmandu</li>
+        <li class="sidebar-item" data-file="photography/nepals-street.html">nepal's street</li>
         <li class="sidebar-item" data-file="photography/america.html">american scenes</li>
-        <li class="sidebar-item" data-file="photography/dream.html">dream sequence</li>
+        <li class="sidebar-item" data-file="photography/swoyambhu.html">swoyambhu</li>
+        <li class="sidebar-item" data-file="photography/moving-by.html">moving by</li>
         <li class="sidebar-item" data-file="photography/abstractions.html">abstractions</li>
       </ul>
     </aside>
@@ -42,15 +43,28 @@
   </div>
 
   <script src="assets/js/header-dropdown.js"></script>
+  <script src="assets/js/photography-carousel.js"></script>
   <script>
     async function loadP5jsContent(file) {
       const contentArea = document.getElementById('design-content');
       contentArea.innerHTML = 'Loading...';
       try {
+        // Clean up previous carousel
+        if (typeof cleanupCarousel === 'function') {
+          cleanupCarousel();
+        }
+        
         const res = await fetch(file);
         if (!res.ok) throw new Error('Not found');
         const html = await res.text();
         contentArea.innerHTML = html;
+        
+        // Initialize carousel after content loads
+        setTimeout(() => {
+          if (typeof initializeCarousel === 'function') {
+            initializeCarousel();
+          }
+        }, 100);
       } catch (e) {
         contentArea.innerHTML = '<div style="color:#f66">Could not load content.</div>';
       }
