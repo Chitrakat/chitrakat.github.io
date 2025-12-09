@@ -28,8 +28,8 @@ function preload() {
 }
 
 src(s0)
-.add(src(o0).scale(0.91), 0.91) // controls the "glow"
-.modulateScale(noize(0.1), 0.2, ) // 1, 0.1, (0.05), 0.08, 1 and 1 is sick 
+.add(src(o0).scale(1), 0.91) // controls the "glow"
+.modulateScale(noize(0.9), 0.9, ) // 1, 0.1, (0.05), 0.08, 1 and 1 is sick 
 .out()
 // sandbox - end
 
@@ -47,15 +47,12 @@ function setup() {
     random2 = random(width/3);
     random3 = random(width/3);
 
-    maxCircle = windowHeight/5;
+    maxCircle = windowHeight/7;
     minCircle = windowHeight/10;
-    mouseCircleSize = height/5;
-
-    randShade = random(-20, 150);
-    // randShade = 0;
-
+    mouseCircleSize = height/7;
+    
+    randShade = 0;
     opacity = o1;
-    // noMouseCursor();
 }
 
 // Change mouse circle size with scroll wheel
@@ -66,43 +63,46 @@ function mouseWheel(event) {
 }
 
 function draw() {
-
-    frameRate(14);
+    
+    frameRate(20);
+    blendMode(DIFFERENCE);
     opacity = o1; // reset opacity
     value = 100;
 
-    if(mouseIsPressed){
+    if(!mouseIsPressed){
+        // blendMode(DIFFERENCE);
         value = 255;
         opacity = 500;
         // frameCount *= 10;
-        frameRate(3);
-        randShade = random(-20, 150);
+        // frameRate(0.5);
         clear();
     }
-	blendMode(DIFFERENCE); // set blend mode to DIFFERENCE
-    background(0, 40); // set background color with transparency
+	//blendMode(SUBTRACT); // set blend mode to DIFFERENCE
+    //background(0); // set background color with transparency
 
     // Colors 
+    let b = (sin(frameCount * 0.001) * 0.5 + 0.5) * 100 + randShade;
+    fill(b, 0, 190-b, 10); 
+    // Size
 	textSize(windowHeight/15);
     noStroke();
-
-    let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100 + randShade;
-    let b2 = (sin(frameCount * 0.05) * 0.5 + 0.5) * 100 ;
-    fill(b, 0, 190-b, 20); 
     
     // Mouse Circles
     if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
         circle(mouseX, mouseY, mouseCircleSize);
         // circle(width-mouseX, height-mouseY, height/3);
     }
-
+    
     
     // Middle Circle
-    let rSize = (sin(frameCount * 0.25)) * maxCircle + minCircle;
-    fill(100,0,b2, 10);
+    let b2 = (sin(frameCount * 0.005) * 0.5) * 100 ;
+    let rSize = (sin(frameCount * 0.1)) * maxCircle + minCircle;
     noStroke();
-    circle(width/2, height/2, height/2 + rSize);
+    fill(100, 0, b2, 2);
 
+
+    circle(width/2, height/2, height/2 + rSize);
+    // blendMode(SUBTRACT);
     // Moving texts
     let tx, ty;
     let fontSize = height/5;
@@ -179,8 +179,8 @@ class movingObject{
 
     update() {
         // Use the same logic as the text movement
-        this.x = constrain(noise(this.xNoiseSeed + frameCount * 0.06) * width, 0, width);
-        this.y = constrain(noise(this.yNoiseSeed + frameCount * 0.0065) * height, 0, height);
+        this.x = constrain(noise(this.xNoiseSeed + frameCount * 0.006) * width, 0, width);
+        this.y = constrain(noise(this.yNoiseSeed + frameCount * 0.00065) * height, 0, height);
     }
 
     display() {
@@ -192,15 +192,17 @@ class movingObject{
         let th = this.size;
 
         // Draw text
+        blendMode(SUBTRACT);
         rectMode(CENTER);
-        fill(100, opacity);
+        fill(100);
         if(mouseIsPressed){
-            fill(255, 500);
+            // fill(255, 500);
         }
         // stroke(0)
         // strokeWeight(2);
         textAlign(CENTER, CENTER);
         text(this.label, this.x, this.y);
+        blendMode(DIFFERENCE);
     }
 }
 
