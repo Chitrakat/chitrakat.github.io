@@ -64,7 +64,7 @@ function mouseWheel(event) {
 
 function draw() {
     
-    frameRate(20);
+    frameRate(14);
     blendMode(DIFFERENCE);
     opacity = o1; // reset opacity
     value = 100;
@@ -95,10 +95,12 @@ function draw() {
     
     
     // Middle Circle
-    let b2 = (sin(frameCount * 0.005) * 0.5) * 100 ;
-    let rSize = (sin(frameCount * 0.1)) * maxCircle + minCircle;
+    let b2 = ((sin(frameCount * 0.05) * 0.5 + 0.5) * 255);
+    console.log(b2);
+    fill(100 -b2/2, 0, b2, 2);
     noStroke();
-    fill(100, 0, b2, 2);
+
+    let rSize = (sin(frameCount * 0.1)) * maxCircle + minCircle;
 
 
     circle(width/2, height/2, height/2 + rSize);
@@ -192,7 +194,7 @@ class movingObject{
         let th = this.size;
 
         // Draw text
-        blendMode(SUBTRACT);
+        // blendMode(SUBTRACT);
         rectMode(CENTER);
         fill(100);
         if(mouseIsPressed){
@@ -202,14 +204,14 @@ class movingObject{
         // strokeWeight(2);
         textAlign(CENTER, CENTER);
         text(this.label, this.x, this.y);
-        blendMode(DIFFERENCE);
+        // blendMode(DIFFERENCE);
     }
 }
 
 // Handle window resizing for responsive canvas and elements
 function windowResized() {
     resizeCanvas(windowWidth-10, windowHeight-10);
-    H.pixelDensity(0.3);
+    H.pixelDensity(0.5);
     // Optionally, re-calculate any values that depend on width/height
     // e.g., update random1, random2, random3 if needed
 }
