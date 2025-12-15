@@ -7,7 +7,7 @@ docs: https://github.com/ffd8/hy5
 let libs = ['https://unpkg.com/hydra-synth', 'includes/libs/hydra-synth.js', 'https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js', 'includes/libs/hy5.js']
 
 // sandbox - start
-H.pixelDensity(0.4) // 2x = retina, set <= 1 if laggy
+H.pixelDensity(0.3) // 2x = retina, set <= 1 if laggy
 
 let random1, random2, random3;
 
@@ -28,7 +28,7 @@ function preload() {
 }
 
 src(s0)
-.add(src(o0).scale(1), 0.91) // controls the "glow"
+.add(src(o0).scale(4), 0.21) // controls the "glow"
 .modulateScale(noize(0.9), 0.9, ) // 1, 0.1, (0.05), 0.08, 1 and 1 is sick 
 .out()
 // sandbox - end
@@ -68,13 +68,14 @@ function draw() {
     blendMode(DIFFERENCE);
     opacity = o1; // reset opacity
     value = 100;
-
+    
     if(!mouseIsPressed){
         // blendMode(DIFFERENCE);
-        value = 255;
-        opacity = 500;
+        value = 0;
+        opacity = 0;
         // frameCount *= 10;
         // frameRate(0.5);
+        blendMode(SCREEN);
         clear();
     }
 	//blendMode(SUBTRACT); // set blend mode to DIFFERENCE
@@ -114,9 +115,15 @@ function draw() {
     // Create moving objects if not already created
     if (!window.movingObjs) {
         window.movingObjs = [
-            new movingObject(random(1000), random(1000), fontSize/2, 'design'),
-            new movingObject(random(1000), random(1000), fontSize/2, 'photography'),
-            new movingObject(random(1000), random(1000), fontSize/2, 'creative\ncoding'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'Hi, I\'m Suyash'),
+            // new movingObject(random(1000), random(1000), fontSize/2, 'Hi, I\'m Suyash'),
+            
+            new movingObject(random(1000), random(1000), fontSize/2, 'I\'m a'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'I\'m a'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'I\'m a'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'designer'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'photographer'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'creative\ncoder'),
             // new movingObject(random(1000), random(1000), fontSize/2, 'drawing'),
             // new movingObject(random(1000), random(1000), fontSize/1.5, 'game\n design'),
             // new movingObject(random(1000), random(1000), fontSize/1.1, 'plotter'),
@@ -196,7 +203,7 @@ class movingObject{
         // Draw text
         // blendMode(SUBTRACT);
         rectMode(CENTER);
-        fill(100);
+        fill(200);
         if(mouseIsPressed){
             // fill(255, 500);
         }

@@ -24,63 +24,7 @@
       <button class="carousel-btn prev-btn" id="prev-btn">&#8249;</button>
       <button class="carousel-btn next-btn" id="next-btn">&#8250;</button>
     </div>
-    <div class="carousel-counter">
-      <span id="current-slide">1</span> / <span id="total-slides">15</span>
-    </div>
   </div>
 </div>
 
-<style>
-.photo-carousel {
-  max-width: 1000px;
-  margin: 20px auto;
-}
-.carousel-container {
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
-  background: #222;
-}
-.carousel-track {
-  display: flex;
-  transition: transform 0.3s ease;
-}
-.carousel-image {
-  width: 100%;
-  height: 70vh;
-  object-fit: contain;
-  flex-shrink: 0;
-  display: none;
-}
-.carousel-image.active {
-  display: block;
-}
-.carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0,0,0,0.7);
-  color: white;
-  border: none;
-  padding: 15px 20px;
-  font-size: 24px;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background 0.3s;
-}
-.carousel-btn:hover {
-  background: rgba(0,0,0,0.9);
-}
-.prev-btn {
-  left: 10px;
-}
-.next-btn {
-  right: 10px;
-}
-.carousel-counter {
-  text-align: center;
-  margin-top: 15px;
-  color: #ccc;
-  font-size: 16px;
-}
-</style>
+<link rel="stylesheet" href="../assets/css/carousel.css">
