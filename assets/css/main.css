@@ -5,52 +5,6 @@
 	Includes media queries for desktop, tablet, and mobile.
 */
 
-/* Open Sans Variable Font Classes */
-.open-sans-body {
-  font-family: "Open Sans", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
-}
-
-.open-sans-title {
-  font-family: "Open Sans", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 600;
-  font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
-}
-
-.open-sans-heading {
-  font-family: "Open Sans", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
-}
-
-.open-sans-light {
-  font-family: "Open Sans", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 300;
-  font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
-}
-
-.open-sans-bold {
-  font-family: "Open Sans", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 700;
-  font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
-}
-
 :root {
 	--primary-bg: #000000;
 	--accent: #22223b;
@@ -74,14 +28,35 @@ body {
 	margin: 0;
 	padding: 0;
 	min-height: 100vh;
-	font-family: "Open Sans", sans-serif;
-	font-optical-sizing: auto;
-	font-weight: 400;
-	font-style: normal;
-	font-variation-settings:
-		"wdth" 100;
+	font-family: 'Hubot Sans', Arial, sans-serif;
 	background: var(--primary-bg);
 	color: var(--text);
+}
+
+/* Global Typography Classes */
+.text-xs { font-size: 0.75rem; line-height: 1.4; }
+.text-sm { font-size: 0.875rem; line-height: 1.5; }
+.text-base { font-size: 1rem; line-height: 1.6; } 
+.text-lg { font-size: 1.125rem; line-height: 1.6; }
+.text-xl { font-size: 1.25rem; line-height: 1.7; }
+.text-2xl { font-size: 1.5rem; line-height: 1.7; }
+.text-3xl { font-size: 1.875rem; line-height: 1.8; }
+.text-4xl { font-size: 2.25rem; line-height: 1.8; }
+.text-5xl { font-size: 3rem; line-height: 1.9; }
+.text-6xl { font-size: 4rem; line-height: 1.9; }
+
+/* Typography for specific content */
+.photo-detail h2 {
+	font-size: 2rem;
+	margin-bottom: 1rem;
+	font-weight: 600;
+}
+
+.photo-detail p {
+	font-size: 1.1rem;
+	line-height: 1.6;
+	color: #bfbfbf;
+	margin-bottom: 1.5rem;
 }
 
 /* Hero Section */
@@ -91,12 +66,7 @@ body {
 	display: block;
 	background: var(--primary-bg);
 	padding: 4vh 0 0 4vw; /* Top and left padding only */
-	font-family: "Open Sans", sans-serif;
-	font-optical-sizing: auto;
-	font-weight: 400;
-	font-style: normal;
-	font-variation-settings:
-		"wdth" 100;
+	font-family: 'Hubot Sans', Arial, sans-serif;
 }
 
 .hero-content {
@@ -107,40 +77,27 @@ body {
 	padding: 0;
 	max-width: 40rem;
 	width: 100%;
-	font-family: "Open Sans", sans-serif;
-	font-optical-sizing: auto;
-	font-weight: 400;
-	font-style: normal;
-	font-variation-settings:
-		"wdth" 100;
+	font-family: 'Hubot Sans', Arial, sans-serif;
 }
 
 .hero-title {
 	font-size: 3rem;
-	font-weight: 600;
+	font-weight: 500;
 	margin: 0 0 1.2rem 0;
 	letter-spacing: 0.02em;
 	color: var(--text);
 	text-align: left;
-	font-family: "Open Sans", sans-serif;
-	font-optical-sizing: auto;
-	font-style: normal;
-	font-variation-settings:
-		"wdth" 100;
+	font-family: 'Hubot Sans', Arial, sans-serif;
 }
 
 .hero-tagline {
 	font-size: 1.5rem;
-	font-weight: 300;
+	font-weight: 100;
 	color: var(--subtitle);
 	margin-bottom: 0.5rem;
 	line-height: 1.4;
 	text-align: left;
-	font-family: "Open Sans", sans-serif;
-	font-optical-sizing: auto;
-	font-style: normal;
-	font-variation-settings:
-		"wdth" 100;
+	font-family: 'Hubot Sans', Arial, sans-serif;
 }
 
 .hero-button {
@@ -157,11 +114,7 @@ body {
 	box-shadow: 0 4px 24px 0 rgba(79, 140, 255, 0.08);
 	letter-spacing: 0.05em;
 	align-self: flex-start;
-	font-family: "Open Sans", sans-serif;
-	font-optical-sizing: auto;
-	font-style: normal;
-	font-variation-settings:
-		"wdth" 100;
+	font-family: 'Hubot Sans', Arial, sans-serif;
 }
 
 .hero-button:hover,
