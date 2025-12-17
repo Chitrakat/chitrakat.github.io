@@ -111,6 +111,19 @@
   color: #6a4cff;
   text-decoration: underline;
 }
+#design-desc {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #444;
+  color: #bfbfbf;
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 100%;
+  font-weight: 400;
+}
+#design-desc:empty {
+  display: none;
+}
 .carousel-btn {
   position: fixed;
   top: 50%;

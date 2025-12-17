@@ -7,7 +7,7 @@ docs: https://github.com/ffd8/hy5
 let libs = ['https://unpkg.com/hydra-synth', 'includes/libs/hydra-synth.js', 'https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js', 'includes/libs/hy5.js']
 
 // sandbox - start
-H.pixelDensity(0.3) // 2x = retina, set <= 1 if laggy
+H.pixelDensity(0.5) // 2x = retina, set <= 1 if laggy
 
 let random1, random2, random3;
 
@@ -28,8 +28,8 @@ function preload() {
 }
 
 src(s0)
-.add(src(o0).scale(4), 0.21) // controls the "glow"
-.modulateScale(noize(0.9), 0.9, ) // 1, 0.1, (0.05), 0.08, 1 and 1 is sick 
+.add(src(o0).scale(0.6), 0.4) // controls the "glow"
+.modulateScale(noize(0.9), 0.9, 1 ) // 1, 0.1, (0.05), 0.08, 1 and 1 is sick 
 .out()
 // sandbox - end
 
@@ -37,7 +37,7 @@ src(s0)
 function setup() {
     createCanvas(windowWidth, windowHeight);
     background(0);
-    frameRate(14);
+    frameRate(7);
     noCursor();
 
     rectMode(CENTER);
@@ -47,9 +47,9 @@ function setup() {
     random2 = random(width/3);
     random3 = random(width/3);
 
-    maxCircle = windowHeight/7;
+    maxCircle = windowHeight/5;
     minCircle = windowHeight/10;
-    mouseCircleSize = height/7;
+    mouseCircleSize = height/10;
     
     randShade = 0;
     opacity = o1;
@@ -58,16 +58,16 @@ function setup() {
 // Change mouse circle size with scroll wheel
 function mouseWheel(event) {
     mouseCircleSize += event.deltaY > 0 ? -10 : 10;
-    mouseCircleSize = constrain(mouseCircleSize, 50, height/2);
+    mouseCircleSize = constrain(mouseCircleSize, 40, height/2);
     return false; // prevent page scroll
 }
 
 function draw() {
     
     frameRate(14);
-    blendMode(DIFFERENCE);
     opacity = o1; // reset opacity
     value = 100;
+    blendMode(DIFFERENCE);
     
     if(!mouseIsPressed){
         // blendMode(DIFFERENCE);
@@ -75,7 +75,7 @@ function draw() {
         opacity = 0;
         // frameCount *= 10;
         // frameRate(0.5);
-        blendMode(SCREEN);
+        blendMode(BURN);
         clear();
     }
 	//blendMode(SUBTRACT); // set blend mode to DIFFERENCE
@@ -83,7 +83,7 @@ function draw() {
 
     // Colors 
     let b = (sin(frameCount * 0.001) * 0.5 + 0.5) * 100 + randShade;
-    fill(b, 0, 190-b, 10); 
+    fill(b, 0, 10*b, 10); 
     // Size
 	textSize(windowHeight/15);
     noStroke();
@@ -96,16 +96,16 @@ function draw() {
     
     
     // Middle Circle
-    let b2 = ((sin(frameCount * 0.05) * 0.5 + 0.5) * 255);
+    let b2 = ((sin(frameCount * 0.025) * 0.5 + 0.5) * 255);
     console.log(b2);
-    fill(100 -b2/2, 0, b2, 2);
+    fill(100 -b2/2, 0, b2);
     noStroke();
 
-    let rSize = (sin(frameCount * 0.1)) * maxCircle + minCircle;
-
-
+    let rSize = (sin(frameCount * 0.05)) * maxCircle + minCircle;
     circle(width/2, height/2, height/2 + rSize);
     // blendMode(SUBTRACT);
+
+
     // Moving texts
     let tx, ty;
     let fontSize = height/5;
@@ -120,8 +120,9 @@ function draw() {
             
             new movingObject(random(1000), random(1000), fontSize/2, 'I\'m a'),
             new movingObject(random(1000), random(1000), fontSize/2, 'I\'m a'),
-            new movingObject(random(1000), random(1000), fontSize/2, 'I\'m a'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'I\'m kinda lost'),
             new movingObject(random(1000), random(1000), fontSize/2, 'designer'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'photographer'),
             new movingObject(random(1000), random(1000), fontSize/2, 'photographer'),
             new movingObject(random(1000), random(1000), fontSize/2, 'creative\ncoder'),
             // new movingObject(random(1000), random(1000), fontSize/2, 'drawing'),
@@ -162,7 +163,7 @@ class movingObject{
                     let minDist = (a.size + b.size) * 0.45; // 0.45: text is not a circle, but this works visually
                     if (dist < minDist && dist > 0.1) {
                         // Move each object away from the other
-                        let repulsionStrength = 2; // Increase for stronger repulsion
+                        let repulsionStrength = 4; // Increase for stronger repulsion
                         let overlap = (minDist - dist) / 2 * repulsionStrength;
                         let nx = dx / dist;
                         let ny = dy / dist;
@@ -184,12 +185,14 @@ class movingObject{
         this.label = label;
         this.x = 0;
         this.y = 0;
+        this.xval = 0.006;
+        this.yval = 0.00065;
     }
 
     update() {
         // Use the same logic as the text movement
-        this.x = constrain(noise(this.xNoiseSeed + frameCount * 0.006) * width, 0, width);
-        this.y = constrain(noise(this.yNoiseSeed + frameCount * 0.00065) * height, 0, height);
+        this.x = constrain(noise(this.xNoiseSeed + frameCount * this.xval) * width, 0, width);
+        this.y = constrain(noise(this.yNoiseSeed + frameCount * this.yval) * height, 0, height);
     }
 
     display() {
@@ -203,12 +206,17 @@ class movingObject{
         // Draw text
         // blendMode(SUBTRACT);
         rectMode(CENTER);
-        fill(200);
+        fill(0);
+        this.xval = 0.006;
+        this.yval = 0.00065;
         if(mouseIsPressed){
-            // fill(255, 500);
+            fill(0, 60);
+            this.xval = this.xval * 2;
+            this.yval = this.yval * 2;
+    
         }
-        // stroke(0)
-        // strokeWeight(2);
+        stroke(0)
+        strokeWeight(4);
         textAlign(CENTER, CENTER);
         text(this.label, this.x, this.y);
         // blendMode(DIFFERENCE);
