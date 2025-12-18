@@ -2,6 +2,9 @@
 _HY5_p5_hydra // cc teddavis.org 2024
 pass p5 with type into hydra
 docs: https://github.com/ffd8/hy5
+
+made with hydra-synth.js + hy5.js + p5.js
+edited by Suyash Chitrakar
 */
 
 let libs = ['https://unpkg.com/hydra-synth', 'includes/libs/hydra-synth.js', 'https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js', 'includes/libs/hy5.js']
@@ -24,12 +27,12 @@ s0.initP5() // send p5 to hydra
 P5.toggle(0) // hide p5
 
 function preload() {
-    n1 = random(0,1,0.1);
+    n1 = random(0,1,0.9);
 }
 
 src(s0)
 .add(src(o0).scale(0.6), 0.4) // controls the "glow"
-.modulateScale(noize(0.9), 0.9, 1 ) // 1, 0.1, (0.05), 0.08, 1 and 1 is sick 
+.modulateScale(noize(0.9), 0.9, 1.9 , 0.1) // 1, 0.1, (0.05), 0.08, 1 and 1 is sick 
 .out()
 // sandbox - end
 
@@ -47,7 +50,7 @@ function setup() {
     random2 = random(width/3);
     random3 = random(width/3);
 
-    maxCircle = windowHeight/5;
+    maxCircle = windowHeight/7;
     minCircle = windowHeight/10;
     mouseCircleSize = height/10;
     
@@ -66,8 +69,8 @@ function draw() {
     
     frameRate(14);
     opacity = o1; // reset opacity
-    value = 100;
-    blendMode(DIFFERENCE);
+    value = 255;
+    blendMode(BLEND);
     
     if(!mouseIsPressed){
         // blendMode(DIFFERENCE);
@@ -75,7 +78,7 @@ function draw() {
         opacity = 0;
         // frameCount *= 10;
         // frameRate(0.5);
-        blendMode(BURN);
+        blendMode(HARD_LIGHT);
         clear();
     }
 	//blendMode(SUBTRACT); // set blend mode to DIFFERENCE
@@ -83,7 +86,8 @@ function draw() {
 
     // Colors 
     let b = (sin(frameCount * 0.001) * 0.5 + 0.5) * 100 + randShade;
-    fill(b, 0, 10*b, 10); 
+    let g = (sin(frameCount * 0.003) * 0.5 + 0.5) * 10 + random(randShade);
+    fill(b, g, 10*b, 70); 
     // Size
 	textSize(windowHeight/15);
     noStroke();
@@ -98,7 +102,7 @@ function draw() {
     // Middle Circle
     let b2 = ((sin(frameCount * 0.025) * 0.5 + 0.5) * 255);
     console.log(b2);
-    fill(100 -b2/2, 0, b2);
+    fill(180 -b2/2, 0, b2, 10);
     noStroke();
 
     let rSize = (sin(frameCount * 0.05)) * maxCircle + minCircle;
@@ -163,7 +167,7 @@ class movingObject{
                     let minDist = (a.size + b.size) * 0.45; // 0.45: text is not a circle, but this works visually
                     if (dist < minDist && dist > 0.1) {
                         // Move each object away from the other
-                        let repulsionStrength = 4; // Increase for stronger repulsion
+                        let repulsionStrength = 1; // Increase for stronger repulsion
                         let overlap = (minDist - dist) / 2 * repulsionStrength;
                         let nx = dx / dist;
                         let ny = dy / dist;
@@ -196,7 +200,7 @@ class movingObject{
     }
 
     display() {
-        noStroke();
+        // noStroke();
 
         // Calculate text box size
         textSize(this.size/1.5);
@@ -209,17 +213,18 @@ class movingObject{
         fill(0);
         this.xval = 0.006;
         this.yval = 0.00065;
-        if(mouseIsPressed){
-            fill(0, 60);
-            this.xval = this.xval * 2;
-            this.yval = this.yval * 2;
-    
-        }
         stroke(0)
         strokeWeight(4);
         textAlign(CENTER, CENTER);
         text(this.label, this.x, this.y);
-        // blendMode(DIFFERENCE);
+        if(mouseIsPressed){
+            stroke(255);
+            strokeWeight(4);
+            // this.xval = this.xval * 2;
+            // this.yval = this.yval * 2;
+            // blendMode(DIFFERENCE);
+    
+        }
     }
 }
 

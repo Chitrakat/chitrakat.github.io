@@ -21,9 +21,8 @@
           <a href="design.html" class="dropdown-item">design</a>
           <a href="photography.html" class="dropdown-item">photography</a>
           <a href="p5js.html" class="dropdown-item">p5.js</a>
-          <a href="plotter.html" class="dropdown-item">plotter</a>
           <a href="gamedesign.html" class="dropdown-item">game design</a>
-          <a href="drawing.html" class="dropdown-item">drawing</a>
+          <a href="drawing.html" class="dropdown-item">art</a>
         </div>
       </div>
     </div>
@@ -35,7 +34,7 @@
         <li class="sidebar-item active" data-file="design-popup/html/vol55-2.html">vol. 55 no. 2</li>
         <li class="sidebar-item" data-file="design-popup/html/vol56-1.html">vol. 56 no. 1</li>
         <li class="sidebar-item" data-file="design-popup/html/vol56-2.html">vol. 56 no. 2</li>
-        <li class="sidebar-item" data-file="design-popup/html/vol57-double.html">vol. 57 double</li>
+        <li class="sidebar-item" data-file="design-popup/html/vol57-double.html">vol. 57 no. 1 & no. 2</li>
         <li class="sidebar-item" data-file="design-popup/html/x-journal.html">x-journal</li>
         <li class="sidebar-item" data-file="design-popup/html/lines.html">lines in the shed</li>
       </ul>
@@ -69,12 +68,28 @@
         // Find matching project by filename
         const projectData = findProjectByFile(filename, jsonData);
         
-        // Inject HTML content
-        contentArea.innerHTML = htmlContent;
-        
-        // Add images grid if project has images
+        // Create the side-by-side layout
         if (projectData && projectData.images && projectData.images.length > 0) {
-          addImageGrid(projectData.images, contentArea);
+          contentArea.innerHTML = `
+            <div class="design-detail">
+              <div class="design-info">
+                ${htmlContent}
+              </div>
+              <div class="project-images">
+                <div class="image-grid">
+                  ${projectData.images.map((img, index) => `
+                    <img src="${img}" 
+                         alt="Project image ${index + 1}" 
+                         class="grid-image" 
+                         onclick="openImageModal('${img}')">
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          `;
+        } else {
+          // If no images, just show the content
+          contentArea.innerHTML = htmlContent;
         }
         
       } catch (error) {
@@ -95,24 +110,6 @@
       
       const projectTitle = fileMap[filename];
       return jsonData.find(project => project.title === projectTitle);
-    }
-
-    function addImageGrid(images, container) {
-      const gridHTML = `
-        <div class="project-images">
-          <h3>Project Images</h3>
-          <div class="image-grid">
-            ${images.map((img, index) => `
-              <img src="${img}" 
-                   alt="Project image ${index + 1}" 
-                   class="grid-image" 
-                   onclick="openImageModal('${img}')">
-            `).join('')}
-          </div>
-        </div>
-      `;
-      
-      container.insertAdjacentHTML('beforeend', gridHTML);
     }
 
     function openImageModal(imageSrc) {
@@ -158,8 +155,8 @@
   
   <style>
     .design-detail h2 {
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
+      font-size: 4rem;
+      margin-bottom: 3rem;
       color: #fff;
     }
     
@@ -205,19 +202,21 @@
       margin-bottom: 12px;
     }
     
-    /* Design content layout - side by side */
+    /* Design content layout - table and images side by side */
     .design-detail {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
       gap: 40px;
+      align-items: flex-start;
     }
     
     .design-info {
+      flex: 1;
       min-width: 0; /* Prevents overflow */
     }
     
     /* Project images section */
     .project-images {
+      flex: 1;
       min-width: 0;
     }
     
@@ -237,7 +236,6 @@
       width: 100%;
       height: 200px;
       object-fit: cover;
-      border-radius: 8px;
       cursor: pointer;
       transition: transform 0.2s;
       background: #222;
