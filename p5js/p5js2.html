@@ -1,9 +1,168 @@
-<div class="p5js-detail"><h2>generative artworks</h2>
+<div class="p5js-detail">
+    <h2>generative artworks</h2>
+    <p>generative artworks made out of different particle systems, printed using a pen plotter</p>
     
-    
-    <p>generative artworks made out of different particle systems </p>
-
-
-
-
+    <div id="gen-galleries"></div>
 </div>
+
+<script>
+async function loadGenImages() {
+  const galleriesContainer = document.getElementById('gen-galleries');
+  const folders = ['a1', 'a2', 'a3', 'a4', 'a5', 'a6'];
+  
+  // Define known images for each folder to avoid 404s
+  const folderImages = {
+    'a1': ['g2.png', 'grid2z_02.png', 'grid2z_06.png'],
+    'a2': ['1268_005.png', '1268_005zz_07.png', '1268_005z_03.png'],
+    'a3': ['1268_003.png', '1268_003zz_03.png', '1268_003zz_05.png', '1268_003zz_09.png'],
+    'a4': ['1267_001.png', '1267_001zz_03.png', '1267_001zz_05.png', '1267_001zz_07.png'],
+    'a5': ['1268_001z_03.png', '1268_001z_06.png', 'particles.png'],
+    'a6': []  // Empty folder
+  };
+  
+  let galleriesHTML = '';
+  
+  for (const folder of folders) {
+    const images = folderImages[folder];
+    
+    if (images.length > 0) {
+      galleriesHTML += `
+        <div class="gallery-section">
+          <h3>Series ${folder.toUpperCase()}</h3>
+          <div class="image-grid">
+            ${images.map(img => `
+              <img src="gen/images/${folder}/${img}" 
+                   alt="Generative artwork from ${folder}" 
+                   class="grid-image" 
+                   onclick="openImageModal('gen/images/${folder}/${img}')"
+                   onerror="console.log('Failed to load:', 'gen/images/${folder}/${img}'); this.style.background='#f66'; this.style.color='#fff'; this.innerHTML='Failed to load';">
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+  }
+  
+  galleriesContainer.innerHTML = galleriesHTML;
+  console.log('Generated galleries HTML:', galleriesHTML);
+  console.log('Images should be at paths like:', 'gen/images/a1/g2.png');
+}
+
+// Open image modal (reuse from design.html functionality)
+function openImageModal(imageSrc) {
+  let modal = document.getElementById('image-modal');
+  
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'image-modal';
+    modal.innerHTML = `
+      <div class="modal-backdrop" onclick="closeImageModal()">
+        <img class="modal-image" onclick="event.stopPropagation()">
+        <span class="modal-close" onclick="closeImageModal()">&times;</span>
+      </div>
+    `;
+    document.body.appendChild(modal);
+  }
+  
+  const modalImage = modal.querySelector('.modal-image');
+  modalImage.src = imageSrc;
+  modal.style.display = 'block';
+}
+
+function closeImageModal() {
+  const modal = document.getElementById('image-modal');
+  if (modal) {
+    modal.style.display = 'none';
+  }
+}
+
+// Load images when page loads
+loadGenImages();
+</script>
+
+<style>
+.gallery-section {
+  margin-bottom: 40px;
+}
+
+.gallery-section h3 {
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 10px;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.grid-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s;
+  background: #222;
+  border-radius: 0;
+}
+
+.grid-image:hover {
+  transform: scale(1.05);
+}
+
+/* Modal styles */
+#image-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+}
+
+.modal-backdrop {
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal-image {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 0;
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 2.5em;
+  color: white;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.modal-close:hover {
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .image-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+  }
+  
+  .grid-image {
+    height: 150px;
+  }
+}
+</style>
