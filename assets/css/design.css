@@ -111,6 +111,19 @@
   color: #6a4cff;
   text-decoration: underline;
 }
+#design-desc {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #444;
+  color: #bfbfbf;
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 100%;
+  font-weight: 400;
+}
+#design-desc:empty {
+  display: none;
+}
 .carousel-btn {
   position: fixed;
   top: 50%;
@@ -188,4 +201,26 @@
     left: 4px !important;
     right: 4px !important;
   }
+}
+
+/* Project description styling */
+.project-description {
+  width: 100%;
+  max-width: none;
+  margin-top: 20px;
+  padding-right: 0px; /* Add space from images */
+  padding-left: 40px; /* Add space from images */
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.project-description p {
+  margin-bottom: 15px;
+}
+
+.project-description h4 {
+  color: #fff;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  font-size: 1.2rem;
 }

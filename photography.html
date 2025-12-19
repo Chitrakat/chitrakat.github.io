@@ -6,6 +6,8 @@
   <title>p5.js | Suyash Chitrakar</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/header.css">
+  <link rel="stylesheet" href="assets/css/sidebar.css">
+  <script src="assets/js/photo-carousel.js"></script>
 </head>
 <body>
   <header class="main-header">
@@ -19,9 +21,8 @@
           <a href="design.html" class="dropdown-item">design</a>
           <a href="photography.html" class="dropdown-item">photography</a>
           <a href="p5js.html" class="dropdown-item">p5.js</a>
-          <a href="plotter.html" class="dropdown-item">plotter</a>
           <a href="gamedesign.html" class="dropdown-item">game design</a>
-          <a href="drawing.html" class="dropdown-item">drawing</a>
+          <a href="drawing.html" class="dropdown-item">art</a>
         </div>
       </div>
     </div>
@@ -64,6 +65,10 @@
           if (typeof initializeCarousel === 'function') {
             initializeCarousel();
           }
+          // Load dynamic images
+          if (typeof loadCarouselImages === 'function') {
+            loadCarouselImages();
+          }
         }, 100);
       } catch (e) {
         contentArea.innerHTML = '<div style="color:#f66">Could not load content.</div>';
@@ -79,74 +84,7 @@
     loadP5jsContent(document.querySelector('.sidebar-item.active').getAttribute('data-file'));
   </script>
   <style>
-    .design-layout {
-      display: flex;
-      margin-top: 48px;
-      height: calc(100vh - 48px);
-    }
-    .design-sidebar {
-      width: 180px;
-      background: #000000;
-      padding: 0;
-      border-right: 1px solid #222;
-      border-bottom: 1px solid #222;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-    }
-    .design-sidebar ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    .sidebar-item {
-      padding: 18px 20px;
-      cursor: pointer;
-      color: #eee;
-      font-size: 1.08rem;
-      border-bottom: 1px solid #232323;
-      transition: background 0.18s, color 0.18s;
-    }
-    .sidebar-item.active, .sidebar-item:hover {
-      background: #232323;
-      color: #fff;
-    }
-    .design-content {
-      flex: 1;
-      padding: 40px 32px;
-      font-size: 1.2rem;
-      color: #fff;
-      background: #000000;
-      min-height: 100%;
-    }
-    @media (max-width: 700px) {
-      .design-layout {
-        flex-direction: column;
-      }
-      .design-sidebar {
-        width: 100%;
-        flex-direction: row;
-        border-right: none;
-        border-bottom: 1px solid #222;
-      }
-      .design-sidebar ul {
-        display: flex;
-        flex-direction: row;
-      }
-      .sidebar-item {
-        flex: 1;
-        border-bottom: none;
-        border-right: 1px solid #232323;
-        text-align: center;
-        padding: 14px 0;
-      }
-      .sidebar-item:last-child {
-        border-right: none;
-      }
-      .design-content {
-        padding: 24px 10px;
-      }
-    }
+    /* Photography page specific styles can go here */
   </style>
 </body>
 </html>

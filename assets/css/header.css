@@ -70,8 +70,6 @@
   top: 110%;
   min-width: 160px;
   background: #000000;
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(213, 210, 210, 0.695);
   overflow: hidden;
   opacity: 0;
   transform: translateY(-10px);
