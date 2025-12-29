@@ -32,7 +32,7 @@ function preload() {
 
 src(s0)
 .add(src(o0).scale(0.6), 0.4) // controls the "glow"
-.modulateScale(noize(0.9), 0.9, 1.9 , 0.1) // 1, 0.1, (0.05), 0.08, 1 and 1 is sick 
+.modulateScale(noize(3), 0.9, 1 , 0.1) // 1, 0.1, (0.05), 0.08, 1 and 1 is sick 
 .out()
 // sandbox - end
 
@@ -40,8 +40,7 @@ src(s0)
 function setup() {
     createCanvas(windowWidth, windowHeight);
     background(0);
-    frameRate(7);
-    noCursor();
+    frameRate(20);
 
     rectMode(CENTER);
     textAlign(CENTER, CENTER);
@@ -52,7 +51,7 @@ function setup() {
 
     maxCircle = windowHeight/7;
     minCircle = windowHeight/10;
-    mouseCircleSize = height/10;
+    mouseCircleSize = height/8;
     
     randShade = 0;
     opacity = o1;
@@ -66,11 +65,9 @@ function mouseWheel(event) {
 }
 
 function draw() {
-    
-    frameRate(14);
     opacity = o1; // reset opacity
     value = 255;
-    blendMode(BLEND);
+    blendMode(SUBTRACT  );
     
     if(!mouseIsPressed){
         // blendMode(DIFFERENCE);
@@ -95,7 +92,7 @@ function draw() {
     // Mouse Circles
     if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
         circle(mouseX, mouseY, mouseCircleSize);
-        // circle(width-mouseX, height-mouseY, height/3);
+        circle(windowWidth-mouseX, windowHeight-mouseY, mouseCircleSize % 100);
     }
     
     
