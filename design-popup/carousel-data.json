@@ -13,7 +13,9 @@
       "assets/img/design-popup/vol55-2/vol55-2-03.jpg",
       "assets/img/design-popup/vol55-2/vol55-2-04.jpg",
       "assets/img/design-popup/vol55-2/vol55-2-05.jpg",
-      "assets/img/design-popup/vol55-2/vol55-2-06.jpg"
+      "assets/img/design-popup/vol55-2/vol55-2-06.jpg",
+      "assets/img/design-popup/vol55-2/vol55-2-07.jpg",
+      "assets/img/design-popup/vol55-2/vol55-2-08.jpg"
     ]
   },
   {
@@ -25,13 +27,16 @@
     "website": "https://www.knoxcatch.org/vol-56-no-1",
     "img": "assets/img/design-cover/vol56-1.png",
     "images": [
+      "assets/img/design-popup/vol56-1/IMG_9503.JPG",
+      "assets/img/design-popup/vol56-1/IMG_9504.JPG",
+      "assets/img/design-popup/vol56-1/IMG_9506.JPG",
+      "assets/img/design-popup/vol56-1/IMG_9508.JPG",
+      "assets/img/design-popup/vol56-1/IMG_9509.JPG",
       "assets/img/design-popup/vol56-1/vol56-1-01.jpg",
-      "assets/img/design-popup/vol56-1/vol56-1-02.jpg",
       "assets/img/design-popup/vol56-1/vol56-1-03.jpg",
       "assets/img/design-popup/vol56-1/vol56-1-04.jpg",
       "assets/img/design-popup/vol56-1/vol56-1-05.jpg",
       "assets/img/design-popup/vol56-1/vol56-1-06.jpg",
-      "assets/img/design-popup/vol56-1/vol56-1-07.jpg",
       "assets/img/design-popup/vol56-1/vol56-1-08.jpg",
       "assets/img/design-popup/vol56-1/vol56-1-09.jpg"
     ]
@@ -45,6 +50,13 @@
     "website": "https://www.knoxcatch.org/vol-56-no-2",
     "img": "assets/img/design-cover/vol56-2.png",
     "images": [
+      "assets/img/design-popup/vol56-2/VOL56 (1).jpg",
+      "assets/img/design-popup/vol56-2/VOL56 (2).jpg",
+      "assets/img/design-popup/vol56-2/VOL56 (3).jpg",
+      "assets/img/design-popup/vol56-2/VOL56 (4).jpg",
+      "assets/img/design-popup/vol56-2/VOL56 (5).jpg",
+      "assets/img/design-popup/vol56-2/VOL56 (6).jpg",
+      "assets/img/design-popup/vol56-2/VOL56 (7).jpg",
       "assets/img/design-popup/vol56-2/vol56-2-01.jpg",
       "assets/img/design-popup/vol56-2/vol56-2-02.jpg",
       "assets/img/design-popup/vol56-2/vol56-2-03.jpg",
@@ -72,8 +84,17 @@
     "tools": "Sketch",
     "collaborators": "urvi bohra '26, drishti shrestha '26, sania '26",
     "website": "",
-  "img": "assets/img/design-cover/x.png",
-  "images": []
+    "img": "assets/img/design-cover/x.png",
+    "images": [
+      "assets/img/design-popup/x-journal/xj-journal (1).jpg",
+      "assets/img/design-popup/x-journal/xj-journal (2).jpg",
+      "assets/img/design-popup/x-journal/xj-journal (3).jpg",
+      "assets/img/design-popup/x-journal/xj-journal (4).jpg",
+      "assets/img/design-popup/x-journal/xj-journal (5).jpg",
+      "assets/img/design-popup/x-journal/xj-journal (6).jpg",
+      "assets/img/design-popup/x-journal/xj-journal (7).jpg",
+      "assets/img/design-popup/x-journal/xj-journal (8).jpg"
+    ]
   },
   {
     "title": "Lines in The Shed, Ryan Tracy",
