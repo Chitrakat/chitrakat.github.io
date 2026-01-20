@@ -6,12 +6,11 @@
     width: 100vw;
     height: 38px;
     background: rgba(20, 20, 20, 0.92);
-    color: #fff;
+    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: space-between;
     z-index: 1000;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     padding: 0 14px;
   }
   .header-left .site-title {
@@ -20,7 +19,7 @@
     letter-spacing: 1.1px;
     font-family: "Open Sans", sans-serif;
     font-optical-sizing: auto;
-    font-style: normal;
+    font-style: bold;
     font-variation-settings:
       "wdth" 100;
     color: inherit;
@@ -28,6 +27,7 @@
     cursor: pointer;
     transition: none;
   }
+
   .header-left .site-title:visited,
   .header-left .site-title:active,
   .header-left .site-title:focus,
@@ -51,8 +51,8 @@
   font-weight: 500;
   cursor: pointer;
   padding: 10px 18px;
-  border-radius: 6px;
-  transition: background 0.2s;
+  border-radius: 15px;
+  transition: background 0.5s;
   font-family: "Open Sans", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
@@ -61,11 +61,14 @@
   outline: none;
 }
 .dropdown-toggle:hover, .dropdown-toggle:focus {
-  background: rgba(0, 0, 0, 0.08);
+  background: #383838;;
+  
 }
 .dropdown-menu {
   display: none;
   position: absolute;
+  border-radius: 10px;
+  border: 1px solid #383838;
   right: 0; 
   top: 110%;
   min-width: 160px;
@@ -96,7 +99,7 @@
   outline: none;
 }
 .dropdown-item:hover {
-  background: #000000;
+  background: #383838;
 }
 @media (max-width: 600px) {
   .main-header {
