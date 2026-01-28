@@ -55,10 +55,8 @@ body {
 }
 
 .photo-description-column {
-	max-width: 40%;
+	max-width: 70%;
 	margin: 2rem 0;
-	padding: 1.5rem;
-	border-radius: 8px; 
 }
 
 /* Hero Section */
