@@ -2,15 +2,13 @@
 
 .design-layout {
   display: flex;
-  margin-top: 48px;
-  height: calc(100vh - 48px);
+  margin-top: 38px;
+  height: calc(100vh - 38px);
 }
 
 .design-sidebar {
   width: 200px;
   background: #181818;
-  padding: 0;
-  border-right: 1px solid #222;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -27,12 +25,12 @@
   cursor: pointer;
   color: #eee;
   font-size: 1.08rem;
-  border-bottom: 1px solid #232323;
-  transition: background 0.18s, color 0.18s;
+  border-bottom: 1px solid #383838;
+  transition: background 800ms, color 800ms;
 }
 
 .sidebar-item.active, .sidebar-item:hover {
-  background: #232323;
+  background: #383838;
   color: #fff;
 }
 

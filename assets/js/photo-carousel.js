@@ -56,12 +56,11 @@ async function smartDiscoverImages(folder) {
   
   if (folderName === 'gai-jatra') {
     patterns = [
-      { prefix: 'sammy-', numbers: [74, 75, 78, 79, 80, 81, 82, 85, 86, 87, 89, 91, 92, 94, 96, 97, 102, 142] }
+      { prefix: 'gai-jatra-', numbers: [1,2,3,4,5,6,7,8,9,11,12,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64] }
     ];
   } else if (folderName === 'america') {
     patterns = [
-      { prefix: 'sammy-', numbers: [25, 35, 47, 48, 52, 54, 56, 65, 66, 67, 68, 199, 201, 208] },
-      { prefix: 'usa-', numbers: [1, 2, 4, 5, 7, 9, 17, 20, 21] }
+      { prefix: 'ununited-', numbers: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67] }
     ];
   } else if (folderName === 'nepals-street') {
     patterns = [
@@ -80,19 +79,12 @@ async function smartDiscoverImages(folder) {
     patterns = [
       { prefix: 'sammy-', numbers: [18, 23, 24, 26, 27, 28, 29, 30, 31, 32, 33, 34] }
     ];
-  } else {
-    // Fallback: try a few common samples
-    patterns = [
-      { prefix: 'sammy-', numbers: [1, 10, 20, 25, 30, 50, 74, 75] },
-      { prefix: 'usa-', numbers: [1, 2, 3, 4, 5] },
-      { prefix: 'img-', numbers: [1, 2, 3, 4, 5] }
-    ];
   }
   
   // Build image list from patterns
   for (const pattern of patterns) {
     for (const num of pattern.numbers) {
-      const paddedNum = pattern.prefix === 'usa-' ? num.toString().padStart(2, '0') : num.toString().padStart(3, '0');
+      const paddedNum = (pattern.prefix === 'usa-' || pattern.prefix === 'ununited-' || pattern.prefix === 'gai-jatra-') ? num.toString().padStart(2, '0') : num.toString().padStart(3, '0');
       const imageName = `${pattern.prefix}${paddedNum}`;
       
       // Check if image exists

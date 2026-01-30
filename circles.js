@@ -17,7 +17,7 @@ let random1, random2, random3;
 let maxCircle, minCircle;
 let mouseCircleSize;
 
-let randShade, opacity;
+let randShade, randShade1, randShade2, opacity;
 let value = 100;
 let o1 = 40;
 
@@ -26,16 +26,17 @@ let n1;
 s0.initP5() // send p5 to hydra
 P5.toggle(0) // hide p5
 
-function preload() {
-    n1 = random(0,1,0.9);
-}
-
 src(s0)
 .add(src(o0).scale(0.6), 0.4) // controls the "glow"
-.modulateScale(noize(3), 0.9, 1 , 0.1) // 1, 0.1, (0.05), 0.08, 1 and 1 is sick 
+.modulateScale(noize(3), 0.9, 1 , 0.1) 
 .out()
+// 1, 0.1, (0.05), 0.08, 1 and 1 
 // sandbox - end
 
+function windowResized() {
+    resizeCanvas(windowWidth-10, windowHeight-10);
+    H.pixelDensity(0.5);
+}
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
@@ -51,65 +52,50 @@ function setup() {
 
     maxCircle = windowHeight/7;
     minCircle = windowHeight/10;
-    mouseCircleSize = height/8;
+    mouseCircleSize = height/4;
     
-    randShade = 0;
+    randShade = random(100);
+    randShade1 = random(100);
+    randShade2 = random(100);
     opacity = o1;
 }
 
-// Change mouse circle size with scroll wheel
-function mouseWheel(event) {
-    mouseCircleSize += event.deltaY > 0 ? -10 : 10;
-    mouseCircleSize = constrain(mouseCircleSize, 40, height/2);
-    return false; // prevent page scroll
-}
 
 function draw() {
-    opacity = o1; // reset opacity
-    value = 255;
-    blendMode(SUBTRACT  );
-    
-    if(!mouseIsPressed){
-        // blendMode(DIFFERENCE);
-        value = 0;
-        opacity = 0;
-        // frameCount *= 10;
-        // frameRate(0.5);
-        blendMode(HARD_LIGHT);
+    blendMode(HARD_LIGHT);
+    if(mouseIsPressed){
         clear();
     }
-	//blendMode(SUBTRACT); // set blend mode to DIFFERENCE
-    //background(0); // set background color with transparency
+    
 
-    // Colors 
+    // Colors for mouse circles
+    let r = (sin(frameCount * 0.01) * 1.5 + 0.5) * randShade;
+    let g = (sin(frameCount * 0.003) * 0.5 + 0.5) * 10 + random(randShade1);
     let b = (sin(frameCount * 0.001) * 0.5 + 0.5) * 100 + randShade;
-    let g = (sin(frameCount * 0.003) * 0.5 + 0.5) * 10 + random(randShade);
-    fill(b, g, 10*b, 70); 
-    // Size
-	textSize(windowHeight/15);
+    fill(r, g, b, 70); 
     noStroke();
     
     // Mouse Circles
     if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
         circle(mouseX, mouseY, mouseCircleSize);
-        circle(windowWidth-mouseX, windowHeight-mouseY, mouseCircleSize % 100);
+        // circle(windowWidth-mouseX, windowHeight-mouseY, mouseCircleSize % 100);
     }
     
-    
+
     // Middle Circle
-    let b2 = ((sin(frameCount * 0.025) * 0.5 + 0.5) * 255);
+    let b2 = ((sin(frameCount * 0.025) * 0.5 + 0.5) * randShade);
     console.log(b2);
     fill(180 -b2/2, 0, b2, 10);
     noStroke();
 
     let rSize = (sin(frameCount * 0.05)) * maxCircle + minCircle;
     circle(width/2, height/2, height/2 + rSize);
-    // blendMode(SUBTRACT);
 
 
     // Moving texts
     let tx, ty;
     let fontSize = height/5;
+    
     // fill(200);
 
     tx = constrain(noise(100 + frameCount * 0.0006) * width, 0, width);
@@ -121,31 +107,24 @@ function draw() {
             
             new movingObject(random(1000), random(1000), fontSize/2, 'I\'m a'),
             new movingObject(random(1000), random(1000), fontSize/2, 'I\'m a'),
-            new movingObject(random(1000), random(1000), fontSize/2, 'I\'m kinda lost'),
-            new movingObject(random(1000), random(1000), fontSize/2, 'designer'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'I\'m\n kinda lost'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'graphic\ndesigner'),
             new movingObject(random(1000), random(1000), fontSize/2, 'photographer'),
             new movingObject(random(1000), random(1000), fontSize/2, 'photographer'),
             new movingObject(random(1000), random(1000), fontSize/2, 'creative\ncoder'),
-            // new movingObject(random(1000), random(1000), fontSize/2, 'drawing'),
-            // new movingObject(random(1000), random(1000), fontSize/1.5, 'game\n design'),
-            // new movingObject(random(1000), random(1000), fontSize/1.1, 'plotter'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'artist?'),
+            new movingObject(random(1000), random(1000), fontSize/1.5, 'game\n designer'),
         ];
     }
 
-    // Update each moving object
     for (let obj of window.movingObjs) {
         obj.update();
     }
-
-    // Separate overlapping objects
-    movingObject.separateAll(window.movingObjs);
-
-    // Display each moving object
     for (let obj of window.movingObjs) {
         obj.display();
     }
+    movingObject.separateAll(window.movingObjs);
 
-    // addFuzzyNoise(0.00001); // Adjust the amount (0.01 - 0.2) for more/less noise
 }
 
 class movingObject{
@@ -197,38 +176,15 @@ class movingObject{
     }
 
     display() {
-        // noStroke();
-
-        // Calculate text box size
         textSize(this.size/1.5);
-        let tw = textWidth(this.label);
-        let th = this.size;
-
         // Draw text
-        // blendMode(SUBTRACT);
         rectMode(CENTER);
         fill(0);
         this.xval = 0.006;
         this.yval = 0.00065;
-        stroke(0)
+        stroke(0);
         strokeWeight(4);
         textAlign(CENTER, CENTER);
         text(this.label, this.x, this.y);
-        if(mouseIsPressed){
-            stroke(255);
-            strokeWeight(4);
-            // this.xval = this.xval * 2;
-            // this.yval = this.yval * 2;
-            // blendMode(DIFFERENCE);
-    
-        }
     }
-}
-
-// Handle window resizing for responsive canvas and elements
-function windowResized() {
-    resizeCanvas(windowWidth-10, windowHeight-10);
-    H.pixelDensity(0.5);
-    // Optionally, re-calculate any values that depend on width/height
-    // e.g., update random1, random2, random3 if needed
 }
