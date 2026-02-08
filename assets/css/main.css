@@ -42,39 +42,7 @@ body {
 .text-5xl { font-size: 3rem; line-height: 1.9; }
 .text-6xl { font-size: 4rem; line-height: 1.9; }
 
-/* Typography for specific content */
-.photo-detail h2 {
-	font-size: 2rem;
-	margin-bottom: 1rem;
-	font-weight: 600;
-}
 
-.gallery-title-dark{
-	font-size: 5rem;
-	font-weight: 700;
-	margin-bottom: 1.5rem;
-	color: var(--dark-text);
-}
-
-.photo-detail p {
-	font-size: 1.1rem;
-	line-height: 1.6;
-	color: var(--subtitle);
-	margin-bottom: 1.5rem;
-}
-
-.photo-description-column {
-	max-width: 70%;
-	margin: 2rem 0;
-}
-
-.photo-description-column-dark {
-	max-width: 50%;
-	font-size: 1.5rem;
-	/* align-items: center; */
-	color: var(--dark-text);
-	/* margin: 2rem 0; */
-}
 
 /* Hero Section */
 .hero {
