@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VOL. 57 NO. 1 & NO. 2 - Design | Suyash Chitrakar</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/header.css">
+  <link rel="stylesheet" href="../assets/css/project-page.css">
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-left">
+      <a href="../index.html" class="site-title">suyash chitrakar</a>
+    </div>
+    <div class="header-right">
+      <div class="dropdown">
+        <button class="dropdown-toggle" id="dropdownMenuButton">my work &#x25BC;</button>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="../design.html" class="dropdown-item">design</a>
+          <a href="../photography.html" class="dropdown-item">photography</a>
+          <a href="../p5js.html" class="dropdown-item">p5.js</a>
+          <a href="../gamedesign.html" class="dropdown-item">game design</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="project-nav">
+    <a href="../design.html" class="back-link">←</a>
+  </nav>
+  
+  <main class="project-container">
+    <div class="project-content">
+      <div class="project-info-section">
+        <h1>Catch Magazine: VOL. 57 NO. 1 and VOL. 57 NO. 2</h1>
+        
+        <div class="meta-table">
+          <table>
+            <tr><td>Year</td><td>2025</td></tr>
+            <tr><td>Kind</td><td>Layout Design, Typography</td></tr>
+            <tr><td>Tools</td><td>InDesign</td></tr>
+            <tr><td>Collaborators</td><td>Eve</td></tr>
+            <tr><td>Website</td><td><a href="https://example.com/3" target="_blank">https://example.com/3</a></td></tr>
+          </table>
+        </div>
+        
+        <div class="project-description">
+         <p>
+            For Volumes 57, Numbers 1 and 2, my role within <em>Catch</em> shifted with having designed several previous editions. This cycle introduced new designers to the publication, and my focus moved from leading the overall visual direction to supporting structure, typography, and collaboration.
+          </p>
+
+          <h3>Volume 57, Number 1</h3>
+          <p>
+            Volume 57, Number 1 marked another change in physical scale. The cover design was centered around a card design by Maya Dengler Kaufman and Urvi Bohra. For this edition, my primary contribution was typographic. I focused on interior type systems, hierarchy, and consistency, establishing a clear reading experience.
+          </p>
+
+          <h3>Volume 57, Number 2</h3>
+          <p>
+            For Volume 57, Number 2, the magazine returned to a more traditional bound format after a period of heavy experimentation. Reflecting on earlier issues, the editorial and design team decided to ground the edition in a single, cohesive printing-inspired concept. This time, the reference point was cyanotype.
+          </p>
+
+          <p>
+            The design was built around cyanotype printing. In addition to referencing the process conceptually, the team created original cyanotypes using found materials such as flowers, leaves, and clothing. These handmade prints informed the color palette, textures, and imagery throughout the book. For this issue, I collaborated on visual direction, designed spreads, contributed to layout decisions, and helped shape the typographic system.
+          </p>
+
+          <p>
+            The edition also included postcard inserts, featuring additional artwork submitted by contributors. These postcards extend the publication beyond the bound book, allowing works to circulate independently and reinforcing <em>Catch</em> as both a reading object and a platform for shared exchange.
+          </p>
+
+          <p>
+            Together, these two issues reflect a moment of recalibration for the magazine, balancing experimentation with structure, mentorship with collaboration, and visual play with typographic clarity.
+          </p>
+        </div>
+      </div>
+      
+      <div class="project-gallery">
+        <!-- <h3>Project Images</h3> -->
+        <div class="image-grid" id="imageGrid">
+          <!-- Images will be loaded dynamically -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Image Modal -->
+  <div id="imageModal" class="modal">
+    <div class="modal-overlay" onclick="closeModal()">
+      <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <img id="modalImage" src="" alt="">
+        <div class="modal-nav">
+          <button id="prevBtn" onclick="previousImage()">&lt;</button>
+          <button id="nextBtn" onclick="nextImage()">&gt;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/header-dropdown.js"></script>
+  <script>
+    const projectImages = [
+      "../assets/img/design-popup/vol57-1/vol57-1-01.jpg",
+      "../assets/img/design-popup/vol57-1/vol57-1-02.jpg"
+    ];
+
+    let currentImageIndex = 0;
+
+    function loadImages() {
+      const grid = document.getElementById('imageGrid');
+      const imagesHTML = projectImages.map((img, index) => `
+        <div class="image-item" onclick="openModal(${index})">
+          <img src="${img}" alt="Project image ${index + 1}" loading="lazy">
+        </div>
+      `).join('');
+      
+      grid.innerHTML = imagesHTML;
+    }
+
+    function openModal(index) {
+      currentImageIndex = index;
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImage');
+      
+      modal.style.display = 'block';
+      modalImg.src = projectImages[index];
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('imageModal');
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    function nextImage() {
+      currentImageIndex = (currentImageIndex + 1) % projectImages.length;
+      document.getElementById('modalImage').src = projectImages[currentImageIndex];
+    }
+
+    function previousImage() {
+      currentImageIndex = (currentImageIndex - 1 + projectImages.length) % projectImages.length;
+      document.getElementById('modalImage').src = projectImages[currentImageIndex];
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (document.getElementById('imageModal').style.display === 'block') {
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') previousImage();
+      }
+    });
+
+    // Load images on page load
+    document.addEventListener('DOMContentLoaded', loadImages);
+  </script>
+</body>
+</html>

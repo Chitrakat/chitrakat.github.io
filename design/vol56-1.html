@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VOL. 56 NO. 1 - Design | Suyash Chitrakar</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/header.css">
+  <link rel="stylesheet" href="../assets/css/project-page.css">
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-left">
+      <a href="../index.html" class="site-title">suyash chitrakar</a>
+    </div>
+    <div class="header-right">
+      <div class="dropdown">
+        <button class="dropdown-toggle" id="dropdownMenuButton">my work &#x25BC;</button>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="../design.html" class="dropdown-item">design</a>
+          <a href="../photography.html" class="dropdown-item">photography</a>
+          <a href="../p5js.html" class="dropdown-item">p5.js</a>
+          <a href="../gamedesign.html" class="dropdown-item">game design</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="project-nav">
+    <a href="../design.html" class="back-link">←</a>
+  </nav>
+  
+  <main class="project-container">
+    <div class="project-content">
+      <div class="project-info-section">
+        <h1>Catch Magazine: VOL. 56 NO. 1</h1>
+        
+        <div class="meta-table">
+          <table>
+            <tr><td>Year</td><td>2023</td></tr>
+            <tr><td>Kind</td><td>Book Design, Spread Design, Typography, Layout</td></tr>
+            <tr><td>Tools</td><td>InDesign, Photoshop, Illustrator</td></tr>
+            <tr><td>Collaborators</td><td>none</td></tr>
+            <tr><td>Website</td><td><a href="https://www.knoxcatch.org/vol-56-no-1" target="_blank">https://www.knoxcatch.org/vol-56-no-1</a></td></tr>
+          </table>
+        </div>
+        
+        <div class="project-description">
+          <h3>Behind the Design</h3>
+          <p>
+            For the first time in recent editions, the magazine was produced at a larger, traditional magazine scale. The increased format created space for images to breathe, text to expand, and graphics to be used across pages rather than being compressed into smaller, plain layouts.
+          </p>
+
+          <h3>Themes</h3>
+          <p>
+            The thematic focus of the issue centers on the scanner as both a tool and a conceptual framework. Scanners were used to capture a wide range of objects and images, emphasizing flattening, distortion, and accidental detail. The scanning process introduced artifacts such as shadows, edges, and compression, which became integral to the visual language of the magazine rather than elements to be corrected.
+          </p>
+
+          <h3>Cover Design</h3>
+          <p>
+            This approach extends to the cover design. The back covers draw directly from the artworks featured inside the issue, edited and recontextualized to reflect the internal vibrancy of the magazine. The front cover features a tree silhouette sourced from the Knox College campus, grounding the publication in a specific place.
+          </p>
+
+          <p>
+            <strong>Fun Fact:</strong> The table of contents continues this site-specific approach. The flowers used throughout this section were scanned from the cushions inside the Pub Office, a shared space where editorial meetings and collaborations took place.
+          </p>
+        </div>
+      </div>
+      
+      <div class="project-gallery">
+        <!-- <h3>Project Images</h3> -->
+        <div class="image-grid" id="imageGrid">
+          <!-- Images will be loaded dynamically -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Image Modal -->
+  <div id="imageModal" class="modal">
+    <div class="modal-overlay" onclick="closeModal()">
+      <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <img id="modalImage" src="" alt="">
+        <div class="modal-nav">
+          <button id="prevBtn" onclick="previousImage()">&lt;</button>
+          <button id="nextBtn" onclick="nextImage()">&gt;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/header-dropdown.js"></script>
+  <script>
+    const projectImages = [
+      "../assets/img/design-popup/vol56-1/IMG_9503.JPG",
+      "../assets/img/design-popup/vol56-1/IMG_9504.JPG",
+      "../assets/img/design-popup/vol56-1/IMG_9506.JPG",
+      "../assets/img/design-popup/vol56-1/IMG_9508.JPG",
+      "../assets/img/design-popup/vol56-1/IMG_9509.JPG",
+      "../assets/img/design-popup/vol56-1/vol56-1-01.jpg",
+      "../assets/img/design-popup/vol56-1/vol56-1-03.jpg",
+      "../assets/img/design-popup/vol56-1/vol56-1-04.jpg",
+      "../assets/img/design-popup/vol56-1/vol56-1-05.jpg",
+      "../assets/img/design-popup/vol56-1/vol56-1-06.jpg",
+      "../assets/img/design-popup/vol56-1/vol56-1-08.jpg",
+      "../assets/img/design-popup/vol56-1/vol56-1-09.jpg"
+    ];
+
+    let currentImageIndex = 0;
+
+    function loadImages() {
+      const grid = document.getElementById('imageGrid');
+      const imagesHTML = projectImages.map((img, index) => `
+        <div class="image-item" onclick="openModal(${index})">
+          <img src="${img}" alt="Project image ${index + 1}" loading="lazy">
+        </div>
+      `).join('');
+      
+      grid.innerHTML = imagesHTML;
+    }
+
+    function openModal(index) {
+      currentImageIndex = index;
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImage');
+      
+      modal.style.display = 'block';
+      modalImg.src = projectImages[index];
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('imageModal');
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    function nextImage() {
+      currentImageIndex = (currentImageIndex + 1) % projectImages.length;
+      document.getElementById('modalImage').src = projectImages[currentImageIndex];
+    }
+
+    function previousImage() {
+      currentImageIndex = (currentImageIndex - 1 + projectImages.length) % projectImages.length;
+      document.getElementById('modalImage').src = projectImages[currentImageIndex];
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (document.getElementById('imageModal').style.display === 'block') {
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') previousImage();
+      }
+    });
+
+    // Load images on page load
+    document.addEventListener('DOMContentLoaded', loadImages);
+  </script>
+</body>
+</html>

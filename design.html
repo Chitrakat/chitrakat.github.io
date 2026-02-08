@@ -6,8 +6,7 @@
   <title>Design | Suyash Chitrakar</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/header.css">
-  <link rel="stylesheet" href="assets/css/design.css">
-  <link rel="stylesheet" href="assets/css/sidebar.css">
+  <link rel="stylesheet" href="assets/css/design-grid.css">
 </head>
 <body>
   <header class="main-header">
@@ -27,292 +26,78 @@
     </div>
   </header>
   
-  <div class="design-layout">
-    <aside class="design-sidebar">
-      <ul>
-        <li class="sidebar-item active" data-file="design-popup/html/vol55-2.html">vol. 55 no. 2</li>
-        <li class="sidebar-item" data-file="design-popup/html/vol56-1.html">vol. 56 no. 1</li>
-        <li class="sidebar-item" data-file="design-popup/html/vol56-2.html">vol. 56 no. 2</li>
-        <li class="sidebar-item" data-file="design-popup/html/vol57-double.html">vol. 57 no. 1 & no. 2</li>
-        <li class="sidebar-item" data-file="design-popup/html/x-journal.html">x-journal</li>
-        <li class="sidebar-item" data-file="design-popup/html/lines.html">lines in the shed</li>
-      </ul>
-    </aside>
-    <section class="design-content" id="design-content">
-      <!-- Content will be loaded here -->
-    </section>
-  </div>
+  <main class="design-grid-container">
+    <div id="loading" class="loading-state">Loading projects...</div>
+    <div id="design-grid" class="design-grid">
+      <!-- Grid items will be loaded here -->
+    </div>
+  </main>
 
   <script src="assets/js/header-dropdown.js"></script>
-
   
   <script>
-    async function loadDesignContent(file) {
-      const contentArea = document.getElementById('design-content');
-      contentArea.innerHTML = 'Loading...';
-      
+    // Project slug mapping for URLs
+    const projectSlugs = {
+      'Catch Magazine: VOL. 55 NO. 2': 'vol55-2',
+      'Catch Magazine: VOL. 56 NO. 1': 'vol56-1', 
+      'Catch Magazine: VOL. 56 NO. 2': 'vol56-2',
+      'Catch Magazine: VOL. 57 NO. 1 and VOL. 57 NO. 2': 'vol57-double',
+      'X-JOURNAL': 'x-journal',
+      'Lines in The Shed, Ryan Tracy': 'lines'
+    };
+
+    // Cover image mapping
+    const coverImages = {
+      'Catch Magazine: VOL. 55 NO. 2': 'assets/img/design-cover/vol55-2.png',
+      'Catch Magazine: VOL. 56 NO. 1': 'assets/img/design-cover/vol56-1.png',
+      'Catch Magazine: VOL. 56 NO. 2': 'assets/img/design-cover/vol56-2.png', 
+      'Catch Magazine: VOL. 57 NO. 1 and VOL. 57 NO. 2': 'assets/img/design-cover/vol57-1.png',
+      'X-JOURNAL': 'assets/img/design-cover/x.png',
+      'Lines in The Shed, Ryan Tracy': 'assets/img/design-cover/lines.jpg'
+    };
+
+    async function loadDesignProjects() {
       try {
-        // Load both HTML content and JSON data
-        const [htmlResponse, jsonResponse] = await Promise.all([
-          fetch(file),
-          fetch('design-popup/carousel-data.json')
-        ]);
+        const response = await fetch('design-popup/carousel-data.json');
+        if (!response.ok) throw new Error('Failed to load projects');
         
-        if (!htmlResponse.ok) throw new Error('HTML not found');
+        const projects = await response.json();
+        const gridContainer = document.getElementById('design-grid');
+        const loadingState = document.getElementById('loading');
         
-        const htmlContent = await htmlResponse.text();
-        const jsonData = await jsonResponse.json();
-        
-        // Extract filename from path
-        const filename = file.split('/').pop();
-        
-        // Find matching project by filename
-        const projectData = findProjectByFile(filename, jsonData);
-        
-        // Create the side-by-side layout
-        if (projectData && projectData.images && projectData.images.length > 0) {
-          contentArea.innerHTML = `
-            <div class="design-detail">
-              <div class="design-info">
-                ${htmlContent}
-              </div>
-              <div class="project-images">
-                <div class="image-grid">
-                  ${projectData.images.map((img, index) => `
-                    <img src="${img}" 
-                         alt="Project image ${index + 1}" 
-                         class="grid-image" 
-                         onclick="openImageModal('${img}')">
-                  `).join('')}
+        // Generate grid items
+        const gridHTML = projects.map(project => {
+          const slug = projectSlugs[project.title];
+          const coverImage = coverImages[project.title];
+          const projectUrl = `design/${slug}.html`;
+          
+          return `
+            <div class="grid-item">
+              <a href="${projectUrl}" class="project-link">
+                <div class="project-image">
+                  <img src="${coverImage}" alt="${project.title}" loading="lazy">
+                  <div class="image-overlay"></div>
                 </div>
-              </div>
+                <div class="project-info">
+                  <h3 class="project-title">${project.title}</h3>
+                  <span class="project-year">${project.year}</span>
+                </div>
+              </a>
             </div>
           `;
-        } else {
-          // If no images, just show the content
-          contentArea.innerHTML = htmlContent;
-        }
+        }).join('');
+        
+        gridContainer.innerHTML = gridHTML;
+        loadingState.style.display = 'none';
         
       } catch (error) {
-        contentArea.innerHTML = '<div style="color:#f66">Could not load content.</div>';
+        console.error('Error loading projects:', error);
+        document.getElementById('loading').innerHTML = 'Failed to load projects.';
       }
     }
 
-    function findProjectByFile(filename, jsonData) {
-      // Map filenames to project titles
-      const fileMap = {
-        'vol55-2.html': 'Catch Magazine: VOL. 55 NO. 2',
-        'vol56-1.html': 'Catch Magazine: VOL. 56 NO. 1',
-        'vol56-2.html': 'Catch Magazine: VOL. 56 NO. 2',
-        'vol57-double.html': 'Catch Magazine: VOL. 57 NO. 1 and VOL. 57 NO. 2',
-        'x-journal.html': 'X-JOURNAL',
-        'lines.html': 'Lines in The Shed, Ryan Tracy'
-      };
-      
-      const projectTitle = fileMap[filename];
-      return jsonData.find(project => project.title === projectTitle);
-    }
-
-    function openImageModal(imageSrc) {
-      // Create modal if it doesn't exist
-      let modal = document.getElementById('image-modal');
-      if (!modal) {
-        modal = document.createElement('div');
-        modal.id = 'image-modal';
-        modal.innerHTML = `
-          <div class="modal-overlay" onclick="closeImageModal()">
-            <div class="modal-content" onclick="event.stopPropagation()">
-              <button class="modal-close" onclick="closeImageModal()">&times;</button>
-              <img id="modal-img" src="" alt="">
-            </div>
-          </div>
-        `;
-        document.body.appendChild(modal);
-      }
-      
-      const modalImg = document.getElementById('modal-img');
-      modal.style.display = 'block';
-      modalImg.src = imageSrc;
-    }
-
-    function closeImageModal() {
-      const modal = document.getElementById('image-modal');
-      if (modal) {
-        modal.style.display = 'none';
-      }
-    }
-    
-    document.querySelectorAll('.sidebar-item').forEach(item => {
-      item.addEventListener('click', function() {
-        document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
-        this.classList.add('active');
-        loadDesignContent(this.getAttribute('data-file'));
-      });
-    });
-    
-    // Load first item on page load
-    loadDesignContent(document.querySelector('.sidebar-item.active').getAttribute('data-file'));
+    // Load projects when page loads
+    document.addEventListener('DOMContentLoaded', loadDesignProjects);
   </script>
-  
-  <style>
-    .design-detail h2 {
-      font-size: 4rem;
-      margin-bottom: 3rem;
-      color: #fff;
-    }
-    
-    .design-table-container {
-      max-width: 600px;
-    }
-    
-    .design-table-container table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 24px;
-    }
-    
-    .design-table-container td {
-      padding: 12px 16px;
-      border-bottom: 1px solid #333;
-      color: #fff;
-      vertical-align: top;
-    }
-    
-    .design-table-container td:first-child {
-      font-weight: bold;
-      width: 120px;
-      color: #ccc;
-    }
-    
-    .design-table-container a {
-      color: #6a4cff;
-      text-decoration: underline;
-    }
-    
-    .project-description {
-      margin-top: 24px;
-      padding-top: 24px;
-      border-top: 1px solid #333;
-      color: #bfbfbf;
-      line-height: 1.6;
-    }
-    
-    .project-description h4 {
-      color: #fff;
-      margin-top: 24px;
-      margin-bottom: 12px;
-    }
-    
-    /* Design content layout - table and images side by side */
-    .design-detail {
-      display: flex;
-      gap: 40px;
-      align-items: flex-start;
-    }
-    
-    .design-info {
-      flex: 1;
-      min-width: 0; /* Prevents overflow */
-    }
-    
-    /* Project images section */
-    .project-images {
-      flex: 1;
-      min-width: 0;
-    }
-    
-    .project-images h3 {
-      color: #fff;
-      margin-bottom: 20px;
-      font-size: 1.5rem;
-    }
-    
-    .image-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-    }
-    
-    .grid-image {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      cursor: pointer;
-      transition: transform 0.2s;
-      background: #222;
-    }
-    
-    .grid-image:hover {
-      transform: scale(1.05);
-    }
-    
-    /* Modal styles */
-    #image-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 1000;
-    }
-    
-    .modal-overlay {
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-    
-    .modal-content {
-      position: relative;
-      max-width: 90vw;
-      max-height: 90vh;
-      cursor: default;
-    }
-    
-    .modal-close {
-      position: absolute;
-      top: -40px;
-      right: -40px;
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      border: none;
-      font-size: 2rem;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    #modal-img {
-      max-width: 100%;
-      max-height: 90vh;
-      border-radius: 8px;
-    }
-    
-    @media (max-width: 700px) {      
-      /* Mobile layout for design detail */
-      .design-detail {
-        flex-direction: column;
-        gap: 24px;
-      }
-      
-      .image-grid {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 10px;
-      }
-      
-      .grid-image {
-        height: 150px;
-      }
-    }
-  </style>
 </body>
 </html>

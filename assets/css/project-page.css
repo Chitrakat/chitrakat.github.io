@@ -1,0 +1,330 @@
+/* Project Page Styles */
+
+.project-nav {
+  padding: 20px 24px;
+  margin-top: 38px;
+  background: #000;
+}
+
+.back-link {
+  color: #999;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.back-link:hover {
+  color: #fff;
+}
+
+.project-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px 60px;
+  background: #000;
+  color: #fff;
+  min-height: calc(100vh - 98px);
+}
+
+.project-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: flex-start;
+}
+
+.project-info-section h1 {
+  color: #fff;
+  font-size: 9rem;
+  font-weight: 600;
+  margin: 0 0 32px 0;
+  line-height: 1.2;
+}
+
+.project-info-section p {
+  color: #ccc;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.meta-table {
+  margin: 32px 0;
+}
+
+.meta-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 32px;
+}
+
+.meta-table td {
+  padding: 12px 0;
+  border-bottom: 1px solid #333;
+  color: #fff;
+  vertical-align: top;
+}
+
+.meta-table td:first-child {
+  font-weight: 600;
+  width: 120px;
+  color: #999;
+  padding-right: 20px;
+}
+
+.meta-table a {
+  color: #6a4cff;
+  text-decoration: underline;
+}
+
+.meta-table a:hover {
+  color: #8a6cff;
+}
+
+.project-info{}
+
+.project-description {
+  margin-top: 32px;
+}
+
+.project-description h3 {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 20px 0;
+}
+
+.project-description h4 {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 24px 0 12px 0;
+}
+
+.project-description p {
+  color: #bfbfbf;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.project-description em {
+  font-style: italic;
+  color: #ddd;
+}
+
+.project-gallery h3 {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 24px 0;
+}
+
+.image-grid {
+  display: grid;
+  /* aspect-ratio: 4/3; */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.image-item {
+  position: relative;
+  background: #181818;
+  /* border-radius: 8px; */
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image-item:hover {
+  transform: translateY(4px);
+  /* box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); */
+}
+
+.image-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.image-item:hover img {
+  transform: scale(1.05);
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+}
+
+.modal-overlay {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.modal-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  cursor: default;
+}
+
+.modal-close {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: none;
+    font-size: 2rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+    z-index: 1001;
+}
+
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+#modalImage {
+  max-width: 90vw;
+  max-height: 85vh;
+  /* border-radius: 8px; */
+  /* box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6); */
+}
+
+.modal-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.modal-nav button {
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+  pointer-events: auto;
+}
+
+.modal-nav button:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+#prevBtn {
+  margin-left: -80px;
+}
+
+#nextBtn {
+  margin-right: -80px;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .project-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .project-info-section h1 {
+    font-size: 2rem;
+    margin-bottom: 24px;
+  }
+  
+  .image-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+  }
+  
+  .image-item img {
+    height: 150px;
+  }
+}
+
+@media (max-width: 600px) {
+  .project-container {
+    padding: 24px 16px 40px;
+  }
+  
+  .project-content {
+    gap: 32px;
+  }
+  
+  .project-info-section h1 {
+    font-size: 1.8rem;
+  }
+  
+  .project-info-section p {
+    font-size: 1rem;
+  }
+  
+  .meta-table td:first-child {
+    width: 100px;
+    padding-right: 12px;
+  }
+  
+  .image-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  
+  .image-item img {
+    height: 120px;
+  }
+  
+  #modalImage {
+    max-width: 95vw;
+    max-height: 80vh;
+  }
+  
+  .modal-nav button {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+  
+  #prevBtn {
+    margin-left: -60px;
+  }
+  
+  #nextBtn {
+    margin-right: -60px;
+  }
+  
+  .modal-close {
+    top: -40px;
+    right: -10px;
+    width: 35px;
+    height: 35px;
+    font-size: 1.5rem;
+  }
+}
