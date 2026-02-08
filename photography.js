@@ -7,14 +7,13 @@ function setup() {
 }
 
 function preload(){
-  img = loadImage("1 .jpg");
+  img = loadImage("assets\\img\\photography\\abstractions\\sammy-018.jpg");
   img.resize(width,height);
 }
 
 function draw() {
   background(0);
   fill(255);
-//   noStroke();
   
   let tilesX = 3 ;
   let tilesY = 3;
