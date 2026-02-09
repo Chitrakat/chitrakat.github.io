@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>X-JOURNAL - Design | Suyash Chitrakar</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/header.css">
+  <link rel="stylesheet" href="../assets/css/project-page.css">
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-left">
+      <a href="../index.html" class="site-title">suyash chitrakar</a>
+    </div>
+    <div class="header-right">
+      <div class="dropdown">
+        <button class="dropdown-toggle" id="dropdownMenuButton">my work &#x25BC;</button>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="../design.html" class="dropdown-item">design</a>
+          <a href="../photography.html" class="dropdown-item">photography</a>
+          <a href="../p5js.html" class="dropdown-item">p5.js</a>
+          <a href="../gamedesign.html" class="dropdown-item">game design</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="project-nav">
+    <a href="../design.html" class="back-link">←</a>
+  </nav>
+  
+  <main class="project-container">
+    <div class="project-content">
+      <div class="project-info-section">
+        <h1>X-JOURNAL</h1>
+        
+        <div class="meta-table">
+          <table>
+            <tr><td>Year</td><td>2025</td></tr>
+            <tr><td>Kind</td><td>Art Photography, Book Design, Spread Design, Typography, Layout Design</td></tr>
+            <tr><td>Tools</td><td>Sketch</td></tr>
+            <tr><td>Collaborators</td><td>Urvi Bohra '26, Drishti Shrestha '26, Sania Shetty '26</td></tr>
+            <tr><td>Website</td><td><a href="https://xjournal.work/issues" target="_blank">https://xjournal.work/issues</a></td></tr>
+          </table>
+        </div>
+        
+        <div class="project-description">
+          <p>An experimental art photography journal that merges visual storytelling with innovative design concepts. Created through collaborative efforts, this publication explores the intersection of photography, design, and contemporary culture.</p>
+        </div>
+      </div>
+      
+      <div class="project-gallery">
+        <!-- <h3>Project Images</h3> -->
+        <div class="image-grid" id="imageGrid">
+          <!-- Images will be loaded dynamically -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Image Modal -->
+  <div id="imageModal" class="modal">
+    <div class="modal-overlay" onclick="closeModal()">
+      <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <img id="modalImage" src="" alt="">
+        <div class="modal-nav">
+          <button id="prevBtn" onclick="previousImage()">&lt;</button>
+          <button id="nextBtn" onclick="nextImage()">&gt;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/header-dropdown.js"></script>
+  <script>
+    const projectImages = [
+      "../assets/img/design-popup/x-journal/xj-journal (1).jpg",
+      "../assets/img/design-popup/x-journal/xj-journal (2).jpg",
+      "../assets/img/design-popup/x-journal/xj-journal (3).jpg",
+      "../assets/img/design-popup/x-journal/xj-journal (4).jpg",
+      "../assets/img/design-popup/x-journal/xj-journal (5).jpg",
+      "../assets/img/design-popup/x-journal/xj-journal (6).jpg",
+      "../assets/img/design-popup/x-journal/xj-journal (7).jpg",
+      "../assets/img/design-popup/x-journal/xj-journal (8).jpg"
+    ];
+
+    let currentImageIndex = 0;
+
+    function loadImages() {
+      const grid = document.getElementById('imageGrid');
+      const imagesHTML = projectImages.map((img, index) => `
+        <div class="image-item" onclick="openModal(${index})">
+          <img src="${img}" alt="Project image ${index + 1}" loading="lazy">
+        </div>
+      `).join('');
+      
+      grid.innerHTML = imagesHTML;
+    }
+
+    function openModal(index) {
+      currentImageIndex = index;
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImage');
+      
+      modal.style.display = 'block';
+      modalImg.src = projectImages[index];
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('imageModal');
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    function nextImage() {
+      currentImageIndex = (currentImageIndex + 1) % projectImages.length;
+      document.getElementById('modalImage').src = projectImages[currentImageIndex];
+    }
+
+    function previousImage() {
+      currentImageIndex = (currentImageIndex - 1 + projectImages.length) % projectImages.length;
+      document.getElementById('modalImage').src = projectImages[currentImageIndex];
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (document.getElementById('imageModal').style.display === 'block') {
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') previousImage();
+      }
+    });
+
+    // Load images on page load
+    document.addEventListener('DOMContentLoaded', loadImages);
+  </script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lines in The Shed - Design | Suyash Chitrakar</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/header.css">
+  <link rel="stylesheet" href="../assets/css/project-page.css">
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-left">
+      <a href="../index.html" class="site-title">suyash chitrakar</a>
+    </div>
+    <div class="header-right">
+      <div class="dropdown">
+        <button class="dropdown-toggle" id="dropdownMenuButton">my work &#x25BC;</button>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="../design.html" class="dropdown-item">design</a>
+          <a href="../photography.html" class="dropdown-item">photography</a>
+          <a href="../p5js.html" class="dropdown-item">p5.js</a>
+          <a href="../gamedesign.html" class="dropdown-item">game design</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="project-nav">
+    <a href="../design.html" class="back-link">←</a>
+  </nav>
+  
+  <main class="project-container">
+    <div class="project-content">
+      <div class="project-info-section">
+        <h1>Lines in The Shed, Ryan Tracy</h1>
+        
+        <div class="meta-table">
+          <table>
+            <tr><td>Year</td><td>2023</td></tr>
+            <tr><td>Kind</td><td>Book Design, Logo Design, Typography, Product Photography</td></tr>
+            <tr><td>Tools</td><td>InDesign, Photoshop, Illustrator</td></tr>
+            <tr><td>Collaborators</td><td>none</td></tr>
+            <tr><td>Website</td><td><a href="https://www.ryantracy.com/books" target="_blank">https://www.ryantracy.com/books</a></td></tr>
+          </table>
+        </div>
+        
+        
+        
+        <div class="project-description">
+            <p>
+                Lines in the Shed is a poetry book designed for writer and scholar Ryan Tracy, whose work explores social fracture, environmental anxiety, intimacy, and queer identity within contemporary American life.
+            </p>
+
+            
+          <h3>Design Concept</h3>
+          <p>The design is built around the image of a shed in a state of decay. The broken, overgrown, and eroded shed reflects the emotional and social landscapes of the poems.</p>
+          
+          <h3>Color & Material</h3>
+          <p>The color of the book responds directly to recurring imagery in the text, including references to radiation, artificial light, and environmental contamination, as well as organic elements such as moss.</p>
+          
+          <h3>Typography & Identity</h3>
+          <p>Typography plays a central conceptual role. The title treatment is inspired by label maker tape, a utilitarian material used to mark tools and objects in a shed. The type grounds the book in a traditionally masculine space while reframing that space as a private site for drag, self-expression, and transformation. In this context, a system meant for categorization becomes a marker of identity.</p>
+        </div>
+      </div>
+      
+      <div class="project-gallery">
+        <!-- <h3>Project Images</h3> -->
+        <div class="image-grid" id="imageGrid">
+          <!-- Images will be loaded dynamically -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Image Modal -->
+  <div id="imageModal" class="modal">
+    <div class="modal-overlay" onclick="closeModal()">
+      <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <img id="modalImage" src="" alt="">
+        <div class="modal-nav">
+          <button id="prevBtn" onclick="previousImage()">&lt;</button>
+          <button id="nextBtn" onclick="nextImage()">&gt;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/header-dropdown.js"></script>
+  <script>
+    const projectImages = [
+      "../assets/img/design-popup/lines/lines (1).JPG",
+      "../assets/img/design-popup/lines/lines (2).JPG",
+      "../assets/img/design-popup/lines/lines (3).JPG",
+      "../assets/img/design-popup/lines/lines (4).JPG",
+      "../assets/img/design-popup/lines/lines (5).JPG",
+      "../assets/img/design-popup/lines/lines (6).JPG",
+      "../assets/img/design-popup/lines/lines (7).JPG",
+      "../assets/img/design-popup/lines/lines (8).JPG"
+    ];
+
+    let currentImageIndex = 0;
+
+    function loadImages() {
+      const grid = document.getElementById('imageGrid');
+      const imagesHTML = projectImages.map((img, index) => `
+        <div class="image-item" onclick="openModal(${index})">
+          <img src="${img}" alt="Project image ${index + 1}" loading="lazy">
+        </div>
+      `).join('');
+      
+      grid.innerHTML = imagesHTML;
+    }
+
+    function openModal(index) {
+      currentImageIndex = index;
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImage');
+      
+      modal.style.display = 'block';
+      modalImg.src = projectImages[index];
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('imageModal');
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    function nextImage() {
+      currentImageIndex = (currentImageIndex + 1) % projectImages.length;
+      document.getElementById('modalImage').src = projectImages[currentImageIndex];
+    }
+
+    function previousImage() {
+      currentImageIndex = (currentImageIndex - 1 + projectImages.length) % projectImages.length;
+      document.getElementById('modalImage').src = projectImages[currentImageIndex];
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (document.getElementById('imageModal').style.display === 'block') {
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') previousImage();
+      }
+    });
+
+    // Load images on page load
+    document.addEventListener('DOMContentLoaded', loadImages);
+  </script>
+</body>
+</html>

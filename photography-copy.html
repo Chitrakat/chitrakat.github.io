@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Photography | Suyash Chitrakar</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/header.css">
+  <link rel="stylesheet" href="assets/css/sidebar.css">
+  <script src="assets/js/photo-carousel.js"></script>
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-left">
+      <a href="index.html" class="site-title">suyash chitrakar</a>
+    </div>
+    <div class="header-right">
+      <div class="dropdown">
+        <button class="dropdown-toggle" id="dropdownMenuButton">my work &#x25BC;</button>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="design.html" class="dropdown-item">design</a>
+          <a href="photography.html" class="dropdown-item">photography</a>
+          <a href="p5js.html" class="dropdown-item">p5.js</a>
+          <a href="gamedesign.html" class="dropdown-item">game design</a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="design-layout">
+    <aside class="design-sidebar">
+      <ul>
+        <li class="sidebar-item active" data-file="photography-js.html">gai jatra</li>
+        <li class="sidebar-item" data-file="photography/nepals-street.html">nepal's street</li>
+        <li class="sidebar-item" data-file="photography/america.html">american scenes</li>
+        <li class="sidebar-item" data-file="photography/swoyambhu.html">swoyambhu</li>
+        <li class="sidebar-item" data-file="photography/moving-by.html">moving by</li>
+        <li class="sidebar-item" data-file="photography/abstractions.html">abstractions</li>
+      </ul>
+    </aside>
+    <section class="design-content" id="design-content">
+      <!-- Content will be loaded here -->
+    </section>
+  </div>
+
+  <script src="assets/js/header-dropdown.js"></script>
+  <script src="assets/js/photography-carousel.js"></script>
+  <script>
+    async function loadP5jsContent(file) {
+      const contentArea = document.getElementById('design-content');
+      contentArea.innerHTML = 'Loading...';
+      try {
+        // Clean up previous carousel
+        if (typeof cleanupCarousel === 'function') {
+          cleanupCarousel();
+        }
+        
+        const res = await fetch(file);
+        if (!res.ok) throw new Error('Not found');
+        const html = await res.text();
+        contentArea.innerHTML = html;
+        
+        // Initialize carousel after content loads
+        setTimeout(() => {
+          if (typeof initializeCarousel === 'function') {
+            initializeCarousel();
+          }
+          // Load dynamic images
+          if (typeof loadCarouselImages === 'function') {
+            loadCarouselImages();
+          }
+        }, 100);
+      } catch (e) {
+        contentArea.innerHTML = '<div style="color:#f66">Could not load content.</div>';
+      }
+    }
+    document.querySelectorAll('.sidebar-item').forEach(item => {
+      item.addEventListener('click', function() {
+        document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+        loadP5jsContent(this.getAttribute('data-file'));
+      });
+    });
+    loadP5jsContent(document.querySelector('.sidebar-item.active').getAttribute('data-file'));
+  </script>
+  <style>
+    /* Photography page specific styles can go here */
+  </style>
+</body>
+</html>

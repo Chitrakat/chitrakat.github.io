@@ -3,6 +3,8 @@
 :root {
 	--primary-bg: #000000;
 	--accent: #22223b;
+	--white-bg:#ffffff;
+	--dark-text:#000000;
 	--button-bg: #4f8cff;
 	--button-hover: #2563eb;
 	--text: #ffffff;
@@ -40,24 +42,7 @@ body {
 .text-5xl { font-size: 3rem; line-height: 1.9; }
 .text-6xl { font-size: 4rem; line-height: 1.9; }
 
-/* Typography for specific content */
-.photo-detail h2 {
-	font-size: 2rem;
-	margin-bottom: 1rem;
-	font-weight: 600;
-}
 
-.photo-detail p {
-	font-size: 1.1rem;
-	line-height: 1.6;
-	color: #bfbfbf;
-	margin-bottom: 1.5rem;
-}
-
-.photo-description-column {
-	max-width: 70%;
-	margin: 2rem 0;
-}
 
 /* Hero Section */
 .hero {

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VOL. 55 NO. 2 - Design | Suyash Chitrakar</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/header.css">
+  <link rel="stylesheet" href="../assets/css/project-page.css">
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-left">
+      <a href="../index.html" class="site-title">suyash chitrakar</a>
+    </div>
+    <div class="header-right">
+      <div class="dropdown">
+        <button class="dropdown-toggle" id="dropdownMenuButton">my work &#x25BC;</button>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="../design.html" class="dropdown-item">design</a>
+          <a href="../photography.html" class="dropdown-item">photography</a>
+          <a href="../p5js.html" class="dropdown-item">p5.js</a>
+          <a href="../gamedesign.html" class="dropdown-item">game design</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="project-nav">
+    <a href="../design.html" class="back-link">←</a>
+  </nav>
+  
+  <main class="project-container">
+    <div class="project-content">
+      <div class="project-info-section">
+        <h1>Catch Magazine: VOL. 55 NO. 2</h1>
+
+        <p>
+          <em>Catch</em> is an undergraduate literary magazine published by Knox College in Galesburg, Illinois. Established in 1922 and officially named <em>Catch</em> in 1969, it is the oldest continuously published undergraduate literary journal in the United States. The magazine is funded by Knox College and run entirely by a student-led collective, publishing undergraduate fiction, poetry, creative nonfiction, drama, music, and visual art.
+        </p>
+        
+        <div class="meta-table">
+          <table>
+            <tr><td>Year</td><td>2023</td></tr>
+            <tr><td>Kind</td><td>Book Design, Spread Design, Typography, Layout, Stickers</td></tr>
+            <tr><td>Tools</td><td>InDesign, Photoshop, Illustrator</td></tr>
+            <tr><td>Collaborators</td><td>none</td></tr>
+            <tr><td>Website</td><td><a href="https://www.knoxcatch.org/vol-55-no-2" target="_blank">https://www.knoxcatch.org/vol-55-no-2</a></td></tr>
+          </table>
+        </div>
+          
+        <div class="project-description">
+          <h3>Behind the Design</h3>
+
+          <p>
+            For Volume 55, Number 2, the editorial staff selected a theme inspired by a specific method of printing: 
+            risograph.
+          </p>
+
+          <p>
+            The visuals draws from its characteristics such as rough texture, visible layering and imperfect registration. The goal was not to simulate risograph printing exactly, but to capture its material energy and sense of process within the constraints of student production.
+          </p>
+
+          <h3>Custom stickers</h3>
+          <p>
+            In addition to the magazine layout, a series of custom stickers was designed as part of the issue visual identity. Given full creative freedom, the sticker designs were kept minimal and conceptually tied to the division of content within the magazine. Each sticker functions as a modular extension of the publication, reinforcing the theme while remaining accessible and playful.
+          </p>
+
+          <p>
+            Together, the issue reflects the collaborative nature of <em>Catch</em> and the realities of student-led publishing, embracing experimentation, limitation, and collective authorship as core elements of the design.
+          </p> 
+        </div>
+      </div>
+      
+      <div class="project-gallery">
+        <!-- <h3>Project Images</h3> -->
+        <div class="image-grid" id="imageGrid">
+          <!-- Images will be loaded dynamically -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Image Modal -->
+  <div id="imageModal" class="modal">
+    <div class="modal-overlay" onclick="closeModal()">
+      <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <img id="modalImage" src="" alt="">
+        <div class="modal-nav">
+          <button id="prevBtn" onclick="previousImage()">&lt;</button>
+          <button id="nextBtn" onclick="nextImage()">&gt;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/header-dropdown.js"></script>
+  <script>
+    const projectImages = [
+      "../assets/img/design-popup/vol55-2/vol55-2-01.jpg",
+      "../assets/img/design-popup/vol55-2/vol55-2-02.jpg",
+      "../assets/img/design-popup/vol55-2/vol55-2-03.jpg",
+      "../assets/img/design-popup/vol55-2/vol55-2-04.jpg",
+      "../assets/img/design-popup/vol55-2/vol55-2-05.jpg",
+      "../assets/img/design-popup/vol55-2/vol55-2-06.jpg",
+      "../assets/img/design-popup/vol55-2/vol55-2-07.jpg",
+      "../assets/img/design-popup/vol55-2/vol55-2-08.jpg"
+    ];
+
+    let currentImageIndex = 0;
+
+    function loadImages() {
+      const grid = document.getElementById('imageGrid');
+      const imagesHTML = projectImages.map((img, index) => `
+        <div class="image-item" onclick="openModal(${index})">
+          <img src="${img}" alt="Project image ${index + 1}" loading="lazy">
+        </div>
+      `).join('');
+      
+      grid.innerHTML = imagesHTML;
+    }
+
+    function openModal(index) {
+      currentImageIndex = index;
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImage');
+      
+      modal.style.display = 'block';
+      modalImg.src = projectImages[index];
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('imageModal');
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    function nextImage() {
+      currentImageIndex = (currentImageIndex + 1) % projectImages.length;
+      document.getElementById('modalImage').src = projectImages[currentImageIndex];
+    }
+
+    function previousImage() {
+      currentImageIndex = (currentImageIndex - 1 + projectImages.length) % projectImages.length;
+      document.getElementById('modalImage').src = projectImages[currentImageIndex];
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (document.getElementById('imageModal').style.display === 'block') {
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') previousImage();
+      }
+    });
+
+    // Load images on page load
+    document.addEventListener('DOMContentLoaded', loadImages);
+  </script>
+</body>
+</html>
