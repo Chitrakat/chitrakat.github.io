@@ -7,11 +7,12 @@
 	font-weight: 600;
 }
 
-.gallery-title-dark {
-	font-size: 5rem;
+.gallery-title {
+	font-size: 10rem;
+	/* color: var(--); */
 	font-weight: 700;
-	margin-bottom: 1.5rem;
-	color: var(--dark-text);
+	/* margin-bottom: 1.5rem; */
+	color: var(--black);
 }
 
 .photo-detail p {
@@ -22,12 +23,18 @@
 }
 
 .photo-description-column {
-	max-width: 70%;
+	max-width: 500px;
 	margin: 2rem 0;
+	padding-left: 10vw;
+	color: var(--black);
 }
 
 .photo-description-column-dark {
-	max-width: 50%;
+	max-width: 33%;
 	font-size: 1.5rem;
-	color: var(--dark-text);
+	color: var(--black);
+}
+
+.photography-page {
+	background: #ffffff !important;
 }

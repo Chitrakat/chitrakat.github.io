@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+  
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +12,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Hubot+Sans:ital,wght@0,200..900;1,200..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/header.css">
+  <link rel="stylesheet" href="assets/css/photography-gallery.css">
+  <link rel="stylesheet" href="assets/css/photography.css">
 </head>
+
 <body>
   <!-- Fixed Header -->
   <header class="main-header">
@@ -25,9 +29,9 @@
           <a href="design.html" class="dropdown-item">design</a>
           <a href="photography.html" class="dropdown-item">photography</a>
           <a href="p5js.html" class="dropdown-item">p5.js</a>
-          <a href="plotter.html" class="dropdown-item">plotter</a>
-          <a href="gamedesign.html" class="dropdown-item">game design</a>
-          <a href="drawing.html" class="dropdown-item">drawing</a>
+          <!-- <a href="plotter.html" class="dropdown-item">plotter</a> -->
+          <!-- <a href="gamedesign.html" class="dropdown-item">game design</a> -->
+          <!-- <a href="drawing.html" class="dropdown-item">drawing</a> -->
         </div>
       </div>
     </div>
@@ -36,11 +40,11 @@
 
   <!-- Interactive Photo Gallery -->
   <main class="gallery-container">
-    <div class ="gallery-title-dark">
+    <div class ="gallery-title">
     Gai Jatra
     </div>
     
-    <div class="photo-description-column-dark">
+    <div class="photo-description-column">
     <p>
       Gai Jatra is a festival celebrated by the Newari people of Kathmandu Valley.
       The festival is celebrated in honour of their immediate relatives who have died during the previous year.
@@ -58,306 +62,6 @@
     </div>
   </main>
 
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-      background-color: #ffffff;
-    }
-    
-    .gallery-container {
-      width: 100vw;
-      min-height: calc(100vh - 38px);
-      margin-top: 38px;
-      padding: 80px 60px;
-      box-sizing: border-box;
-    }
-    
-    .photo-grid {
-      align-items: center;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 40px;
-      max-width: 80vw;
-      margin: 0 auto;
-    }
-    
-    .photo-item {
-      height: 200px;
-      overflow: hidden;
-      cursor: pointer;
-      opacity: 0;
-      transition: opacity 1.5s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .photo-item.mouse-nearby {
-      opacity: 1;
-      transition: opacity 1.5s ease;
-    }    
-    /* Enlarged image overlay */
-    .image-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-    
-    .image-overlay.visible {
-      opacity: 1;
-      pointer-events: all;
-    }
-    
-    .image-overlay img {
-      max-width: 50vw;
-      max-height: 50vh;
-      object-fit: contain;
-      cursor: pointer;
-    }    
-    .photo-item img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      display: block;
-    }
-    
-    .loading {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #666;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 18px;
-    }
-    
-    /* Ensure no margins or padding interfere */
-    * {
-      box-sizing: border-box;
-    }
-  </style>
-  
-  <script>
-    class InteractivePhotoGallery {
-      constructor() {
-        this.photoGrid = document.getElementById('photoGrid');
-        this.images = [];
-        this.mouseX = 0;
-        this.mouseY = 0;
-        this.proximityDistance = 200;
-        this.enlargedOverlay = null;
-        
-        this.init();
-      }
-      
-      async init() {
-        // console.log('Initializing InteractivePhotoGallery');
-        this.showLoading();
-        await this.loadImages();
-        // console.log('Images loaded, count:', this.images.length);
-        this.hideLoading();
-        this.createOverlay();
-        this.setupEventListeners();
-        this.updateImageStates();
-      }
-      
-      showLoading() {
-        this.photoGrid.innerHTML = '<div class="loading">Loading Gai Jatra photographs...</div>';
-      }
-      
-      hideLoading() {
-        // Only remove loading message, not all content
-        const loadingDiv = this.photoGrid.querySelector('.loading');
-        if (loadingDiv) {
-          loadingDiv.remove();
-        }
-      }
-      
-      async loadImages() {
-        // console.log('Starting to load images...');
-        // Gai Jatra images are numbered 33-64
-        const imageNumbers = [];
-        for (let i = 33; i <= 64; i++) {
-          imageNumbers.push(i);
-        }
-        // console.log('Image numbers to load:', imageNumbers);
-        
-        // Test: Create a simple div first
-        // const testDiv = document.createElement('div');
-        // testDiv.className = 'photo-item';
-        // testDiv.innerHTML = 'TEST ITEM';
-        // testDiv.style.background = 'purple';
-        // this.photoGrid.appendChild(testDiv);
-        // console.log('Test div added');
-        
-        const imagePromises = imageNumbers.map(num => this.createImageElement(num));
-        // console.log('Created image promises, count:', imagePromises.length);
-        
-        const results = await Promise.all(imagePromises);
-        // console.log('Promise.all resolved, results count:', results.length);
-        
-        this.images = results.filter(result => result !== null);
-        // console.log('After filtering, images count:', this.images.length);
-        
-        // Add all images to the grid
-        this.images.forEach((imgData, index) => {
-          // console.log('Adding image to grid:', index, imgData.number, imgData.element);
-          this.photoGrid.appendChild(imgData.element);
-          
-          // Add click event listener to image
-          if (imgData.img) {
-            imgData.img.addEventListener('click', (e) => {
-              e.stopPropagation();
-              this.enlargeImage(imgData.img.src);
-            });
-          }
-          
-          // Debug: Check if image is actually there
-          // setTimeout(() => {
-          //   const rect = imgData.element.getBoundingClientRect();
-          //   console.log(`Image ${imgData.number} dimensions:`, {
-          //     width: rect.width,
-          //     height: rect.height,
-          //     hasImg: !!imgData.img,
-          //     visible: window.getComputedStyle(imgData.element).opacity
-          //   });
-          // }, 100);
-        });
-        
-        // console.log('All images added to grid');
-      }
-      
-      createImageElement(number) {
-        return new Promise((resolve, reject) => {
-          const img = new Image();
-          const container = document.createElement('div');
-          container.className = 'photo-item';
-          
-          const imagePath = `assets/img/photography/gai-jatra/gai-jatra-${number}.jpg`;
-          // console.log('Loading image:', imagePath);
-          
-          img.onload = () => {
-            // console.log('Successfully loaded:', imagePath);
-            container.appendChild(img);
-            resolve({
-              element: container,
-              number: number,
-              img: img
-            });
-          };
-          
-          img.onerror = (e) => {
-            // console.error('Failed to load image:', imagePath, e);
-            // Create a placeholder for failed images
-            container.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;color:#666;font-size:12px;">Image ${number}<br>Failed to load</div>`;
-            resolve({
-              element: container,
-              number: number,
-              img: null
-            });
-          };
-          
-          img.src = imagePath;
-          img.alt = `Gai Jatra ${number}`;
-        });
-      }
-      
-      createOverlay() {
-        this.enlargedOverlay = document.createElement('div');
-        this.enlargedOverlay.className = 'image-overlay';
-        document.body.appendChild(this.enlargedOverlay);
-        
-        // Click outside image to close
-        this.enlargedOverlay.addEventListener('click', (e) => {
-          if (e.target === this.enlargedOverlay) {
-            this.closeEnlargedImage();
-          }
-        });
-        
-        // Hover outside to close
-        this.enlargedOverlay.addEventListener('mouseleave', () => {
-          this.closeEnlargedImage();
-        });
-      }
-      
-      enlargeImage(imageSrc) {
-        const img = document.createElement('img');
-        img.src = imageSrc;
-        img.addEventListener('click', () => {
-          this.closeEnlargedImage();
-        });
-        
-        this.enlargedOverlay.innerHTML = '';
-        this.enlargedOverlay.appendChild(img);
-        this.enlargedOverlay.classList.add('visible');
-      }
-      
-      closeEnlargedImage() {
-        this.enlargedOverlay.classList.remove('visible');
-        setTimeout(() => {
-          this.enlargedOverlay.innerHTML = '';
-        }, 300);
-      }
-      
-      setupEventListeners() {
-        // Mouse movement tracking
-        document.addEventListener('mousemove', (e) => {
-          this.mouseX = e.clientX;
-          this.mouseY = e.clientY;
-          this.updateImageStates();
-        });
-        
-        // Window resize
-        window.addEventListener('resize', () => {
-          this.updateImageStates();
-        });
-        
-        // ESC key to close enlarged image
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape') {
-            this.closeEnlargedImage();
-          }
-        });
-      }
-      
-      updateImageStates() {
-        this.images.forEach(imgData => {
-          if (!imgData.img) return;
-          
-          const rect = imgData.element.getBoundingClientRect();
-          const centerX = rect.left + rect.width / 2;
-          const centerY = rect.top + rect.height / 2;
-          
-          const distance = Math.sqrt(
-            Math.pow(this.mouseX - centerX, 2) + 
-            Math.pow(this.mouseY - centerY, 2)
-          );
-          
-          if (distance <= this.proximityDistance) {
-            imgData.element.classList.add('mouse-nearby');
-          } else {
-            imgData.element.classList.remove('mouse-nearby');
-          }
-        });
-      }
-      
-    }
-    
-    // Initialize when page loads
-    document.addEventListener('DOMContentLoaded', () => {
-      new InteractivePhotoGallery();
-    });
-  </script>
-
+  <script src="assets/js/photography-gallery.js"></script>
 </body>
 </html>

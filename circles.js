@@ -13,6 +13,7 @@ let libs = ['https://unpkg.com/hydra-synth', 'includes/libs/hydra-synth.js', 'ht
 H.pixelDensity(0.3) // 2x = retina, set <= 1 if laggy
 
 let random1, random2, random3;
+let mouseBoo = false;
 
 let maxCircle, minCircle;
 let mouseCircleSize;
@@ -40,7 +41,7 @@ function windowResized() {
 function setup() {
     createCanvas(windowWidth, windowHeight);
     background(0);
-    frameRate(20);
+    frameRate(15);
 
     rectMode(CENTER);
     textAlign(CENTER, CENTER);
@@ -62,10 +63,13 @@ function setup() {
 
 function draw() {
     noStroke();
-    if(mouseIsPressed){
+    if(mouseBoo){
         clear();
     }
-
+    if(mouseIsPressed){
+        mouseBoo = !mouseBoo;
+    }
+    
     // Colors for mouse circles
     let r = (sin(frameCount * 0.01) * 1.5 + 0.5) * randShade;
     let g = (sin(frameCount * 0.003) * 0.5 + 0.5) * random(50, 100) + random(randShade1);
@@ -79,7 +83,7 @@ function draw() {
     let rSize = (sin(frameCount * 0.009)) * maxCircle + minCircle;
     fill(180 -b2/2, 0, b2, 10);
     circle(width/2, height/2, random3 + rSize);
-    // square(width/2, height/2, random3 + rSize);
+    square(width/2, height/2, random3 + rSize);
 
     // Moving texts
     let tx, ty;
@@ -96,11 +100,11 @@ function draw() {
         ];
     }
 
+    movingObject.separateAll(window.movingObjs);
     for (let obj of window.movingObjs) {
         obj.update();
         obj.display();
     }
-    movingObject.separateAll(window.movingObjs);
 }
 
 class movingObject{
