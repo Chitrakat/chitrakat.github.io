@@ -22,11 +22,14 @@ async function loadCarouselImages() {
   
   // Create image elements
   let loadedCount = 0;
+  const heading = document.querySelector('h2') || document.querySelector('h1');
+  const altPrefix = heading ? heading.textContent : 'Image';
+  
   for (let i = 0; i < images.length; i++) {
     const imageName = images[i];
     const img = document.createElement('img');
     img.src = `${folder}${imageName}.jpg`;
-    img.alt = `${document.querySelector('h2').textContent} ${i + 1}`;
+    img.alt = `${altPrefix} ${i + 1}`;
     img.className = `carousel-image${i === 0 ? ' active' : ''}`;
     
     // Only add images that actually load
@@ -56,7 +59,7 @@ async function smartDiscoverImages(folder) {
   
   if (folderName === 'gai-jatra') {
     patterns = [
-      { prefix: 'gai-jatra-', numbers: [1,2,3,4,5,6,7,8,9,11,12,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64] }
+      { prefix: 'gai-jatra-', numbers: [33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64] }
     ];
   } else if (folderName === 'america') {
     patterns = [

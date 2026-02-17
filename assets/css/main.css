@@ -10,6 +10,7 @@
 	--text: #ffffff;
 	--subtitle: #bfbfbf;
 	--border-radius: 2.5rem;
+	--black: #000000;
 }
 
 *, *::before, *::after {
@@ -50,7 +51,7 @@ body {
 	width: 100vw;
 	display: block;
 	background: var(--primary-bg);
-	padding: 4vh 0 0 4vw; /* Top and left padding only */
+	padding: 1vh 0 0 4vw; /* Top and left padding only */
 	font-family: 'Hubot Sans', Arial, sans-serif;
 }
 
