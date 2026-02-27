@@ -1,52 +1,89 @@
-<section class="project-section">
-  <h1 class="project-title">Interactive p5.js Animations for X-Journal</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Interactive p5.js Animations for X-Journal | Suyash Chitrakar</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/header.css">
+  <link rel="stylesheet" href="../assets/css/project-page.css">
+  <link rel="stylesheet" href="../assets/css/p5js1-design.css">
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-left">
+      <a href="../index.html" class="site-title">suyash chitrakar</a>
+    </div>
+    <div class="header-right">
+      <div class="dropdown">
+        <button class="dropdown-toggle" id="dropdownMenuButton">my work &#x25BC;</button>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="../design.html" class="dropdown-item">design</a>
+          <a href="../photography.html" class="dropdown-item">photography</a>
+          <a href="../p5js.html" class="dropdown-item">p5.js</a>
+          <a href="../gamedesign.html" class="dropdown-item">game design</a>
+        </div>
+      </div>
+    </div>
+  </header>
 
-  <p class="text-base">
-    While working for X-Journal, as their designer and photographer, I also
-    created a series of interactive p5.js animations. The goal of this project was to design visually striking, 
-    motion-driven promotional material to increase student submissions.
+  <nav class="project-nav">
+    <a href="../p5js.html" class="back-link">←</a>
+  </nav>
+  
+  <main class="project-container">
+    <!-- Header Image Section -->
+    <section class="project-section">
+      <div class="header-image-grid">
+        <img src="../assets/img/p5x1/HEADER-(1).png" alt="p5.js Project Header 1" class="header-image">
+        <img src="../assets/img/p5x1/HEADER-(2).png" alt="p5.js Project Header 2" class="header-image">
+      </div>
+    </section>
 
-    <br><br>
-    Using p5.js, I developed dynamic generative animations that reflect the magazine’s 
-    The animations were intentionally minimalist, leveraging motion, rhythm, and color to capture attention without relying on traditional graphic design layouts.
-    experimental and modern identity. The visuals were left slightly abstract, with an x visible at all times.
-    These visuals were optimized for digital distribution 
-    and embedded media, making them suitable for use on social platforms, mailing lists, 
-    and the X-Journal website. 
+    <!-- Project Description Section -->
+    <section class="project-section">
+      <h1 class="project-title">Interactive p5.js Animations for X-Journal</h1>
 
-    <br><br>
-      // supports real-world student-driven publications.
-  </p>
+      <p class="text-base">
+        While working for X-Journal, as their designer and photographer, I also
+        created a series of interactive p5.js animations. The goal of this project was to design visually striking, 
+        motion-driven promotional material to increase student submissions.
 
-  <div class="iframe-wrapper">
-    <iframe 
-      src="https://editor.p5js.org/schitrakar/full/bDfXi2LxMQ" 
-      class="p5-embed"
-      loading="lazy"
-      title="X-Journal Animation 1">
-    </iframe>
+        <br><br>
+        Using p5.js, I developed dynamic generative animations that reflect the magazine's 
+        The animations were intentionally minimalist, leveraging motion, rhythm, and color to capture attention without relying on traditional graphic design layouts.
+        experimental and modern identity. The visuals were left slightly abstract, with an x visible at all times.
+        These visuals were optimized for digital distribution 
+        and embedded media, making them suitable for use on social platforms, mailing lists, 
+        and the X-Journal website. 
 
-    <iframe 
-      src="https://editor.p5js.org/schitrakar/full/L5Z6E6zdp"
-      class="p5-embed"
-      loading="lazy"
-      title="X-Journal Animation 2">
-    </iframe>
-  </div>
+        <br><br>
+          // supports real-world student-driven publications.
+      </p>
+    </section>
 
-  <style>
-    .iframe-wrapper {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      width: 100%;
-    }
+    <!-- Image Grid Section -->
+    <section class="project-section">
+      <div class="image-grid">
+        <img src="../assets/img/p5x1/P5-BURN-(1).png" alt="P5-BURN Effect 1" class="grid-image">
+        <img src="../assets/img/p5x1/P5-BURN-(2).png" alt="P5-BURN Effect 2" class="grid-image">
+        <img src="../assets/img/p5x1/P5-BURN-(3).png" alt="P5-BURN Effect 3" class="grid-image">
+        <img src="../assets/img/p5x1/P5-BURN-(4).png" alt="P5-BURN Effect 4" class="grid-image">
+        <img src="../assets/img/p5x1/P5-DODGE-(1).png" alt="P5-DODGE Effect 1" class="grid-image">
+        <img src="../assets/img/p5x1/P5-DODGE-(2).png" alt="P5-DODGE Effect 2" class="grid-image">
+        <img src="../assets/img/p5x1/P5-DODGE-(3).png" alt="P5-DODGE Effect 3" class="grid-image">
+        <img src="../assets/img/p5x1/P5-DODGE-(4).png" alt="P5-DODGE Effect 4" class="grid-image">
+      </div>
+    </section>
 
-    .p5-embed {
-      width: 100%;
-      height: 600px;
-      border: none;
-      border-radius: 8px;
-    }
-  </style>
-</section>
+    <!-- Try the Sketch Link -->
+    <section class="project-section">
+      <p class="text-base">
+        <a href="https://editor.p5js.org/schitrakar/full/bDfXi2LxMQ" target="_blank" class="sketch-link">Try the sketch here</a>
+      </p>
+    </section>
+  </main>
+
+  <script src="../assets/js/header-dropdown.js"></script>
+</body>
+</html>

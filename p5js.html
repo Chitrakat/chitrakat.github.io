@@ -6,7 +6,7 @@
   <title>p5.js | Suyash Chitrakar</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/header.css">
-  <link rel="stylesheet" href="assets/css/sidebar.css">
+  <link rel="stylesheet" href="assets/css/design-grid.css">
 </head>
 <body>
   <header class="main-header">
@@ -25,46 +25,69 @@
       </div>
     </div>
   </header>
-  <div class="design-layout">
-    <aside class="design-sidebar">
-      <ul>
-        <li class="sidebar-item active" data-file="p5js/p5js1.html">motion graphics for X-Journal</li>
-        <li class="sidebar-item" data-file="p5js/p5js2.html">generative designs</li>
-        <!-- <li class="sidebar-item" data-file="p5js/p5js3.html">p5.js Project 3</li>
-        <li class="sidebar-item" data-file="p5js/p5js4.html">p5.js Project 4</li>
-        <li class="sidebar-item" data-file="p5js/p5js5.html">p5.js Project 5</li> -->
-      </ul>
-    </aside>
-    <section class="design-content" id="design-content">
-      <!-- Content will be loaded here -->
-    </section>
-  </div>
+  
+  <main class="design-grid-container">
+    <div id="loading" class="loading-state">Loading projects...</div>
+    <div id="design-grid" class="design-grid">
+      <!-- Grid items will be loaded here -->
+    </div>
+  </main>
 
   <script src="assets/js/header-dropdown.js"></script>
+  
   <script>
-    async function loadP5jsContent(file) {
-      const contentArea = document.getElementById('design-content');
-      contentArea.innerHTML = 'Loading...';
+    // Project slug mapping for URLs
+    const projectSlugs = {
+      'Interactive p5.js Animations for X-Journal': 'p5js1',
+      'Generative Designs': 'p5js2',
+      'p5.js Project 3': 'p5js3',
+      'p5.js Project 4': 'p5js4',
+      'p5.js Project 5': 'p5js5',
+      'App Design': 'app-design'
+    };
+
+    async function loadP5jsProjects() {
       try {
-        const res = await fetch(file);
-        if (!res.ok) throw new Error('Not found');
-        const html = await res.text();
-        contentArea.innerHTML = html;
-      } catch (e) {
-        contentArea.innerHTML = '<div style="color:#f66">Could not load content.</div>';
+        const response = await fetch('p5js-projects-data.json');
+        if (!response.ok) throw new Error('Failed to load projects');
+        
+        const projects = await response.json();
+        const gridContainer = document.getElementById('design-grid');
+        const loadingState = document.getElementById('loading');
+        
+        // Generate grid items
+        const gridHTML = projects.map(project => {
+          const slug = projectSlugs[project.title];
+          const coverImage = project.img;
+          const projectUrl = `p5js/${slug}.html`;
+          
+          return `
+            <div class="grid-item">
+              <a href="${projectUrl}" class="project-link">
+                <div class="project-image">
+                  <img src="${coverImage}" alt="${project.title}" loading="lazy">
+                  <div class="image-overlay"></div>
+                </div>
+                <div class="project-info">
+                  <h3 class="project-title">${project.title}</h3>
+                  <span class="project-year">${project.year}</span>
+                </div>
+              </a>
+            </div>
+          `;
+        }).join('');
+        
+        gridContainer.innerHTML = gridHTML;
+        loadingState.style.display = 'none';
+        
+      } catch (error) {
+        console.error('Error loading projects:', error);
+        document.getElementById('loading').innerHTML = 'Failed to load projects.';
       }
     }
-    document.querySelectorAll('.sidebar-item').forEach(item => {
-      item.addEventListener('click', function() {
-        document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
-        this.classList.add('active');
-        loadP5jsContent(this.getAttribute('data-file'));
-      });
-    });
-    loadP5jsContent(document.querySelector('.sidebar-item.active').getAttribute('data-file'));
+
+    // Load projects when page loads
+    document.addEventListener('DOMContentLoaded', loadP5jsProjects);
   </script>
-  <style>
-    /* p5.js page specific styles can go here */
-  </style>
 </body>
 </html>
