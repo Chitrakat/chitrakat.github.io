@@ -1,0 +1,148 @@
+/* Header Image Grid - 2 columns side-by-side */
+.header-image-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.header-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+}
+
+/* Image Grid - 3 columns responsive */
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin: 40px 0;
+  width: 100%;
+}
+
+.grid-image {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.grid-image:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Project Title - Larger */
+.project-title {
+  font-size: 3rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+/* Responsive Design */
+@media (max-width: 1099px) {
+  .image-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 799px) {
+  .header-image-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .image-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .grid-image {
+    height: 240px;
+  }
+
+  .project-title {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 599px) {
+  .header-image-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .image-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .grid-image {
+    height: 200px;
+  }
+
+  .header-image {
+    height: 280px;
+  }
+
+  .project-title {
+    font-size: 1.8rem;
+  }
+}
+
+.iframe-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.p5-embed {
+  width: 100%;
+  height: 600px;
+  border: none;
+  border-radius: 8px;
+}
+
+.sketch-link {
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.sketch-link:hover {
+  opacity: 0.7;
+}
+    /* Full-Width Header Section */
+    .full-width-header {
+      width: 100%;
+      margin-bottom: 40px;
+    }
+
+    .full-header-image {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      display: block;
+      border-radius: 0;
+    }
+
+    @media (max-width: 799px) {
+      .full-width-header {
+        margin-bottom: 30px;
+      }
+    }
+
+    @media (max-width: 599px) {
+      .full-width-header {
+        margin-bottom: 20px;
+      }
+    }
