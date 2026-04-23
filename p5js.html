@@ -38,12 +38,11 @@
   <script>
     // Project slug mapping for URLs
     const projectSlugs = {
-      'Interactive p5.js Animations for X-Journal': 'p5js1',
+      'App Design': 'app-design',
+      'Interactive Identity for X-Journal I': 'p5js1',
       'Generative Designs': 'p5js2',
-      'p5.js Project 3': 'p5js3',
-      'p5.js Project 4': 'p5js4',
-      'p5.js Project 5': 'p5js5',
-      'App Design': 'app-design'
+      'Interactive Identity for X-Journal II': 'p5js3',
+      'Hierarchy': 'p5js4'
     };
 
     async function loadP5jsProjects() {
@@ -59,11 +58,11 @@
         const gridHTML = projects.map(project => {
           const slug = projectSlugs[project.title];
           const coverImage = project.img;
-          const projectUrl = `p5js/${slug}.html`;
+          const projectUrl = slug ? `p5js/${slug}.html` : '#';
           
           return `
             <div class="grid-item">
-              <a href="${projectUrl}" class="project-link">
+              <a href="${projectUrl}" class="project-link" ${slug ? '' : 'aria-disabled="true" tabindex="-1"'}>
                 <div class="project-image">
                   <img src="${coverImage}" alt="${project.title}" loading="lazy">
                   <div class="image-overlay"></div>
