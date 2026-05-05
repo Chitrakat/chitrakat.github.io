@@ -1,16 +1,89 @@
-<div class="photo-detail">
-  <h2>Nepal's Street</h2>
-  <p>Street photography capturing the essence of Nepal's urban life.</p>
-  
-  <div class="photo-carousel" data-folder="../assets/img/photography/nepals-street/">
-    <div class="carousel-container">
-      <div class="carousel-track" id="carousel-track">
-        <!-- Images will be loaded dynamically here -->
-      </div>
-      <button class="carousel-btn prev-btn" id="prev-btn">&#8249;</button>
-      <button class="carousel-btn next-btn" id="next-btn">&#8250;</button>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nepal's Streets | Suyash Chitrakar</title>
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <link rel="stylesheet" href="../assets/css/photography-project.css">
+</head>
+<body class="photo-project-page">
+  <header class="main-header">
+    <div class="header-left">
+      <a href="../index.html" class="site-title">suyash chitrakar</a>
     </div>
-  </div>
-</div>
+    <div class="header-right">
+      <div class="dropdown">
+        <button class="dropdown-toggle" id="dropdownMenuButton">my work &#x25BC;</button>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="../design.html" class="dropdown-item">design</a>
+          <a href="../photography.html" class="dropdown-item">photography</a>
+          <a href="../p5js.html" class="dropdown-item">p5.js</a>
+          <a href="../gamedesign.html" class="dropdown-item">game design</a>
+        </div>
+      </div>
+    </div>
+  </header>
 
-<link rel="stylesheet" href="../assets/css/carousel.css">
+  <div class="photo-project-layout">
+    <aside class="photo-sidebar">
+      <div class="photo-sidebar-section">
+        <p class="photo-sidebar-category">Photography</p>
+        <a href="america.html" class="photo-sidebar-link">Empty America</a>
+        <a href="self-without-the-self.html" class="photo-sidebar-link">Self Without the Self</a>
+        <a href="stills-from-an-unmade-movie.html" class="photo-sidebar-link">Stills from an unmade movie</a>
+        <a href="dream-sequence.html" class="photo-sidebar-link">Dream Sequence</a>
+        <a href="gai-jatra.html" class="photo-sidebar-link">Gai Jatra</a>
+        <a href="nepals-street.html" class="photo-sidebar-link active">Nepal's Streets</a>
+      </div>
+      <div class="photo-sidebar-section">
+        <p class="photo-sidebar-category">Commercial Photography</p>
+        <a href="jazz-at-knox.html" class="photo-sidebar-link">Jazz at Knox</a>
+        <a href="dance-at-knox.html" class="photo-sidebar-link">Dance at Knox</a>
+        <a href="portraits-of-graduation.html" class="photo-sidebar-link">Portraits of Graduation</a>
+      </div>
+    </aside>
+
+    <main class="photo-main">
+      <h1 class="photo-project-title">Nepal's Streets</h1>
+      <p class="photo-project-desc">I'd visit Nepal every summer because I missed home. This is an ongoing project capturing a mixture of moments from worship, boredom, and daily life, focusing on the dichotomy of age.</p>
+
+      <div class="photo-grid" id="photo-grid"></div>
+    </main>
+  </div>
+
+  <div id="photo-lightbox" class="photo-lightbox">
+    <button class="photo-lightbox-close" id="photo-lightbox-close">&times;</button>
+    <button class="photo-lightbox-prev" id="photo-lightbox-prev">&#8249;</button>
+    <img id="photo-lightbox-img" class="photo-lightbox-img" src="" alt="">
+    <button class="photo-lightbox-next" id="photo-lightbox-next">&#8250;</button>
+  </div>
+
+  <script src="../assets/js/header-dropdown.js"></script>
+  <script src="../assets/js/photography-grid.js"></script>
+  <script>
+    (function () {
+      var folder = '../assets/img/photography/nepals-street/';
+      var images = [
+        'sammy-073.jpg', 'sammy-122.jpg', 'sammy-123.jpg', 'sammy-124.jpg',
+        'sammy-126.jpg', 'sammy-127.jpg', 'sammy-136.jpg', 'sammy-137.jpg',
+        'sammy-139.jpg', 'sammy-155.jpg', 'sammy-156.jpg', 'sammy-160.jpg',
+        'sammy-164.jpg',
+        'sammy-351.jpg'
+      ];
+
+      var grid = document.getElementById('photo-grid');
+      images.forEach(function (name) {
+        var img = document.createElement('img');
+        img.src = folder + name;
+        img.alt = "Nepal's Streets — " + name;
+        img.className = 'photo-grid-img';
+        img.loading = 'lazy';
+        grid.appendChild(img);
+      });
+    }());
+  </script>
+</body>
+</html>
+
+
