@@ -6,31 +6,19 @@
   <title>Design | Suyash Chitrakar</title>
   <link rel="stylesheet" href="assets/css/site.css">
 </head>
-<body>
-  <header class="main-header">
-    <div class="header-left">
-      <a href="index.html" class="site-title">suyash chitrakar</a>
-    </div>
-    <div class="header-right">
-      <div class="dropdown">
-        <button class="dropdown-toggle" id="dropdownMenuButton">my work &#x25BC;</button>
-        <div class="dropdown-menu" id="dropdownMenu">
-          <a href="design.html" class="dropdown-item">design</a>
-          <a href="photography.html" class="dropdown-item">photography</a>
-          <a href="p5js.html" class="dropdown-item">p5.js</a>
-          <a href="gamedesign.html" class="dropdown-item">game design</a>
-        </div>
-      </div>
-    </div>
-  </header>
+<body class="work-list-page" data-site-root="." data-site-section="design">
   
-  <main class="design-grid-container">
+  <main class="work-list-main">
+    <section class="work-list-intro">
+      <h1 class="work-list-title">Publication Design</h1>
+      <p class="work-list-subtitle">Books, literary journals, and editorial systems shaped through layout, typography, and physical sequencing.</p>
+    </section>
     <div id="loading" class="loading-state">Loading projects...</div>
-    <div id="design-grid" class="design-grid">
-      <!-- Grid items will be loaded here -->
-    </div>
+    <section id="design-grid" class="work-list-rows"></section>
   </main>
 
+  <script src="assets/js/work-listings.js"></script>
+  <script src="assets/js/site-header.js"></script>
   <script src="assets/js/header-dropdown.js"></script>
   
   <script>
@@ -52,39 +40,39 @@
       'Lines in The Shed, Ryan Tracy': 'assets/img/design-cover/lines.jpg'
     };
 
+    const designDescriptions = {
+      'Catch Magazine: VOL. 55 NO. 2': 'Editorial design and typography for a literary issue built around risograph texture and modular inserts.',
+      'Catch Magazine: VOL. 56 NO. 1': 'Publication design balancing scanner-based imagery, scale shifts, and paced editorial hierarchy.',
+      'Catch Magazine: VOL. 56 NO. 2': 'A postcard-format issue exploring unbound reading, circulation, and collaborative materiality.',
+      'X-JOURNAL': 'Cross-disciplinary journal design pairing artwork documentation with a restrained typographic system.',
+      'Lines in The Shed, Ryan Tracy': 'A poetry book whose visual identity grows out of decay, label-maker typography, and object-making.'
+    };
+
     async function loadDesignProjects() {
       try {
         const response = await fetch('design-popup/carousel-data.json');
         if (!response.ok) throw new Error('Failed to load projects');
         
         const projects = await response.json();
-        const gridContainer = document.getElementById('design-grid');
         const loadingState = document.getElementById('loading');
         
-        // Generate grid items
-        const gridHTML = projects.map(project => {
+        const listingItems = projects.map(project => {
           const slug = projectSlugs[project.title];
           const coverImage = coverImages[project.title];
-          const projectUrl = `design/${slug}.html`;
-          
-          return `
-            <div class="grid-item">
-              <a href="${projectUrl}" class="project-link">
-                <div class="project-image">
-                  <img src="${coverImage}" alt="${project.title}" loading="lazy">
-                  <div class="image-overlay"></div>
-                </div>
-                <div class="project-info">
-                  <h3 class="project-title">${project.title}</h3>
-                  <span class="project-year">${project.year}</span>
-                </div>
-              </a>
-            </div>
-          `;
-        }).join('');
-        
-        gridContainer.innerHTML = gridHTML;
-        loadingState.style.display = 'none';
+          return {
+            href: slug ? `design/${slug}.html` : '',
+            title: project.title,
+            image: coverImage,
+            description: designDescriptions[project.title] || '',
+            tag: `${project.year} | ${project.kind}`
+          };
+        });
+
+        window.renderWorkListing({
+          containerId: 'design-grid',
+          loadingId: 'loading',
+          items: listingItems
+        });
         
       } catch (error) {
         console.error('Error loading projects:', error);

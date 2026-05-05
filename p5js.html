@@ -6,31 +6,19 @@
   <title>p5.js | Suyash Chitrakar</title>
   <link rel="stylesheet" href="assets/css/site.css">
 </head>
-<body>
-  <header class="main-header">
-    <div class="header-left">
-      <a href="index.html" class="site-title">suyash chitrakar</a>
-    </div>
-    <div class="header-right">
-      <div class="dropdown">
-        <button class="dropdown-toggle" id="dropdownMenuButton">my work &#x25BC;</button>
-        <div class="dropdown-menu" id="dropdownMenu">
-          <a href="design.html" class="dropdown-item">design</a>
-          <a href="photography.html" class="dropdown-item">photography</a>
-          <a href="p5js.html" class="dropdown-item">p5.js</a>
-          <a href="gamedesign.html" class="dropdown-item">game design</a>
-        </div>
-      </div>
-    </div>
-  </header>
+<body class="work-list-page" data-site-root="." data-site-section="p5js">
   
-  <main class="design-grid-container">
+  <main class="work-list-main">
+    <section class="work-list-intro">
+      <h1 class="work-list-title">Creative Coding</h1>
+      <p class="work-list-subtitle">Interactive and generative projects spanning identity systems, interfaces, and algorithmic image-making.</p>
+    </section>
     <div id="loading" class="loading-state">Loading projects...</div>
-    <div id="design-grid" class="design-grid">
-      <!-- Grid items will be loaded here -->
-    </div>
+    <section id="design-grid" class="work-list-rows"></section>
   </main>
 
+  <script src="assets/js/work-listings.js"></script>
+  <script src="assets/js/site-header.js"></script>
   <script src="assets/js/header-dropdown.js"></script>
   
   <script>
@@ -43,39 +31,38 @@
       'Hierarchy': 'p5js4'
     };
 
+    const projectDescriptions = {
+      'App Design': 'Interface and UX explorations for app concepts with attention to flow, hierarchy, and visual systems.',
+      'Interactive Identity for X-Journal I': 'Motion-led publication identity experiments built with p5.js and responsive visual behaviors.',
+      'Generative Designs': 'Plotter-driven generative compositions exploring repetition, interference, and controlled randomness.',
+      'Interactive Identity for X-Journal II': 'A second round of interactive identity studies extending the journal system into new visual logic.',
+      'Hierarchy': 'An interactive visual narrative about ascent, structure, and collapse in rule-based systems.'
+    };
+
     async function loadP5jsProjects() {
       try {
         const response = await fetch('p5js-projects-data.json');
         if (!response.ok) throw new Error('Failed to load projects');
         
         const projects = await response.json();
-        const gridContainer = document.getElementById('design-grid');
         const loadingState = document.getElementById('loading');
         
-        // Generate grid items
-        const gridHTML = projects.map(project => {
+        const listingItems = projects.map(project => {
           const slug = projectSlugs[project.title];
-          const coverImage = project.img;
-          const projectUrl = slug ? `p5js/${slug}.html` : '#';
-          
-          return `
-            <div class="grid-item">
-              <a href="${projectUrl}" class="project-link" ${slug ? '' : 'aria-disabled="true" tabindex="-1"'}>
-                <div class="project-image">
-                  <img src="${coverImage}" alt="${project.title}" loading="lazy">
-                  <div class="image-overlay"></div>
-                </div>
-                <div class="project-info">
-                  <h3 class="project-title">${project.title}</h3>
-                  <span class="project-year">${project.year}</span>
-                </div>
-              </a>
-            </div>
-          `;
-        }).join('');
-        
-        gridContainer.innerHTML = gridHTML;
-        loadingState.style.display = 'none';
+          return {
+            href: slug ? `p5js/${slug}.html` : '',
+            title: project.title,
+            image: project.img,
+            description: projectDescriptions[project.title] || '',
+            tag: `${project.year} | p5.js`
+          };
+        });
+
+        window.renderWorkListing({
+          containerId: 'design-grid',
+          loadingId: 'loading',
+          items: listingItems
+        });
         
       } catch (error) {
         console.error('Error loading projects:', error);
