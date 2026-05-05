@@ -1,0 +1,661 @@
+﻿@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Lilex:ital,wght@0,100..700;1,100..700&family=Outfit:wght@100..900&display=swap");
+
+@import url("./style.css");
+@import url("./header.css");
+@import url("./sidebar.css");
+@import url("./design-grid.css");
+@import url("./design.css");
+@import url("./project-page.css");
+@import url("./photography.css");
+@import url("./photography-gallery.css");
+@import url("./carousel.css");
+@import url("./p5js1-design.css");
+
+.project-title,
+h1,
+h2,
+h3 {
+  font-family: "Lexend", "Outfit", "Lilex", sans-serif;
+}
+
+body.landing-page {
+  margin: 0;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+  background: #000;
+  color: #fff;
+}
+
+body.landing-page .main-header {
+  display: none !important;
+  pointer-events: none;
+}
+body.landing-page .canvas-section {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  background: #000;
+  overflow: hidden;
+  z-index: 0;
+}
+
+body.landing-page .canvas-section canvas {
+  position: absolute;
+  inset: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  display: block;
+}
+
+body.landing-page .works-section {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  background: #fff;
+  color: #000;
+}
+
+body.landing-page .works-layout {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 2.2rem 1.8rem 4rem;
+  display: grid;
+  grid-template-columns: minmax(220px, 28vw) 1fr;
+  gap: 2.2rem;
+}
+
+body.landing-page .works-sticky {
+  position: sticky;
+  top: 1rem;
+  height: fit-content;
+  align-self: start;
+  padding-top: 0;
+  display: flex;
+  align-items: flex-start;
+  z-index: 3;
+}
+
+body.landing-page .works-sticky p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  max-width: 26ch;
+}
+
+body.landing-page .works-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+body.landing-page .project-row {
+  display: grid;
+  grid-template-columns: minmax(320px, 36%) minmax(0, 64%);
+  gap: 1.8rem;
+  align-items: start;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid #e8e8e8;
+  padding-bottom: 1.5rem;
+  min-width: 0;
+}
+
+body.landing-page .project-meta {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+body.landing-page .project-row .project-title {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.08;
+  font-weight: 600;
+  text-wrap: pretty;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.16em;
+  transition: color 140ms ease, text-decoration-color 140ms ease;
+}
+
+body.landing-page .project-desc {
+  margin: 0.45rem 0 0.65rem;
+  font-size: 0.88rem;
+  line-height: 1.35;
+  color: #303030;
+  max-width: 38ch;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+body.landing-page .project-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #ff004c;
+}
+
+body.landing-page .project-thumb {
+  justify-self: end;
+  width: 100%;
+  max-width: 760px;
+  aspect-ratio: auto;
+  background: #f4f4f4;
+  overflow: visible;
+  min-width: 0;
+}
+
+body.landing-page .project-thumb img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  filter: none;
+}
+
+body.landing-page .project-row:hover .project-title,
+body.landing-page .project-row:focus-visible .project-title {
+  color: #ff004c;
+  text-decoration-color: #ff004c;
+}
+
+body.landing-page .project-row:focus-visible {
+  outline: 1px solid #ff004c;
+  outline-offset: 0.15rem;
+}
+
+.p5js-detail .gallery-section {
+  margin-bottom: 40px;
+}
+
+.p5js-detail .gallery-section h3 {
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 10px;
+}
+
+.p5js-detail .image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.p5js-detail .grid-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s;
+  background: #222;
+  border-radius: 0;
+}
+
+.p5js-detail .grid-image:hover {
+  transform: scale(1.05);
+}
+
+#image-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+}
+
+#image-modal .modal-backdrop {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+#image-modal .modal-image {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 0;
+}
+
+#image-modal .modal-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 2.5em;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+#image-modal .modal-close:hover {
+  opacity: 0.7;
+}
+
+@media (max-width: 980px) {
+  body.landing-page .works-layout {
+    grid-template-columns: 1fr;
+    padding: 1.4rem 1rem 2.8rem;
+    gap: 1.25rem;
+  }
+
+  body.landing-page .works-sticky {
+    position: sticky;
+    top: 0.6rem;
+    height: fit-content;
+    padding-top: 0.4rem;
+  }
+
+  body.landing-page .works-sticky p {
+    max-width: none;
+  }
+
+  body.landing-page .project-row {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  body.landing-page .project-title {
+    font-size: 1.2rem;
+  }
+
+  body.landing-page .project-thumb {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .p5js-detail .image-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+  }
+
+  .p5js-detail .grid-image {
+    height: 150px;
+  }
+}
+
+/* Keep native mouse cursor visible */
+body,
+.gallery-container,
+.photo-grid,
+.photo-item,
+.photo-item img,
+canvas {
+  cursor: auto !important;
+}
+
+/* Landing titles should remain black */
+body.landing-page .works-section .project-title {
+  color: #000 !important;
+}
+
+/* Light theme overrides for project/detail pages */
+.project-nav {
+  background: #fff;
+}
+
+.back-link {
+  color: #111;
+}
+
+.back-link:hover {
+  color: #ff004c;
+}
+
+.project-container {
+  background: #fff;
+  color: #111;
+}
+
+.project-info-section h1,
+.project-info-section h2,
+.project-main h1,
+.project-main h2,
+.project-title,
+.project-description h3,
+.project-description h4,
+.project-gallery h3 {
+  color: #111 !important;
+}
+
+.project-info-section p,
+.project-description p {
+  color: #333;
+}
+
+.meta-table td {
+  color: #111;
+  border-bottom: 1px solid #ddd;
+}
+
+.meta-table td:first-child {
+  color: #555;
+}
+
+.image-item {
+  background: #ffffff;
+}
+
+
+body.landing-page {
+  background: #ffffff;
+  color: #111;
+}
+
+body.landing-page #cursor {
+  display: none;
+}
+
+body.landing-page #fixed-left {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: clamp(240px, 28vw, 360px);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 22px 20px;
+  z-index: 20;
+  pointer-events: none;
+}
+
+body.landing-page #fixed-left a,
+body.landing-page #fixed-left .infos-trigger {
+  pointer-events: auto;
+}
+
+body.landing-page #fixed-left .footer-right p,
+body.landing-page #fixed-left .infos-trigger {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.35;
+  color: #111;
+}
+
+body.landing-page #fixed-left .fl-top .label {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: #111;
+}
+
+body.landing-page #fixed-left .footer-right {
+  margin-top: 8px;
+}
+
+body.landing-page #fixed-left .footer-right a {
+  color: #ff004c;
+  text-decoration: underline;
+}
+
+body.landing-page #wrapper {
+  width: 100%;
+}
+
+body.landing-page #page1,
+body.landing-page #page2 {
+  min-height: 100vh;
+}
+
+body.landing-page #page1 {
+  position: relative;
+  background: transparent;
+}
+
+body.landing-page #page1::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 10vh;
+  pointer-events: none;
+  z-index: 1;
+}
+body.landing-page #page1::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 25vh;
+  pointer-events: none;
+  z-index: 1;
+}
+
+body.landing-page #page1::before {
+  top: -20px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,1) 0%,
+    /* rgba(255,255,255,0.9) 50%, */
+    rgba(255,255,255,0) 100%
+  );
+}
+
+body.landing-page #page1::after {
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    rgba(255,255,255,1) 0%,
+    rgba(255,255,255,0.9) 30%,
+    rgba(255,255,255,0.6) 50%,
+    rgba(255,255,255,0) 100%
+  );
+}
+
+body.landing-page #page1 canvas {
+  position: fixed !important;
+  inset: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 0;
+}
+
+body.landing-page #page2 {
+  position: relative;
+  z-index: 2;
+  background: #ffffff;
+  margin-top: 56px;
+}
+
+body.landing-page #p2-scroll {
+  margin-left: clamp(240px, 28vw, 360px);
+  padding: 14px 1.4rem 3rem 1.4rem;
+}
+
+body.landing-page #p2-scroll .project-row {
+  display: grid;
+  grid-template-columns: minmax(240px, 34%) minmax(0, 66%);
+  gap: 1.7rem;
+  align-items: start;
+  color: #111;
+  text-decoration: none;
+  border: 1px solid #ff004c;
+  padding: 0.8rem;
+  margin-bottom: 1.45rem;
+}
+
+body.landing-page #p2-scroll .project-meta {
+  padding: 0.45rem 0.7rem 0.45rem 0.45rem;
+}
+
+body.landing-page #p2-scroll .project-title {
+  color: #111 !important;
+  margin: 0;
+  text-decoration: none;
+  line-height: 1.1;
+}
+
+body.landing-page #p2-scroll .project-desc {
+  color: #2b2b2b;
+  max-width: 34ch;
+}
+
+body.landing-page #p2-scroll .project-tag {
+  color: #ff004c;
+}
+
+body.landing-page #p2-scroll .project-thumb {
+  width: 100%;
+  max-width: 780px;
+  aspect-ratio: auto;
+  justify-self: end;
+  overflow: visible;
+  background: #e9e9e9;
+}
+
+body.landing-page #p2-scroll .project-thumb img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+body.landing-page .arrow-btn {
+  position: fixed;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #111;
+  background: #f3f3f3;
+  color: #111;
+  cursor: pointer;
+  z-index: 30;
+}
+
+body.landing-page #selected-works-btn {
+  top: 18px;
+  border-radius: 999px;
+  height: 34px;
+}
+
+body.landing-page #page1-tools {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+body.landing-page .page1-tool-btn {
+  position: static;
+  width: 34px;
+  height: 34px;
+  min-height: 34px;
+  border-radius: 999px;
+  padding: 0;
+}
+
+body.landing-page .page1-tool-icon {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+body.landing-page .page1-tool-btn .material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  font-feature-settings: "liga";
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+body.landing-page #arrow-down,
+body.landing-page #arrow-up {
+  width: 34px;
+  min-height: 148px;
+  border-radius: 18px;
+  padding: 8px 0;
+}
+
+body.landing-page #arrow-down {
+  top: 66px;
+}
+
+body.landing-page #arrow-up {
+  top: 18px;
+  width: auto;
+  min-height: 34px;
+  height: 34px;
+  border-radius: 999px;
+  padding: 0 12px;
+}
+
+body.landing-page .arrow-label {
+  font-size: 0.8rem;
+  line-height: 1;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+
+body.landing-page #bio-overlay,
+body.landing-page #poster-preview,
+body.landing-page #page3 {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  body.landing-page #fixed-left {
+    position: static;
+    width: 100%;
+    height: auto;
+    padding: 14px 12px;
+  }
+
+  body.landing-page #p2-scroll {
+    margin-left: 0;
+    padding: 0.5rem 0.8rem 2.6rem;
+  }
+
+  body.landing-page #page2 {
+    margin-top: 32px;
+  }
+
+  body.landing-page #p2-scroll .project-row {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  body.landing-page .arrow-btn {
+    right: 8px;
+  }
+
+  body.landing-page #page1-tools {
+    right: 12px;
+    bottom: 12px;
+  }
+}

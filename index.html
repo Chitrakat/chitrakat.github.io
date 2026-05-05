@@ -1,37 +1,168 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Suyash Chitrakar</title>
+  <link rel="stylesheet" href="assets/css/site.css">
   <!-- Google Fonts for modern typography -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=download" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=autorenew" />
   <link href="https://fonts.googleapis.com/css2?family=Hubot+Sans:ital,wght@0,200..900;1,200..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="assets/css/header.css">
+  
 </head>
-<body>
-  <!-- Fixed Header -->
-  <!--#include virtual="assets/header.html" -->
-  <header class="main-header">
-    <div class="header-left">
-  <a href="index.html" class="site-title">Suyash Chitrakar</a>
+<body class="landing-page">
+  <div id="cursor" aria-hidden="true"></div>
+
+  <div id="fixed-left">
+    <div class="fl-top">
+      <p class="label">Suyash Chitrakar</p>
     </div>
-    <div class="header-right">
-      <div class="dropdown">
-        <button class="dropdown-toggle" id="dropdownMenuButton">my work &#x25BC;</button>
-        <div class="dropdown-menu" id="dropdownMenu">
-          <a href="design.html" class="dropdown-item">design</a>
-          <a href="photography.html" class="dropdown-item">photography</a>
-          <a href="p5js.html" class="dropdown-item">p5.js</a>
-          <a href="gamedesign.html" class="dropdown-item">game design</a>
-        </div>
+    <div class="fl-bottom">
+      <!-- <p class="footer-desktop" id="infos-btn">
+        <span class="infos-trigger">Infos</span>
+      </p> -->
+      <div class="footer-right">
+        <p>contact me :<br><a href="mailto:suyash.chitrakar@gmail.com">@email</a></p>
       </div>
     </div>
-  </header>
-  <script src="assets/js/header-dropdown.js"></script>
+  </div>
+
+  <div id="selected-works-btn" class="arrow-btn" title="Selected works">
+    <span style="font-size:13px;letter-spacing:0.04em;padding:0 10px;white-space:nowrap;">Selected Works</span>
+  </div>
+
+  <div id="arrow-up" class="arrow-btn" title="Previous page">
+    <span class="arrow-label">back</span>
+  </div>
+
+  <div id="bio-overlay"><p id="bio-text"></p></div>
+
+  <div id="poster-preview"><img id="poster-preview-img" src="" alt=""></div>
+
+  <div id="wrapper">
+    <div id="page1">
+      <main class="content"><p></p></main>
+      <div id="page1-tools" aria-label="Page 1 tools">
+        <button id="refresh-btn" class="arrow-btn page1-tool-btn" type="button" title="Refresh artwork">
+          <svg class="page1-tool-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M20 12a8 8 0 1 1-2.34-5.66" />
+            <path d="M20 4v6h-6" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="page2">
+      <div id="p2-scroll">
+        <a class="project-row" href="design/lines.html">
+          <div class="project-meta">
+            <h2 class="project-title">Lines in The Shed, Ryan Tracy</h2>
+            <p class="project-desc">Lines in the Shed is a poetry book designed for writer and 
+              scholar Ryan Tracy, whose work explores social fracture, environmental anxiety, 
+              intimacy, and queer identity within contemporary American life.</p>
+            <span class="project-tag">Publication, Graphic Design | 2025</span>
+          </div>
+          <div class="project-thumb"><img src="assets/img/design-cover/lines.jpg" alt="Lines in The Shed, Ryan Tracy thumbnail" loading="lazy"></div>
+        </a>
+
+        <a class="project-row" href="photography/america.html">
+          <div class="project-meta">
+            <h2 class="project-title">Empty America</h2>
+            <p class="project-desc">Photographic observations of contemporary American life.</p>
+            <span class="project-tag">Photography | 2024 - ongoing</span>
+          </div>
+          <div class="project-thumb"><img src="assets/img/photography/america/ununited-31.jpg" alt="American Scenes thumbnail" loading="lazy"></div>
+        </a>
+
+        <a class="project-row" href="p5js/p5js1.html">
+          <div class="project-meta">
+            <h2 class="project-title">Interactive Identity for X-Journal I</h2>
+            <p class="project-desc">Motion-led visual identity experiments built with p5.js.</p>
+            <span class="project-tag">Creative Coding</span>
+          </div>
+          <div class="project-thumb"><img src="assets/img/p5x1/HEADER-(2).png" alt="Interactive Identity for X-Journal I thumbnail" loading="lazy"></div>
+        </a>
+
+        <a class="project-row" href="p5js/p5js3.html">
+          <div class="project-meta">
+            <h2 class="project-title">Interactive Identity for X-Journal II</h2>
+            <p class="project-desc">Second iteration of interactive publication identity studies.</p>
+            <span class="project-tag">Creative Coding</span>
+          </div>
+          <div class="project-thumb"><img src="assets/img/p5x2/P5-HEADER.png" alt="Interactive Identity for X-Journal II thumbnail" loading="lazy"></div>
+        </a>
+
+        <a class="project-row" href="p5js/p5js4.html">
+          <div class="project-meta">
+            <h2 class="project-title">Hierarchy</h2>
+            <p class="project-desc">Interactive visual narrative on systems, ascent, and collapse.</p>
+            <span class="project-tag">Creative Coding</span>
+          </div>
+          <div class="project-thumb"><img src="assets/img/p5class/P5U-MAIN.png" alt="Hierarchy thumbnail" loading="lazy"></div>
+        </a>
+
+        <a class="project-row" href="p5js/p5js2.html">
+          <div class="project-meta">
+            <h2 class="project-title">Generative Designs</h2>
+            <p class="project-desc">Generative compositions developed for digital and plotted outputs.</p>
+            <span class="project-tag">Creative Coding</span>
+          </div>
+          <div class="project-thumb"><img src="assets/img/gen/1.jpg" alt="Generative Designs thumbnail" loading="lazy"></div>
+        </a>
+
+        <a class="project-row" href="photography/nepals-street.html">
+          <div class="project-meta">
+            <h2 class="project-title">Nepal's Street</h2>
+            <p class="project-desc">Street portraits and urban fragments from Nepal.</p>
+            <span class="project-tag">Photography</span>
+          </div>
+          <div class="project-thumb"><img src="assets/img/photography/nepals-street/sammy-351.jpg" alt="Nepal's Street thumbnail" loading="lazy"></div>
+        </a>
+
+        <a class="project-row" href="design/vol55-2.html">
+          <div class="project-meta">
+            <h2 class="project-title">Catch Magazine: VOL. 55 NO. 2</h2>
+            <p class="project-desc">Editorial design and typography for a literary issue.</p>
+            <span class="project-tag">Graphic design</span>
+          </div>
+          <div class="project-thumb"><img src="assets/img/design-cover/vol55-2.png" alt="Catch Magazine VOL. 55 NO. 2 thumbnail" loading="lazy"></div>
+        </a>
+
+        <a class="project-row" href="design/vol56-1.html">
+          <div class="project-meta">
+            <h2 class="project-title">Catch Magazine: VOL. 56 NO. 1</h2>
+            <p class="project-desc">Publication design balancing rhythm, pacing, and hierarchy.</p>
+            <span class="project-tag">Graphic design</span>
+          </div>
+          <div class="project-thumb"><img src="assets/img/design-cover/vol56-1.png" alt="Catch Magazine VOL. 56 NO. 1 thumbnail" loading="lazy"></div>
+        </a>
+
+        <a class="project-row" href="design/vol56-2.html">
+          <div class="project-meta">
+            <h2 class="project-title">Catch Magazine: VOL. 56 NO. 2</h2>
+            <p class="project-desc">Issue design focused on structured contrast and visual flow.</p>
+            <span class="project-tag">Graphic design</span>
+          </div>
+          <div class="project-thumb"><img src="assets/img/design-cover/vol56-2.png" alt="Catch Magazine VOL. 56 NO. 2 thumbnail" loading="lazy"></div>
+        </a>
+
+        <a class="project-row" href="design/x-journal.html">
+          <div class="project-meta">
+            <h2 class="project-title">X-JOURNAL</h2>
+            <p class="project-desc">Cross-disciplinary journal identity, art direction, and layout.</p>
+            <span class="project-tag">Graphic design</span>
+          </div>
+          <div class="project-thumb"><img src="assets/img/design-cover/x.png" alt="X-JOURNAL thumbnail" loading="lazy"></div>
+        </a>
+      </div>
+    </div>
+
+    <div id="page3" aria-hidden="true"></div>
+  </div>
 
   <!-- p5.js library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
@@ -40,6 +171,48 @@
   <script src="https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js"></script>
   <!-- Custom sketch -->
   <script src="circles.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script>
+    (function () {
+      const page1 = document.getElementById("page1");
+      const page2 = document.getElementById("page2");
+      const up = document.getElementById("arrow-up");
+      const worksBtn = document.getElementById("selected-works-btn");
+      const page1Tools = document.getElementById("page1-tools");
+      const refreshBtn = document.getElementById("refresh-btn");
+      const pages = [page1, page2];
+
+      function currentPageIndex() {
+        const midY = window.scrollY + window.innerHeight / 2;
+        return midY >= page2.offsetTop ? 1 : 0;
+      }
+
+      function goTo(index) {
+        const target = pages[Math.max(0, Math.min(index, pages.length - 1))];
+        if (!target) return;
+        window.scrollTo({ top: target.offsetTop, behavior: "smooth" });
+      }
+
+      function updateArrows() {
+        const i = currentPageIndex();
+        up.style.display = i <= 0 ? "none" : "flex";
+        worksBtn.style.display = i >= 1 ? "none" : "flex";
+      }
+
+      refreshBtn.addEventListener("click", () => {
+        if (typeof window.refreshCircleSketch === "function") {
+          window.refreshCircleSketch();
+        }
+      });
+
+      up.addEventListener("click", () => goTo(0));
+      worksBtn.addEventListener("click", () => goTo(1));
+      window.addEventListener("scroll", updateArrows, { passive: true });
+      window.addEventListener("resize", updateArrows);
+      updateArrows();
+    })();
+  </script>
 </body>
 </html>
+
+
+

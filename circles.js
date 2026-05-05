@@ -10,7 +10,8 @@ edited by Suyash Chitrakar
 let libs = ['https://unpkg.com/hydra-synth', 'includes/libs/hydra-synth.js', 'https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js', 'includes/libs/hy5.js']
 
 // sandbox - start
-H.pixelDensity(0.3) // 2x = retina, set <= 1 if laggy
+const DISPLAY_HYDRA_DENSITY = 0.4;
+H.pixelDensity(DISPLAY_HYDRA_DENSITY) 
 
 let random1, random2, random3;
 let mouseBoo = false;
@@ -27,62 +28,98 @@ s0.initP5() // send p5 to hydra
 P5.toggle(0) // hide p5
 
 src(s0)
-.add(src(o0).scale(0.1), 0.4) // controls the "glow"
-.modulateScale(noize(1), 0.5, 2 , 100) 
+.add(src(o0).scale(3), 0.5) // controls the "glow"
+.modulateScale(noize(2), 0.5, 1.5 , 10) 
 .out()
+
+
+// src(s0)
+// .add(src(o0).scale(1), 0.01) // controls the "glow"
+// .modulateScale(noize(1), 400, 2 , 100) 
+// .out()
 // 1, 0.1, (0.05), 0.08, 1 and 1 
 // sandbox - end
 
-function windowResized() {
-    resizeCanvas(windowWidth-10, windowHeight-10);
-    H.pixelDensity(0.3);
+function applyHydraDisplayResolution() {
+    H.pixelDensity(DISPLAY_HYDRA_DENSITY);
+    if (typeof H.setResolution === 'function') {
+        H.setResolution(windowWidth, windowHeight);
+    }
 }
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+    applyHydraDisplayResolution();
+}
+
+function randomizeScene() {
+    random1 = random(width / 3);
+    random2 = random(width / 3);
+    random3 = random(width / 3);
+
+    maxCircle = windowHeight / 10;
+    minCircle = windowHeight / 20;
+    mouseCircleSize = height / 14;
+
+    randShade = random(100);
+    randShade1 = random(100);
+    randShade2 = random(100);
+
+    window.movingObjs = null;
+    clear();
+    background(255);
+}
+
+window.refreshCircleSketch = randomizeScene;
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    background(0);
+    background(255);
     frameRate(15);
+
+    applyHydraDisplayResolution();
 
     rectMode(CENTER);
     textAlign(CENTER, CENTER);
 
-    random1 = random(width/3);
-    random2 = random(width/3);
-    random3 = random(width/3);
-
-    maxCircle = windowHeight/8;
-    minCircle = windowHeight/15;
-    mouseCircleSize = height/8;
-    
-    randShade = random(100);
-    randShade1 = random(100);
-    randShade2 = random(100);
+    randomizeScene();
     blendMode(HARD_LIGHT);
+    // blendMode(REMOVE);
 }
 
 
 function draw() {
     noStroke();
-    if(mouseBoo){
-        clear();
-    }
+    // if(mouseBoo){
+    //     clear();
+    //     background(255);
+    // }
+    // if(mouseIsPressed){
+    //     mouseBoo = !mouseBoo;
+    // }
+
     if(mouseIsPressed){
-        mouseBoo = !mouseBoo;
+        millis(500);
+        clear();
+        background(255);
     }
     
     // Colors for mouse circles
     let r = (sin(frameCount * 0.01) * 1.5 + 0.5) * randShade;
-    let g = (sin(frameCount * 0.003) * 0.5 + 0.5) * random(50, 100) + random(randShade1);
-    let b = (sin(frameCount * 0.001) * 0.5 + 0.5) * 100 + randShade;
+    let g = (sin(frameCount * 0.03) * 0.5 + 0.5) * random(50, 100) + random(randShade1);
+    let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100 + randShade;
     fill(r, g, b); 
+    // stroke(255);
+    // strokeWeight(2);
     circle(mouseX, mouseY, mouseCircleSize);
     // square(mouseX, mouseY, mouseCircleSize);
 
-    // Middle Circle
-    let b2 = ((sin(frameCount * 0.025) * 0.5 + 0.5) * randShade);
+    // Middle SHAPE
+    let b2 = ((sin(frameCount * 0.025) * 0.5 + 0.5) * random(randShade));
     let rSize = (sin(frameCount * 0.009)) * maxCircle + minCircle;
-    fill(180 -b2/2, 0, b2, 10);
-    circle(width/2, height/2, random3 + rSize);
+    fill(180-b2, (b2*200)%70, (b2*200)%180, 15);
+    noStroke();
+    // circle(width/2, height/2, random3 + rSize);
     square(width/2, height/2, random3 + rSize);
 
     // Moving texts
@@ -91,16 +128,17 @@ function draw() {
     tx = constrain(noise(100 + frameCount * 0.0006) * width, 0, width);
     if (!window.movingObjs) {
         window.movingObjs = [
-            new movingObject(random(1000), random(1000), fontSize/2, 'Hi, I\'m Suyash'),
-            new movingObject(random(1000), random(1000), fontSize/2, 'I\'m\n kinda lost'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'hi, i\'m Suyash'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'kinda lost'),
             new movingObject(random(1000), random(1000), fontSize/2, 'a graphic\ndesigner'),
-            new movingObject(random(1000), random(1000), fontSize/2, 'a photographer'),
-            new movingObject(random(1000), random(1000), fontSize/2, 'a creative\ncoder'),
+            new movingObject(random(1000), random(1000), fontSize/4, 'overstimulated'),
+            new movingObject(random(1000), random(1000), fontSize/4, 'caffeinated'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'photographer'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'creative\ncoder'),
             new movingObject(random(1000), random(1000), fontSize/2, 'an artist?'),
         ];
     }
 
-    movingObject.separateAll(window.movingObjs);
     for (let obj of window.movingObjs) {
         obj.update();
         obj.display();
@@ -108,36 +146,6 @@ function draw() {
 }
 
 class movingObject{
-    // Check and separate overlapping objects
-    static separateAll(objs) {
-        let maxTries = 10; // Prevent infinite loops
-        for (let tries = 0; tries < maxTries; tries++) {
-            let moved = false;
-            for (let i = 0; i < objs.length; i++) {
-                for (let j = i + 1; j < objs.length; j++) {
-                    let a = objs[i];
-                    let b = objs[j];
-                    let dx = a.x - b.x;
-                    let dy = a.y - b.y;
-                    let dist = Math.sqrt(dx*dx + dy*dy);
-                    let minDist = (a.size + b.size) * 0.45; // 0.45: text is not a circle, but this works visually
-                    if (dist < minDist && dist > 0.1) {
-                        // Move each object away from the other
-                        let repulsionStrength = 1; // Increase for stronger repulsion
-                        let overlap = (minDist - dist) / 2 * repulsionStrength;
-                        let nx = dx / dist;
-                        let ny = dy / dist;
-                        a.x += nx * overlap;
-                        a.y += ny * overlap;
-                        b.x -= nx * overlap;
-                        b.y -= ny * overlap;
-                        moved = true;
-                    }
-                }
-            }
-            if (!moved) break;
-        }
-    }
     constructor(xNoiseSeed, yNoiseSeed, size, label) {
         this.xNoiseSeed = xNoiseSeed;
         this.yNoiseSeed = yNoiseSeed;
@@ -153,17 +161,18 @@ class movingObject{
         // Use the same logic as the text movement
         this.x = constrain(noise(this.xNoiseSeed + frameCount * this.xval) * width, 0, width);
         this.y = constrain(noise(this.yNoiseSeed + frameCount * this.yval) * height, 0, height);
+        // separateAll();
     }
 
     display() {
         textSize(this.size/1.5);
         // Draw text
         rectMode(CENTER);
-        fill(0);
+        fill(255);
         stroke(0);
-        strokeWeight(2);
+        strokeWeight(3);
         this.xval = 0.003;
-        this.yval = 0.00065;
+        this.yval = 0.0065;
         textAlign(CENTER, CENTER);
         text(this.label, this.x, this.y);
     }

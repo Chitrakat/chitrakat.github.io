@@ -1,21 +1,18 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Generative Designs | Suyash Chitrakar</title>
-  <link rel="stylesheet" href="../assets/css/style.css">
-  <link rel="stylesheet" href="../assets/css/header.css">
-  <link rel="stylesheet" href="../assets/css/project-page.css">
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <link rel="stylesheet" href="../assets/css/p5js2-home.css">
 </head>
-<body>
-  <header class="main-header">
-    <div class="header-left">
-      <a href="../index.html" class="site-title">suyash chitrakar</a>
-    </div>
-    <div class="header-right">
+<body class="p5js2-home-page">
+  <header class="home-lite-header">
+    <a href="../index.html" class="home-lite-title">Suyash Chitrakar</a>
+    <div class="home-lite-right">
       <div class="dropdown">
-        <button class="dropdown-toggle" id="dropdownMenuButton">my work &#x25BC;</button>
+        <button class="dropdown-toggle works-toggle" id="dropdownMenuButton">All Works</button>
         <div class="dropdown-menu" id="dropdownMenu">
           <a href="../design.html" class="dropdown-item">design</a>
           <a href="../photography.html" class="dropdown-item">photography</a>
@@ -26,181 +23,140 @@
     </div>
   </header>
 
-  <nav class="project-nav">
-    <a href="../p5js.html" class="back-link">←</a>
-  </nav>
-  
-  <main class="project-container">
-    <div class="p5js-detail">
-      <h1 class="project-title">Generative Designs</h1>
-      <p>Generative artworks made out of different particle systems, printed using a pen plotter</p>
-      
-      <div id="gen-galleries"></div>
-    </div>
+  <main class="p5js2-home-main">
+    <section class="p5js2-home-intro">
+      <h1 class="p5js2-home-title">Generative Designs</h1>
+      <p class="p5js2-home-subtitle">A homepage-inspired layout featuring selected stills from my generative plotting studies.</p>
+    </section>
+
+    <section class="p5js2-home-list" id="gen-rows"></section>
   </main>
 
   <script src="../assets/js/header-dropdown.js"></script>
 
   <script>
-    async function loadGenImages() {
-      const galleriesContainer = document.getElementById('gen-galleries');
-      const folders = ['a1', 'a2', 'a3', 'a4', 'a5', 'a6'];
-      
-      // Define known images for each folder to avoid 404s
-      const folderImages = {
-        'a1': ['g2.png', 'grid2z_02.png', 'grid2z_06.png'],
-        'a2': ['1268_005.png', '1268_005zz_07.png', '1268_005z_03.png'],
-        'a3': ['1268_003.png', '1268_003zz_03.png', '1268_003zz_05.png', '1268_003zz_09.png'],
-        'a4': ['1267_001.png', '1267_001zz_03.png', '1267_001zz_05.png', '1267_001zz_07.png'],
-        'a5': ['particles.png','1268_001z_03.png', '1268_001z_06.png'],
-        'a6': []  // Empty folder
-      };
-      
-      let galleriesHTML = '';
-      
-      for (const folder of folders) {
-        const images = folderImages[folder];
-        
-        if (images.length > 0) {
-          galleriesHTML += `
-            <div class="gallery-section">
-              <h3>Series ${folder.toUpperCase()}</h3>
-              <div class="image-grid">
-                ${images.map(img => `
-                  <img src="../assets/img/gen/${folder}/${img}" 
-                       alt="Generative artwork from ${folder}" 
-                       class="grid-image" 
-                       onclick="openImageModal('../assets/img/gen/${folder}/${img}')"
-                       onerror="console.log('Failed to load:', '../assets/img/gen/${folder}/${img}'); this.style.background='#f66'; this.style.color='#fff'; this.innerHTML='Failed to load';">
-                `).join('')}
-              </div>
-            </div>
-          `;
-        }
+    const generativeProjects = [
+      {
+        name: 'g2.png',
+        description: 'Filler text for project description. This line is a placeholder while content writing is in progress.',
+        tag: 'Creative Coding | 2024 - Ongoing',
+        src: '../assets/img/gen/a1/g2.png'
+      },
+      {
+        name: '1268_005.png',
+        description: 'Filler text for project description. This line is a placeholder while content writing is in progress.',
+        tag: 'Creative Coding | 2024 - Ongoing',
+        src: '../assets/img/gen/a2/1268_005.png'
+      },
+      {
+        name: '1268_003.png',
+        description: 'Filler text for project description. This line is a placeholder while content writing is in progress.',
+        tag: 'Creative Coding | 2024 - Ongoing',
+        src: '../assets/img/gen/a3/1268_003.png'
+      },
+      {
+        name: '1267_001.png',
+        description: 'Filler text for project description. This line is a placeholder while content writing is in progress.',
+        tag: 'Creative Coding | 2024 - Ongoing',
+        src: '../assets/img/gen/a4/1267_001.png'
+      },
+      {
+        name: 'particles.png',
+        description: 'Filler text for project description. This line is a placeholder while content writing is in progress.',
+        tag: 'Creative Coding | 2024 - Ongoing',
+        src: '../assets/img/gen/a5/particles.png'
       }
-      
-      galleriesContainer.innerHTML = galleriesHTML;
-      console.log('Generated galleries HTML:', galleriesHTML);
-      console.log('Images should be at paths like:', '../assets/img/gen/a1/g2.png');
-    }
+    ];
 
-    // Open image modal (reuse from design.html functionality)
-    function openImageModal(imageSrc) {
-      let modal = document.getElementById('image-modal');
-      
-      if (!modal) {
-        modal = document.createElement('div');
-        modal.id = 'image-modal';
-        modal.innerHTML = `
-          <div class="modal-backdrop" onclick="closeImageModal()">
-            <img class="modal-image" onclick="event.stopPropagation()">
-            <span class="modal-close" onclick="closeImageModal()">&times;</span>
+    function renderProjects() {
+      const rowsContainer = document.getElementById('gen-rows');
+
+      rowsContainer.innerHTML = generativeProjects.map((project) => `
+        <article class="gen-row">
+          <div class="gen-meta">
+            <h2 class="gen-title">${project.name}</h2>
+            <p class="gen-desc">${project.description}</p>
+            <span class="gen-tag">${project.tag}</span>
           </div>
-        `;
-        document.body.appendChild(modal);
-      }
-      
-      const modalImage = modal.querySelector('.modal-image');
-      modalImage.src = imageSrc;
-      modal.style.display = 'block';
+          <div class="gen-thumb">
+            <img
+              src="${project.src}"
+              alt="Generative artwork ${project.name}"
+              class="gen-image"
+              loading="lazy"
+              tabindex="0"
+            >
+            <div class="zoom-preview" aria-hidden="true"></div>
+          </div>
+        </article>
+      `).join('');
     }
 
-    function closeImageModal() {
-      const modal = document.getElementById('image-modal');
-      if (modal) {
-        modal.style.display = 'none';
-      }
+    function setupImageZoom() {
+      const hoverSupported = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      const thumbBlocks = document.querySelectorAll('.gen-thumb');
+      const zoomScale = 2.5;
+
+      thumbBlocks.forEach((thumbBlock) => {
+        const image = thumbBlock.querySelector('.gen-image');
+        const preview = thumbBlock.querySelector('.zoom-preview');
+        if (!image || !preview) {
+          return;
+        }
+
+        preview.style.backgroundImage = `url("${image.src}")`;
+
+        function showPreview() {
+          if (!hoverSupported) {
+            return;
+          }
+          preview.classList.add('visible');
+        }
+
+        function hidePreview() {
+          preview.classList.remove('visible');
+        }
+
+        function updatePreview(event) {
+          if (!hoverSupported) {
+            return;
+          }
+
+          const rect = image.getBoundingClientRect();
+          const localX = event.clientX - rect.left;
+          const localY = event.clientY - rect.top;
+
+          const clampedX = Math.max(0, Math.min(localX, rect.width));
+          const clampedY = Math.max(0, Math.min(localY, rect.height));
+
+          const xPercent = rect.width ? (clampedX / rect.width) * 100 : 50;
+          const yPercent = rect.height ? (clampedY / rect.height) * 100 : 50;
+
+          preview.style.backgroundPosition = `${xPercent}% ${yPercent}%`;
+          preview.style.backgroundSize = `${zoomScale * 100}%`;
+        }
+
+        image.addEventListener('mouseenter', showPreview);
+        image.addEventListener('mousemove', updatePreview);
+        image.addEventListener('mouseleave', hidePreview);
+
+        image.addEventListener('focus', () => {
+          showPreview();
+          preview.style.backgroundPosition = '50% 50%';
+          preview.style.backgroundSize = `${zoomScale * 100}%`;
+        });
+
+        image.addEventListener('blur', hidePreview);
+      });
     }
 
-    // Load images when page loads
-    loadGenImages();
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProjects();
+      setupImageZoom();
+    });
   </script>
 
-  <style>
-    .gallery-section {
-      margin-bottom: 40px;
-    }
-
-    .gallery-section h3 {
-      font-size: 1.5rem;
-      color: #fff;
-      margin-bottom: 20px;
-      border-bottom: 1px solid #333;
-      padding-bottom: 10px;
-    }
-
-    .image-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-    }
-
-    .grid-image {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      cursor: pointer;
-      transition: transform 0.2s;
-      background: #222;
-      border-radius: 0;
-    }
-
-    .grid-image:hover {
-      transform: scale(1.05);
-    }
-
-    /* Modal styles */
-    #image-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 1000;
-    }
-
-    .modal-backdrop {
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.9);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-
-    .modal-image {
-      max-width: 90vw;
-      max-height: 90vh;
-      object-fit: contain;
-      border-radius: 0;
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 2.5em;
-      color: white;
-      cursor: pointer;
-      z-index: 1001;
-    }
-
-    .modal-close:hover {
-      opacity: 0.7;
-    }
-
-    @media (max-width: 768px) {
-      .image-grid {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 10px;
-      }
-      
-      .grid-image {
-        height: 150px;
-      }
-    }
-  </style>
 </body>
 </html>
+
+
