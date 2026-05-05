@@ -1,31 +1,84 @@
-﻿<div class="photo-detail">
-  <!-- <h1>Gai Jatra</h1> -->
-
-    <!-- <div class="photo-description-column">
-      <p>
-        Gai Jatra is a festival celeberated my the Newari people of Kathmandu Valley.
-        The festival is celebrated in honour of their immediate relatives who have died during the previous year.
-      </p>
-        
-      <p>
-        People, mostly children, who don't fully understand the concept of death, dress up as in religious drags
-        and mourn the death of their loved ones.
-      </p>
-
-    </div> -->
-
-
-  <div class="photo-carousel" data-folder="../assets/img/photography/gai-jatra/">>
-    <div class="carousel-container">
-
-      <div class="carousel-track" id="carousel-track">
-        <!-- Images will be loaded dynamically here -->
-      </div>
-      
-      <button class="carousel-btn prev-btn" id="prev-btn">&#8249;</button>
-      <button class="carousel-btn next-btn" id="next-btn">&#8250;</button>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gai Jatra | Suyash Chitrakar</title>
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <link rel="stylesheet" href="../assets/css/photography-project.css">
+</head>
+<body class="photo-project-page">
+  <header class="main-header">
+    <div class="header-left">
+      <a href="../index.html" class="site-title">suyash chitrakar</a>
     </div>
+    <div class="header-right">
+      <div class="dropdown">
+        <button class="dropdown-toggle" id="dropdownMenuButton">my work &#x25BC;</button>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="../design.html" class="dropdown-item">design</a>
+          <a href="../photography.html" class="dropdown-item">photography</a>
+          <a href="../p5js.html" class="dropdown-item">p5.js</a>
+          <a href="../gamedesign.html" class="dropdown-item">game design</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="photo-project-layout">
+    <aside class="photo-sidebar">
+      <div class="photo-sidebar-section">
+        <p class="photo-sidebar-category">Photography</p>
+        <a href="america.html" class="photo-sidebar-link">Empty America</a>
+        <a href="self-without-the-self.html" class="photo-sidebar-link">Self Without the Self</a>
+        <a href="stills-from-an-unmade-movie.html" class="photo-sidebar-link">Stills from an unmade movie</a>
+        <a href="dream-sequence.html" class="photo-sidebar-link">Dream Sequence</a>
+        <a href="gai-jatra.html" class="photo-sidebar-link active">Gai Jatra</a>
+        <a href="nepals-street.html" class="photo-sidebar-link">Nepal's Streets</a>
+      </div>
+      <div class="photo-sidebar-section">
+        <p class="photo-sidebar-category">Commercial Photography</p>
+        <a href="jazz-at-knox.html" class="photo-sidebar-link">Jazz at Knox</a>
+        <a href="dance-at-knox.html" class="photo-sidebar-link">Dance at Knox</a>
+        <a href="portraits-of-graduation.html" class="photo-sidebar-link">Portraits of Graduation</a>
+      </div>
+    </aside>
+
+    <main class="photo-main">
+      <h1 class="photo-project-title">Gai Jatra</h1>
+      <p class="photo-project-desc">Gai Jatra is a festival celebrated by the Newari people of Kathmandu Valley in honour of relatives who have died during the previous year. People, mostly children who don't fully understand the concept of death, dress up in religious drags and mourn the death of their loved ones.</p>
+
+      <div class="photo-grid" id="photo-grid"></div>
+    </main>
   </div>
-</div>
+
+  <div id="photo-lightbox" class="photo-lightbox">
+    <button class="photo-lightbox-close" id="photo-lightbox-close">&times;</button>
+    <button class="photo-lightbox-prev" id="photo-lightbox-prev">&#8249;</button>
+    <img id="photo-lightbox-img" class="photo-lightbox-img" src="" alt="">
+    <button class="photo-lightbox-next" id="photo-lightbox-next">&#8250;</button>
+  </div>
+
+  <script src="../assets/js/header-dropdown.js"></script>
+  <script src="../assets/js/photography-grid.js"></script>
+  <script>
+    (function () {
+      var folder = '../assets/img/photography/gai-jatra/';
+      var images = [];
+      for (var i = 33; i <= 64; i++) images.push('gai-jatra-' + i + '.jpg');
+
+      var grid = document.getElementById('photo-grid');
+      images.forEach(function (name) {
+        var img = document.createElement('img');
+        img.src = folder + name;
+        img.alt = 'Gai Jatra — ' + name;
+        img.className = 'photo-grid-img';
+        img.loading = 'lazy';
+        grid.appendChild(img);
+      });
+    }());
+  </script>
+</body>
+</html>
 
 

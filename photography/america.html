@@ -1,24 +1,86 @@
-﻿<div class="photo-detail">
-  <h2>American Scenes</h2>
-  
-  <div class="photo-description-column">
-    <p>As an international student in the US, I can't help but feel something unsettling about the American life. 
-      <br>      
-      Americans themselves seem unable to recognize what their country has become, perhaps it is more difficult to accept that America has always been this way.</p>
-    
-    <p>The great American dream has been dead, and in place, I find empty spaces, hollow institutions and overconsumption.</p>
-    <p>Photographs taken during my travels across the United States.</p>
-  </div>
-  
-  <div class="photo-carousel" data-folder="../assets/img/photography/america/">
-    <div class="carousel-container">
-      <div class="carousel-track" id="carousel-track">
-        <!-- Images will be loaded dynamically here -->
-      </div>
-      <button class="carousel-btn prev-btn" id="prev-btn">&#8249;</button>
-      <button class="carousel-btn next-btn" id="next-btn">&#8250;</button>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Empty America | Suyash Chitrakar</title>
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <link rel="stylesheet" href="../assets/css/photography-project.css">
+</head>
+<body class="photo-project-page">
+  <header class="main-header">
+    <div class="header-left">
+      <a href="../index.html" class="site-title">suyash chitrakar</a>
     </div>
+    <div class="header-right">
+      <div class="dropdown">
+        <button class="dropdown-toggle" id="dropdownMenuButton">my work &#x25BC;</button>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="../design.html" class="dropdown-item">design</a>
+          <a href="../photography.html" class="dropdown-item">photography</a>
+          <a href="../p5js.html" class="dropdown-item">p5.js</a>
+          <a href="../gamedesign.html" class="dropdown-item">game design</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="photo-project-layout">
+    <aside class="photo-sidebar">
+      <div class="photo-sidebar-section">
+        <p class="photo-sidebar-category">Photography</p>
+        <a href="america.html" class="photo-sidebar-link active">Empty America</a>
+        <a href="self-without-the-self.html" class="photo-sidebar-link">Self Without the Self</a>
+        <a href="stills-from-an-unmade-movie.html" class="photo-sidebar-link">Stills from an unmade movie</a>
+        <a href="dream-sequence.html" class="photo-sidebar-link">Dream Sequence</a>
+        <a href="gai-jatra.html" class="photo-sidebar-link">Gai Jatra</a>
+        <a href="nepals-street.html" class="photo-sidebar-link">Nepal's Streets</a>
+      </div>
+      <div class="photo-sidebar-section">
+        <p class="photo-sidebar-category">Commercial Photography</p>
+        <a href="jazz-at-knox.html" class="photo-sidebar-link">Jazz at Knox</a>
+        <a href="dance-at-knox.html" class="photo-sidebar-link">Dance at Knox</a>
+        <a href="portraits-of-graduation.html" class="photo-sidebar-link">Portraits of Graduation</a>
+      </div>
+    </aside>
+
+    <main class="photo-main">
+      <h1 class="photo-project-title">Empty America</h1>
+      <p class="photo-project-desc">As an international student in the US, I would have never guesed that the US was so empty. In this emptyness, I find the dead American dream, and hollow institutions. Photographs taken during my travels across the United States.</p>
+
+      <div class="photo-grid" id="photo-grid"></div>
+    </main>
   </div>
-</div>
+
+  <div id="photo-lightbox" class="photo-lightbox">
+    <button class="photo-lightbox-close" id="photo-lightbox-close">&times;</button>
+    <button class="photo-lightbox-prev" id="photo-lightbox-prev">&#8249;</button>
+    <img id="photo-lightbox-img" class="photo-lightbox-img" src="" alt="">
+    <button class="photo-lightbox-next" id="photo-lightbox-next">&#8250;</button>
+  </div>
+
+  <script src="../assets/js/header-dropdown.js"></script>
+  <script src="../assets/js/photography-grid.js"></script>
+  <script>
+    (function () {
+      var folder = '../assets/img/photography/america/';
+      var images = [];
+      for (var i = 1; i <= 46; i++) images.push('ununited-' + String(i).padStart(2, '0') + '.jpg');
+      images.push('ununited-48.jpg', 'ununited-50.jpg');
+      for (var i = 52; i <= 67; i++) images.push('ununited-' + String(i).padStart(2, '0') + '.jpg');
+
+      var grid = document.getElementById('photo-grid');
+      images.forEach(function (name) {
+        var img = document.createElement('img');
+        img.src = folder + name;
+        img.alt = 'Empty America — ' + name;
+        img.className = 'photo-grid-img';
+        img.loading = 'lazy';
+        grid.appendChild(img);
+      });
+    }());
+  </script>
+</body>
+</html>
 
 
