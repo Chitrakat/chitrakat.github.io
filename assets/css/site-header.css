@@ -1,0 +1,106 @@
+.site-shell-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid #ff004c;
+  z-index: 80;
+  box-sizing: border-box;
+}
+
+.site-shell-header__title {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  color: #111111;
+}
+
+.site-shell-header__title:visited,
+.site-shell-header__title:hover,
+.site-shell-header__title:focus {
+  color: #111111;
+  text-decoration: none;
+}
+
+.site-shell-header__right {
+  display: flex;
+  align-items: center;
+}
+
+.site-shell-header .dropdown {
+  position: relative;
+}
+
+.site-shell-header .dropdown-toggle {
+  border: 1px solid #111111;
+  border-radius: 999px;
+  background: #f3f3f3;
+  color: #111111;
+  height: 34px;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0 12px;
+  cursor: pointer;
+}
+
+.site-shell-header .dropdown-toggle:hover,
+.site-shell-header .dropdown-toggle:focus {
+  background: #ebebeb;
+}
+
+.site-shell-header .dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  min-width: 180px;
+  background: #ffffff;
+  border: 1px solid #ff004c;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.site-shell-header .dropdown.open .dropdown-menu {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.site-shell-header .dropdown-item {
+  display: block;
+  padding: 12px 16px;
+  color: #111111;
+  text-decoration: none;
+  background: #ffffff;
+}
+
+.site-shell-header .dropdown-item:hover,
+.site-shell-header .dropdown-item:focus {
+  background: #f8f8f8;
+}
+
+.site-shell-header .dropdown-item[aria-current="page"] {
+  color: #ff004c;
+}
+
+.has-site-header {
+  --site-header-offset: 64px;
+}
+
+@media (max-width: 700px) {
+  .site-shell-header {
+    padding: 10px 12px;
+  }
+
+  .has-site-header {
+    --site-header-offset: 56px;
+  }
+}
