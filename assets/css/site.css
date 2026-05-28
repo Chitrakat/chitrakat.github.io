@@ -115,7 +115,7 @@ body.landing-page .project-meta {
 
 body.landing-page .project-row .project-title {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 3rem;
   line-height: 1.08;
   font-weight: 600;
   text-wrap: pretty;
@@ -128,11 +128,12 @@ body.landing-page .project-row .project-title {
   text-decoration-color: transparent;
   text-underline-offset: 0.16em;
   transition: color 140ms ease, text-decoration-color 140ms ease;
+  padding-bottom: 10px;
 }
 
 body.landing-page .project-desc {
   margin: 0.45rem 0 0.65rem;
-  font-size: 0.88rem;
+  font-size: 1rem;
   line-height: 1.35;
   color: #303030;
   max-width: 38ch;
@@ -315,11 +316,16 @@ body.landing-page .works-section .project-title {
 }
 
 .back-link {
-  color: #111;
+  display: inline-block;
+  margin-bottom: 16px;
+  color: #ff004c;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.15s ease;
 }
 
 .back-link:hover {
-  color: #ff004c;
+  color: #d90041;
 }
 
 .project-container {
@@ -490,6 +496,7 @@ body.landing-page #p2-scroll .project-row {
   grid-template-columns: minmax(240px, 34%) minmax(0, 66%);
   gap: 1.7rem;
   align-items: start;
+  position: relative;
   color: #111;
   text-decoration: none;
   border: 1px solid #ff004c;
@@ -498,6 +505,10 @@ body.landing-page #p2-scroll .project-row {
 }
 
 body.landing-page #p2-scroll .project-meta {
+  position: relative;
+  top: auto;
+  align-self: start;
+  will-change: transform;
   padding: 0.45rem 0.7rem 0.45rem 0.45rem;
 }
 
@@ -651,6 +662,11 @@ body.landing-page #page3 {
   body.landing-page #p2-scroll .project-row {
     grid-template-columns: 1fr;
     gap: 0.8rem;
+  }
+
+  body.landing-page #p2-scroll .project-meta {
+    position: static;
+    top: auto;
   }
 
   body.landing-page .arrow-btn {

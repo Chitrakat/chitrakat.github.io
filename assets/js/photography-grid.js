@@ -4,6 +4,8 @@
 
   var allImages = [];
   var currentIndex = 0;
+  var scrollTopButton = null;
+  var scrollTopAnchor = null;
 
   function getLightbox() { return document.getElementById('photo-lightbox'); }
   function getLightboxImg() { return document.getElementById('photo-lightbox-img'); }
@@ -27,7 +29,48 @@
     getLightboxImg().alt = allImages[currentIndex].alt;
   }
 
+  function ensureScrollTopButton() {
+    if (
+      scrollTopButton ||
+      !document.body ||
+      !document.body.classList.contains('photo-project-page') ||
+      document.body.dataset.disableScrollTop === 'true'
+    ) {
+      return;
+    }
+
+    if (!scrollTopAnchor) {
+      scrollTopAnchor = document.getElementById('photo-page-top');
+      if (!scrollTopAnchor) {
+        scrollTopAnchor = document.createElement('div');
+        scrollTopAnchor.id = 'photo-page-top';
+        document.body.insertBefore(scrollTopAnchor, document.body.firstChild);
+      }
+    }
+
+    scrollTopButton = document.createElement('button');
+    scrollTopButton.type = 'button';
+    scrollTopButton.className = 'photo-scroll-top';
+    scrollTopButton.setAttribute('aria-label', 'Back to top');
+    scrollTopButton.title = 'Back to top';
+    scrollTopButton.textContent = '↑';
+    scrollTopButton.addEventListener('click', function () {
+      if (scrollTopAnchor && typeof scrollTopAnchor.scrollIntoView === 'function') {
+        scrollTopAnchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    });
+
+    document.body.appendChild(scrollTopButton);
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
+    ensureScrollTopButton();
+
     /* Collect all grid images after page scripts have rendered them */
     setTimeout(function () {
       allImages = Array.from(document.querySelectorAll('.photo-grid-img'));

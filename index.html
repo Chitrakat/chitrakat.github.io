@@ -162,6 +162,48 @@
       const page1Tools = document.getElementById("page1-tools");
       const refreshBtn = document.getElementById("refresh-btn");
       const pages = [page1, page2];
+      const projectRows = Array.from(document.querySelectorAll("#p2-scroll .project-row"));
+
+      const metaPairs = projectRows
+        .map((row) => {
+          const meta = row.querySelector(".project-meta");
+          return meta ? { row, meta } : null;
+        })
+        .filter(Boolean);
+
+      let followFrame = null;
+
+      function updateProjectMetaFollow() {
+        const isMobile = window.matchMedia("(max-width: 900px)").matches;
+        const preferredY = Math.max(72, Math.round(window.innerHeight * 0.2));
+
+        metaPairs.forEach(({ row, meta }) => {
+          if (isMobile) {
+            meta.style.transform = "translateY(0px)";
+            return;
+          }
+
+          const rowRect = row.getBoundingClientRect();
+          const rowStyle = window.getComputedStyle(row);
+          const paddingTop = parseFloat(rowStyle.paddingTop) || 0;
+          const paddingBottom = parseFloat(rowStyle.paddingBottom) || 0;
+          const rowInnerHeight = row.clientHeight - paddingTop - paddingBottom;
+          const maxOffset = Math.max(0, rowInnerHeight - meta.offsetHeight);
+          const desiredOffset = preferredY - rowRect.top - paddingTop;
+          const clampedOffset = Math.max(0, Math.min(desiredOffset, maxOffset));
+
+          meta.style.transform = `translateY(${clampedOffset}px)`;
+        });
+      }
+
+      function requestProjectMetaFollowUpdate() {
+        if (followFrame !== null) return;
+
+        followFrame = window.requestAnimationFrame(() => {
+          followFrame = null;
+          updateProjectMetaFollow();
+        });
+      }
 
       function currentPageIndex() {
         const midY = window.scrollY + window.innerHeight / 2;
@@ -190,7 +232,11 @@
       worksBtn.addEventListener("click", () => goTo(1));
       window.addEventListener("scroll", updateArrows, { passive: true });
       window.addEventListener("resize", updateArrows);
+      window.addEventListener("scroll", requestProjectMetaFollowUpdate, { passive: true });
+      window.addEventListener("resize", requestProjectMetaFollowUpdate);
+      window.addEventListener("load", requestProjectMetaFollowUpdate);
       updateArrows();
+      requestProjectMetaFollowUpdate();
     })();
   </script>
 </body>

@@ -15,7 +15,7 @@
         <p class="photo-sidebar-category">Photography</p>
         <a href="america.html" class="photo-sidebar-link active">Empty America</a>
         <a href="self-without-the-self.html" class="photo-sidebar-link">Self Without the Self</a>
-        <a href="stills-from-an-unmade-movie.html" class="photo-sidebar-link">Stills from an unmade movie</a>
+        <a href="stills-from-an-unmade-movie.html" class="photo-sidebar-link">Still from an unmade film</a>
         <a href="dream-sequence.html" class="photo-sidebar-link">Dream Sequence</a>
         <a href="gai-jatra.html" class="photo-sidebar-link">Gai Jatra</a>
         <a href="nepals-street.html" class="photo-sidebar-link">Nepal's Streets</a>
@@ -30,7 +30,7 @@
 
     <main class="photo-main">
       <h1 class="photo-project-title">Empty America</h1>
-      <p class="photo-project-desc">As an international student in the US, I would have never guesed that the US was so empty. In this emptyness, I find the dead American dream, and hollow institutions. Photographs taken during my travels across the United States.</p>
+      <p class="photo-project-desc">A study on America's society, modern culture and religion. </p>
 
       <div class="photo-grid" id="photo-grid"></div>
     </main>
@@ -49,10 +49,18 @@
   <script>
     (function () {
       var folder = '../assets/img/photography/america/';
-      var images = [];
-      for (var i = 1; i <= 46; i++) images.push('ununited-' + String(i).padStart(2, '0') + '.jpg');
-      images.push('ununited-48.jpg', 'ununited-50.jpg');
-      for (var i = 52; i <= 67; i++) images.push('ununited-' + String(i).padStart(2, '0') + '.jpg');
+      var images = [
+        'ununited-01.jpg', 'ununited-04.jpg', 'ununited-05.jpg', 'ununited-06.jpg', 'ununited-07.jpg',
+        'ununited-08.jpg', 'ununited-11.jpg', 'ununited-12.jpg', 'ununited-13.jpg', 'ununited-14.jpg',
+        'ununited-15.jpg', 'ununited-16.jpg', 'ununited-17.jpg', 'ununited-18.jpg', 'ununited-19.jpg',
+        'ununited-20.jpg', 'ununited-22.jpg', 'ununited-23.jpg', 'ununited-24.jpg', 'ununited-25.jpg',
+        'ununited-26.jpg', 'ununited-27.jpg', 'ununited-28.jpg', 'ununited-29.jpg', 'ununited-30.jpg',
+        'ununited-31.jpg', 'ununited-32.jpg', 'ununited-33.jpg', 'ununited-36.jpg', 'ununited-38.jpg',
+        'ununited-39.jpg', 'ununited-40.jpg', 'ununited-41.jpg', 'ununited-42.jpg', 'ununited-43.jpg',
+        'ununited-44.jpg', 'ununited-45.jpg', 'ununited-46.jpg', 'ununited-48.jpg', 'ununited-53.jpg',
+        'ununited-54.jpg', 'ununited-55.jpg', 'ununited-56.jpg', 'ununited-58.jpg', 'ununited-59.jpg',
+        'ununited-60.jpg', 'ununited-63.jpg', 'ununited-67.jpg'
+      ];
 
       var grid = document.getElementById('photo-grid');
       images.forEach(function (name) {
