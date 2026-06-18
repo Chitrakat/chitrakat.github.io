@@ -78,7 +78,7 @@
           <div class="project-thumb"><img src="assets/img/photography/america/ununited-31.jpg" alt="American Scenes thumbnail" loading="lazy"></div>
         </a>
 
-        <a class="project-row" href="p5js/p5js1.html">
+        <!-- <a class="project-row" href="p5js/p5js1.html">
           <div class="project-meta">
             <h2 class="project-title">Interactive Identity for X-Journal I</h2>
             <p class="project-desc">Motion-led visual identity experiments built with p5.js.</p>
@@ -94,7 +94,7 @@
             <span class="project-tag">Creative Coding</span>
           </div>
           <div class="project-thumb"><img src="assets/img/p5x2/P5-HEADER.png" alt="Interactive Identity for X-Journal II thumbnail" loading="lazy"></div>
-        </a>
+        </a> -->
 
         <a class="project-row" href="p5js/p5js4.html">
           <div class="project-meta">
@@ -153,6 +153,8 @@
   <script src="https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js"></script>
   <!-- Custom sketch -->
   <script src="circles.js"></script>
+
+  
   <script>
     (function () {
       const page1 = document.getElementById("page1");
@@ -167,19 +169,54 @@
       const metaPairs = projectRows
         .map((row) => {
           const meta = row.querySelector(".project-meta");
-          return meta ? { row, meta } : null;
+          return meta ? { row, meta, currentOffset: 0, targetOffset: 0 } : null;
         })
         .filter(Boolean);
 
       let followFrame = null;
+      let motionFrame = null;
+
+      function startMetaMotionLoop() {
+        if (motionFrame !== null) return;
+
+        const easing = 0.01;
+        const settleThreshold = 0.1;
+
+        function step() {
+          let hasActiveMotion = false;
+
+          metaPairs.forEach((pair) => {
+            const delta = pair.targetOffset - pair.currentOffset;
+
+            if (Math.abs(delta) <= settleThreshold) {
+              pair.currentOffset = pair.targetOffset;
+            } else {
+              pair.currentOffset += delta * easing;
+              hasActiveMotion = true;
+            }
+
+            pair.meta.style.transform = `translateY(${pair.currentOffset}px)`;
+          });
+
+          if (hasActiveMotion) {
+            motionFrame = window.requestAnimationFrame(step);
+          } else {
+            motionFrame = null;
+          }
+        }
+
+        motionFrame = window.requestAnimationFrame(step);
+      }
 
       function updateProjectMetaFollow() {
         const isMobile = window.matchMedia("(max-width: 900px)").matches;
         const preferredY = Math.max(72, Math.round(window.innerHeight * 0.2));
 
-        metaPairs.forEach(({ row, meta }) => {
+        metaPairs.forEach((pair) => {
+          const { row, meta } = pair;
+
           if (isMobile) {
-            meta.style.transform = "translateY(0px)";
+            pair.targetOffset = 0;
             return;
           }
 
@@ -192,8 +229,10 @@
           const desiredOffset = preferredY - rowRect.top - paddingTop;
           const clampedOffset = Math.max(0, Math.min(desiredOffset, maxOffset));
 
-          meta.style.transform = `translateY(${clampedOffset}px)`;
+          pair.targetOffset = clampedOffset;
         });
+
+        startMetaMotionLoop();
       }
 
       function requestProjectMetaFollowUpdate() {
