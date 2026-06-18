@@ -109,8 +109,7 @@ function draw() {
     let g = (sin(frameCount * 0.03) * 0.5 + 0.5) * random(50, 100) + random(randShade1);
     let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100 + randShade;
     fill(r, g, b); 
-    // stroke(255);
-    // strokeWeight(2);
+    // stroke(t(2);
     circle(mouseX, mouseY, mouseCircleSize);
     // square(mouseX, mouseY, mouseCircleSize);
 
