@@ -28,8 +28,8 @@ s0.initP5() // send p5 to hydra
 P5.toggle(0) // hide p5
 
 src(s0)
-.add(src(o0).scale(3), 0.7) // controls the "glow"
-.modulateScale(noize(2), 0.5, 1.5 , 10) 
+.add(src(o0).scale(3), 0.4) // controls the "glow"
+.modulateScale(noize(2), 0.5, 1 , 10) 
 .out()
 
 
@@ -75,7 +75,7 @@ window.refreshCircleSketch = randomizeScene;
 function setup() {
     createCanvas(windowWidth, windowHeight);
     background(255);
-    frameRate(15);
+    // frameRate(60);
 
     applyHydraDisplayResolution();
 
@@ -104,23 +104,23 @@ function draw() {
         background(255);
     }
     
-    // Colors for mouse circles
+    // ==================== Colors for mouse circles ==========================
     let r = (sin(frameCount * 0.01) * 1.5 + 0.5) * randShade;
     let g = (sin(frameCount * 0.03) * 0.5 + 0.5) * random(50, 100) + random(randShade1);
     let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100 + randShade;
-    fill(r, g, b); 
-    // stroke(t(2);
-    circle(mouseX, mouseY, mouseCircleSize + b/10);
-    // square(mouseX, mouseY, mouseCircleSize);
+    fill(r, g, b, 150); 
+    blendMode(DIFFERENCE);
+    circle(mouseX, mouseY, mouseCircleSize);
 
     // Middle SHAPE
+    blendMode(HARD_LIGHT);
     let b2 = ((sin(frameCount * 0.025) * 0.5 + 0.5) * random(randShade));
-    let rSize = (sin(frameCount * 0.009)) * maxCircle + minCircle;
+    let rSize = (sin(frameCount * 0.9)) * maxCircle + minCircle;
     fill(180-b2, (b2*200)%70, (b2*200)%180, 10);
     noStroke();
     // circle(width/2, height/2, random3 + rSize);
     square(width/2, height/2, random3 + rSize);
-
+    
     // Moving texts
     let tx, ty;
     let fontSize = height/5;

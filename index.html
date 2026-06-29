@@ -134,6 +134,22 @@
     <div id="page3" aria-hidden="true"></div>
   </div>
 
+  <footer id="site-footer">
+    <div id="footer-canvas"></div>
+    <div class="footer-overlay">
+      <div class="footer-col">
+        <span>Suyash Chitrakar</span>
+        <a href="https://www.instagram.com/ch11trakar/">Instagram</a>
+        <a href="https://www.linkedin.com/in/suyash-chitrakar/">LinkedIn</a>
+        <a href="https://chitrakat.github.io/index.html">GitHub</a>
+        <span>© 2026</span>
+      </div>
+      <div class="footer-col" style="align-items:flex-end;">
+        
+      </div>
+    </div>
+  </footer>
+
   <!-- p5.js library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
   <!-- hydra-synth and hy5.js for shader integration -->
@@ -141,6 +157,8 @@
   <script src="https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js"></script>
   <!-- Custom sketch -->
   <script src="circles.js"></script>
+  <!-- Footer generative sketch -->
+  <script src="assets/js/footer.js"></script>
 
   
   <script>
@@ -181,6 +199,32 @@
       window.addEventListener("scroll", updateArrows, { passive: true });
       window.addEventListener("resize", updateArrows);
       updateArrows();
+    })();
+
+    // Hide fixed-left when scrolled into footer
+    (function () {
+      const fixedLeft = document.getElementById("fixed-left");
+      const footer = document.getElementById("site-footer");
+
+      if (!fixedLeft || !footer) {
+        console.warn("Fixed-left or footer not found");
+        return;
+      }
+
+      window.addEventListener("scroll", () => {
+        const footerTop = footer.offsetTop;
+        const scrollY = window.scrollY;
+        
+        console.log("scrollY:", scrollY, "footerTop:", footerTop);
+
+        if (window.innerHeight + scrollY >= footerTop) {
+          fixedLeft.style.opacity = "0";
+          fixedLeft.style.pointerEvents = "none";
+        } else {
+          fixedLeft.style.opacity = "1";
+          fixedLeft.style.pointerEvents = "auto";
+        }
+      }, { passive: true });
     })();
   </script>
 </body>
