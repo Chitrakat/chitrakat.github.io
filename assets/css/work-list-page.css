@@ -22,6 +22,14 @@
   align-self: start;
 }
 
+.work-list-page.fixed-intro .work-list-intro {
+  position: fixed;
+  top: calc(var(--site-header-offset, 64px) + 18px);
+  left: max(20px, calc((100vw - 1600px) / 2 + 20px));
+  width: clamp(220px, 28vw, 448px);
+  z-index: 2;
+}
+
 .work-list-page .work-list-title {
   margin: 0;
   font-size: clamp(1.85rem, 3.8vw, 3rem);
@@ -143,6 +151,10 @@
     grid-template-columns: minmax(180px, 34vw) 1fr;
   }
 
+  .work-list-page.fixed-intro .work-list-intro {
+    width: clamp(180px, 34vw, 544px);
+  }
+
   .work-list-page .work-list-rows {
     -webkit-column-count: 2;
     column-count: 2;
@@ -157,6 +169,11 @@
 
   .work-list-page .work-list-intro {
     position: static;
+  }
+
+  .work-list-page.fixed-intro .work-list-intro {
+    position: static;
+    width: auto;
   }
 
   .work-list-page .loading-state,

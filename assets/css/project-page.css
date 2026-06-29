@@ -352,6 +352,18 @@
   top: calc(var(--site-header-offset, 64px) + 18px);
 }
 
+.gen-art-page.fixed-intro .gen-art-intro {
+  position: fixed;
+  top: calc(var(--site-header-offset, 64px) + 18px);
+  left: max(20px, calc((100vw - 1600px) / 2 + 20px));
+  width: clamp(220px, 28vw, 448px);
+  z-index: 2;
+}
+
+.gen-art-page.fixed-intro .gen-art-gallery {
+  grid-column: 2;
+}
+
 .gen-art-page .gen-art-title {
   margin: 0;
   font-size: clamp(1.9rem, 3.7vw, 3rem);
@@ -452,6 +464,10 @@
     gap: 1.35rem;
     grid-template-columns: minmax(180px, 34vw) 1fr;
   }
+
+  .gen-art-page.fixed-intro .gen-art-intro {
+    width: clamp(180px, 34vw, 544px);
+  }
 }
 
 @media (max-width: 900px) {
@@ -462,6 +478,15 @@
 
   .gen-art-page .gen-art-intro {
     position: static;
+  }
+
+  .gen-art-page.fixed-intro .gen-art-intro {
+    position: static;
+    width: auto;
+  }
+
+  .gen-art-page.fixed-intro .gen-art-gallery {
+    grid-column: auto;
   }
 
   .gen-art-page .gen-art-gallery {

@@ -28,7 +28,7 @@ s0.initP5() // send p5 to hydra
 P5.toggle(0) // hide p5
 
 src(s0)
-.add(src(o0).scale(3), 0.5) // controls the "glow"
+.add(src(o0).scale(3), 0.7) // controls the "glow"
 .modulateScale(noize(2), 0.5, 1.5 , 10) 
 .out()
 
@@ -110,13 +110,13 @@ function draw() {
     let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100 + randShade;
     fill(r, g, b); 
     // stroke(t(2);
-    circle(mouseX, mouseY, mouseCircleSize);
+    circle(mouseX, mouseY, mouseCircleSize + b/10);
     // square(mouseX, mouseY, mouseCircleSize);
 
     // Middle SHAPE
     let b2 = ((sin(frameCount * 0.025) * 0.5 + 0.5) * random(randShade));
     let rSize = (sin(frameCount * 0.009)) * maxCircle + minCircle;
-    fill(180-b2, (b2*200)%70, (b2*200)%180, 15);
+    fill(180-b2, (b2*200)%70, (b2*200)%180, 10);
     noStroke();
     // circle(width/2, height/2, random3 + rSize);
     square(width/2, height/2, random3 + rSize);
