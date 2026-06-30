@@ -10,10 +10,6 @@ body.landing-page {
   color: #111;
 }
 
-body.landing-page #cursor {
-  display: none;
-}
-
 body.landing-page .main-header {
   display: none !important;
   pointer-events: none;
