@@ -1,18 +1,13 @@
 [
   {
-    "title": "App Design",
-    "year": "2025",
-    "img": "assets/img/design-cover/x.png"
-  },
-  {
     "title": "Interactive Identity for X-Journal I",
     "year": "2025",
     "img": "assets/img/p5x1/HEADER-(2).png"
   },
   {
-    "title": "Generative Designs",
+    "title": "Interrupting the Grid",
     "year": "2025",
-    "img": "assets/img/gen/1.jpg"
+    "img": "assets/img/gen-art/circles/grids.png"
   },
   {
     "title": "Interactive Identity for X-Journal II",
@@ -23,5 +18,15 @@
     "title": "Hierarchy",
     "year": "2024",
     "img": "assets/img/p5class/P5U-MAIN.png"
+  },
+  {
+    "title": "Photographing Particles",
+    "year": "2025",
+    "img": "assets/img/gen-art/particles/1.jpg"
+  },
+  {
+    "title": "Senior Finals",
+    "year": "2025",
+    "img": "assets/img/gen-art/senior-final/1267_001.png"
   }  
 ]
