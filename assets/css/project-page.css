@@ -353,11 +353,11 @@
 }
 
 .gen-art-page.fixed-intro .gen-art-intro {
-  position: fixed;
+  position: sticky;
   top: calc(var(--site-header-offset, 64px) + 18px);
-  left: max(20px, calc((100vw - 1600px) / 2 + 20px));
-  width: clamp(220px, 28vw, 448px);
-  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - (var(--site-header-offset, 64px) + 18px + 40px));
 }
 
 .gen-art-page.fixed-intro .gen-art-gallery {
@@ -374,9 +374,13 @@
 .gen-art-page .gen-art-desc {
   margin: 12px 0 0;
   max-width: 30ch;
-  font-size: 0.95rem;
+  font-size: 1.25rem;
   line-height: 1.45;
   color: #2f2f2f;
+  overflow-y: auto;
+  padding-right: 8px;
+  flex: 1;
+  min-height: 0;  /* Important: allows flex item to shrink below content */     
 }
 
 .gen-art-page .gen-art-gallery {
