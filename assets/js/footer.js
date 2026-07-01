@@ -3,7 +3,7 @@
 // mouseX / mouseY are footer-canvas-local in instance mode.
 
 new p5(function (p) {
-  const FOOTER_HEIGHT = 200;
+  const FOOTER_HEIGHT = 300;
 //   const r = FOOTER_HEIGHT / 10;
   const r = 10;
   let angles = [];
