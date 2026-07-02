@@ -7,50 +7,6 @@
   min-height: 100vh;
 }
 
-.p5js2-home-page .home-lite-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 18px;
-  background: rgba(255, 255, 255, 0.96);
-  border-bottom: 1px solid #ff004c;
-  z-index: 80;
-}
-
-.p5js2-home-page .home-lite-title {
-  font-size: 1rem;
-  font-weight: 800;
-  letter-spacing: 0.01em;
-  text-decoration: none;
-  color: #111111;
-}
-
-.p5js2-home-page .home-lite-right {
-  display: flex;
-  align-items: center;
-}
-
-.p5js2-home-page .works-toggle {
-  border: 1px solid #111111;
-  border-radius: 999px;
-  background: #f3f3f3;
-  color: #111111;
-  height: 34px;
-  font-size: 0.8rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  padding: 0 12px;
-}
-
-.p5js2-home-page .works-toggle:hover,
-.p5js2-home-page .works-toggle:focus {
-  background: #ebebeb;
-}
-
 .p5js2-home-page .dropdown-menu {
   border: 1px solid #ff004c;
   background: #ffffff;
@@ -191,10 +147,6 @@
 }
 
 @media (max-width: 700px) {
-  .p5js2-home-page .home-lite-header {
-    padding: 10px 12px;
-  }
-
   .p5js2-home-page .p5js2-home-main {
     padding: 76px 12px 24px;
   }

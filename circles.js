@@ -73,7 +73,8 @@ function randomizeScene() {
 window.refreshCircleSketch = randomizeScene;
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+    const heroCanvas = createCanvas(windowWidth, windowHeight);
+    heroCanvas.parent('page1');
     background(255);
     // frameRate(60);
 

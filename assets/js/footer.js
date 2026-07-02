@@ -5,7 +5,7 @@
 new p5(function (p) {
   const FOOTER_HEIGHT = 300;
 //   const r = FOOTER_HEIGHT / 10;
-  const r = 10;
+  const r = 20;
   let angles = [];
   let anglesV = [];
 
@@ -13,11 +13,13 @@ new p5(function (p) {
     angles = [];
     anglesV = [];
     frameRate(20);
-    let div = p.random(100, 10000);
-    let total = p.floor(p.width / (r * 2));
-    for (let i = 0; i < total; i++) {
-      angles[i] = 0;
-      anglesV[i] = 0.001 + i / div;
+    // let div = p.random(1000, 10000);
+    let div = 10000;
+    // let total = p.floor(p.width / (r * 2));
+    let total = 10;
+    for (let i = 0; i < total; i++) { // Initialize angles and velocities for each square
+      angles[i] = 100;
+      anglesV[i] = 0.0009 + i / div;
     }
   }
 
@@ -36,6 +38,7 @@ new p5(function (p) {
 
     p.fill(255);
     p.background(255, 255, 255, 7);
+    // p.displayMode(HARD_LIGHT);
 
     for (let i = 0; i < angles.length; i++) {
       let y = p.map(i, 0, angles.length - 1, -p.height / 2, p.height / 2);
@@ -43,7 +46,7 @@ new p5(function (p) {
 
       p.strokeWeight(1);
       p.stroke(255, 64, 129);
-      p.square(x, y, r );
+      p.square(x, y, r*2);
 
       angles[i] += anglesV[i];
     }
