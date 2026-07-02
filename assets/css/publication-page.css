@@ -12,6 +12,7 @@
 
 .publication-page-title-block {
   margin-bottom: 35px;
+  /* max-width: 50%; */
 }
 
 .publication-page-kicker {
@@ -121,11 +122,13 @@
 
 .publication-gallery-wrap {
   min-width: 0;
+  min-height: auto;
+  margin-top: auto;
 }
 
 .publication-gallery-label {
   margin: 0 0 10px;
-  font-size: 0.76rem;
+  font-size: 0.85rem;
   line-height: 1;
   letter-spacing: 0.08em;
   text-transform: uppercase;

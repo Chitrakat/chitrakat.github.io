@@ -310,8 +310,9 @@ body.landing-page .page1-tool-icon {
 /* Footer */
 body.landing-page #site-footer {
   position: relative;
+  margin-top: 0.4rem;
   width: 100%;
-  height: 200px;
+  height: 300px;
   overflow: hidden;
   background: #fff;
   flex-shrink: 0;
@@ -322,7 +323,7 @@ body.landing-page #site-footer::before {
   position: absolute;
   inset: 0;
   top: 0;
-  height: 50%;
+  height: 40%;
   background: linear-gradient(
     to bottom,
     rgba(255, 255, 255, 1) 0%,
@@ -348,15 +349,16 @@ body.landing-page #footer-canvas canvas {
 
 body.landing-page .footer-overlay {
   position: absolute;
+  margin-top: auto;
   inset: 0;
   z-index: 2;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 2rem;
   align-items: center;
-  justify-content: space-between;
   padding: 2rem;
   pointer-events: none;
   font-family: "Lexend", "Outfit", sans-serif;
-  font-size: 1rem;
   color: #111;
 }
 
@@ -375,6 +377,13 @@ body.landing-page .footer-col {
   flex-direction: column;
   justify-content: flex-start;
   gap: 0.3rem;
+}
+
+body.landing-page .footer-col:first-child {
+  font-size: clamp(1rem, 2vw, 3rem);
+  font-weight: 600;
+  line-height: 1.2;
+  justify-content: center;
 }
 
 body.landing-page #bio-overlay,
