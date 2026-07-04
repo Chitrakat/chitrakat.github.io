@@ -38,6 +38,16 @@ body.landing-page #page1 canvas {
   z-index: 0;
 }
 
+/* Hydra creates additional canvases directly under body; keep them in hero layer */
+body.landing-page > canvas {
+  position: fixed !important;
+  inset: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 0;
+  pointer-events: none;
+}
+
 body.landing-page #page1::before {
   content: "";
   position: fixed;
@@ -124,7 +134,7 @@ body.landing-page #page2 {
   position: relative;
   z-index: 2;
   background: #ffffff;
-  margin-top: 56px;
+  /* margin-top: 56px; */
 }
 
 body.landing-page #p2-scroll {
@@ -310,7 +320,7 @@ body.landing-page .page1-tool-icon {
 /* Footer */
 body.landing-page #site-footer {
   position: relative;
-  margin-top: 0.4rem;
+  /* margin-top: 0.4rem; */
   width: 100%;
   height: 300px;
   overflow: hidden;
@@ -323,14 +333,14 @@ body.landing-page #site-footer::before {
   position: absolute;
   inset: 0;
   top: 0;
-  height: 40%;
+  height: 30%;
   background: linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 1),
     rgba(255, 255, 255, 0) 100%
   );
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
 }
 
 body.landing-page #footer-canvas {
@@ -338,9 +348,12 @@ body.landing-page #footer-canvas {
   inset: 0;
   width: 100%;
   height: 100%;
+  z-index: 1;
 }
 
 body.landing-page #footer-canvas canvas {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100% !important;
   height: 100% !important;
@@ -351,7 +364,7 @@ body.landing-page .footer-overlay {
   position: absolute;
   margin-top: auto;
   inset: 0;
-  z-index: 2;
+  z-index: 4  ;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 2rem;
@@ -374,6 +387,8 @@ body.landing-page .footer-overlay a:hover {
 
 body.landing-page .footer-col {
   display: flex;
+  border-radius: 15px;
+  /* background: #ffffff70; */
   flex-direction: column;
   justify-content: flex-start;
   gap: 0.3rem;
@@ -383,6 +398,8 @@ body.landing-page .footer-col:first-child {
   font-size: clamp(1rem, 2vw, 3rem);
   font-weight: 600;
   line-height: 1.2;
+  /* color: #000000; */
+  /* mix-blend-mode: difference; */
   justify-content: center;
 }
 
@@ -390,6 +407,7 @@ body.landing-page #bio-overlay,
 body.landing-page #poster-preview,
 body.landing-page #page3 {
   display: none;
+  /* font-weight: 400; */
 }
 
 /* Responsive */
