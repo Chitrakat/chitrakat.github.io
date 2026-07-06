@@ -1,4 +1,68 @@
 (function () {
+  function enableDragScroll(container) {
+    if (!container || container.dataset.dragScrollBound === 'true') {
+      return;
+    }
+
+    var isDown = false;
+    var startX = 0;
+    var startScrollLeft = 0;
+    var moved = false;
+
+    container.dataset.dragScrollBound = 'true';
+
+    container.addEventListener('pointerdown', function (event) {
+      if (event.pointerType !== 'mouse' || event.button !== 0) {
+        return;
+      }
+
+      event.preventDefault();
+      isDown = true;
+      moved = false;
+      startX = event.clientX;
+      startScrollLeft = container.scrollLeft;
+      container.classList.add('is-dragging');
+      container.setPointerCapture(event.pointerId);
+    });
+
+    container.addEventListener('pointermove', function (event) {
+      if (!isDown) {
+        return;
+      }
+
+      var deltaX = event.clientX - startX;
+      if (Math.abs(deltaX) > 3) {
+        moved = true;
+      }
+      container.scrollLeft = startScrollLeft - deltaX;
+    });
+
+    function endDrag(event) {
+      if (!isDown) {
+        return;
+      }
+
+      isDown = false;
+      container.classList.remove('is-dragging');
+      if (event && container.hasPointerCapture(event.pointerId)) {
+        container.releasePointerCapture(event.pointerId);
+      }
+    }
+
+    container.addEventListener('pointerup', endDrag);
+    container.addEventListener('pointercancel', endDrag);
+
+    container.addEventListener('click', function (event) {
+      if (!moved) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      moved = false;
+    }, true);
+  }
+
   const publicationData = {
     'vol55-2': {
       title: 'Catch Magazine: VOL. 55 NO. 2',
@@ -140,6 +204,8 @@
     }
   };
 
+  const publicationSequence = ['vol55-2', 'vol56-1', 'vol56-2', 'x-journal', 'lines'];
+
   function escapeHtml(value) {
     return String(value)
       .replace(/&/g, '&amp;')
@@ -158,6 +224,38 @@
     return '<a href="' + safeUrl + '" target="_blank" rel="noreferrer">link</a>';
   }
 
+  function renderProjectSequenceNav(currentKey) {
+    const currentIndex = publicationSequence.indexOf(currentKey);
+    if (currentIndex === -1) {
+      return '';
+    }
+
+    const previousKey = currentIndex > 0 ? publicationSequence[currentIndex - 1] : null;
+    const nextKey = currentIndex < publicationSequence.length - 1 ? publicationSequence[currentIndex + 1] : null;
+
+    const previousProject = previousKey ? publicationData[previousKey] : null;
+    const nextProject = nextKey ? publicationData[nextKey] : null;
+
+    const previousHtml = previousProject
+      ? '<a class="project-sequence-link" href="' + escapeHtml(previousKey + '.html') + '">\u2190 Previous: ' + escapeHtml(previousProject.title) + '</a>'
+      : '';
+
+    const nextHtml = nextProject
+      ? '<a class="project-sequence-link" href="' + escapeHtml(nextKey + '.html') + '">Next: ' + escapeHtml(nextProject.title) + ' \u2192</a>'
+      : '';
+
+    return [
+      '<nav class="project-sequence-nav" aria-label="Project navigation">',
+      '  <div class="project-sequence-slot project-sequence-slot-prev' + (previousHtml ? '' : ' is-empty') + '">',
+      '    ' + previousHtml,
+      '  </div>',
+      '  <div class="project-sequence-slot project-sequence-slot-next' + (nextHtml ? '' : ' is-empty') + '">',
+      '    ' + nextHtml,
+      '  </div>',
+      '</nav>'
+    ].join('');
+  }
+
   function renderPage() {
     const target = document.getElementById('publication-page');
     const key = document.body.dataset.publicationKey;
@@ -169,16 +267,12 @@
     const gallery = project.images.map(function (src, index) {
       return [
         '<figure class="publication-gallery-item">',
-        '  <img src="' + escapeHtml(src) + '" alt="' + escapeHtml(project.title) + ' image ' + (index + 1) + '" loading="lazy">',
+        '  <img src="' + escapeHtml(src) + '" alt="' + escapeHtml(project.title) + ' image ' + (index + 1) + '" loading="lazy" draggable="false">',
         '</figure>'
       ].join('');
     }).join('');
 
     target.innerHTML = [
-      '<section class="publication-page-title-block">',
-      '  <p class="publication-page-kicker">Publication Design</p>',
-      '  <h1 class="publication-page-title">' + escapeHtml(project.title) + '</h1>',
-      '</section>',
       '<section class="publication-page-layout">',
       '  <aside class="publication-page-sidebar">',
       '    <a class="publication-page-back" href="../design.html">\u2190 Back to publication design</a>',
@@ -193,12 +287,20 @@
       '      <div class="publication-description">' + project.descriptionHtml + '</div>',
       '    </div>',
       '  </aside>',
-      '  <div class="publication-gallery-wrap">',
-      '    <p class="publication-gallery-label">Book spreads</p>',
-      '    <div class="publication-gallery">' + gallery + '</div>',
+      '  <div class="publication-content-column">',
+      '    <section class="publication-page-title-block">',
+      '      <h1 class="publication-page-title">' + escapeHtml(project.title) + '</h1>',
+      '    </section>',
+      '    <div class="publication-gallery-wrap">',
+      '      <p class="publication-gallery-label">Book spreads</p>',
+      '      <div class="publication-gallery">' + gallery + '</div>',
+      '    </div>',
       '  </div>',
-      '</section>'
+      '</section>',
+      renderProjectSequenceNav(key)
     ].join('');
+
+    enableDragScroll(target.querySelector('.publication-gallery'));
   }
 
   if (document.readyState === 'loading') {

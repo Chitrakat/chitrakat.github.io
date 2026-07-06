@@ -2,6 +2,8 @@
   margin: 0;
   background: #ffffff;
   color: #111111;
+  --my-grey: #777777;
+  --my-pink: #ff004c;
 }
 
 .publication-page-main {
@@ -11,24 +13,15 @@
 }
 
 .publication-page-title-block {
-  margin-bottom: 35px;
+  margin-bottom: 30px;
   /* max-width: 50%; */
-}
-
-.publication-page-kicker {
-  margin: 0 0 0.5rem;
-  font-size: 0.76rem;
-  line-height: 1;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #777777;
 }
 
 .publication-page-title {
   margin: 0;
-  font-size: clamp(4rem, 5vw, 5.4rem);
+  font-size: clamp(5rem, 100vw, 7rem);
   line-height: 0.95;
-  font-weight: 600;
+  font-weight: 200;
   max-width: 15ch;
 }
 
@@ -39,6 +32,13 @@
   align-items: start;
 }
 
+.publication-content-column {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  min-width: 0;
+}
+
 .publication-page-sidebar {
   position: sticky;
   top: calc(var(--site-header-offset, 64px) + 20px);
@@ -47,18 +47,23 @@
 
 .publication-page-back {
   display: inline-block;
-  margin-bottom: 16px;
-  color: #ff004c;
+  margin-bottom: 10px;
+  color: var(--my-grey);
+  cursor: pointer;
+  text-transform: lowercase;
   text-decoration: none;
 }
 
 .publication-page-back:hover,
 .publication-page-back:focus {
-  color: #d90041;
+  color: var(--my-pink);
+  scale: 1.05;
+  transition: scale 0.5s;
+  transform-origin: left center;
 }
 
 .publication-meta-card {
-  border: 1px solid #ff004c;
+  border: none;
   background: #f7f7f7;
 }
 
@@ -69,7 +74,7 @@
 
 .publication-meta-card td {
   padding: 10px 12px;
-  border-bottom: 1px solid #ffb3cb;
+  border-bottom: 1px solid var(--my-pink);
   vertical-align: top;
   font-size: 0.92rem;
   line-height: 1.4;
@@ -102,7 +107,7 @@
   padding-left: 12px;
   padding-right: 12px;
   padding-bottom: 8px;
-  border-top: 1px solid #ffb3cb;
+  border-top: 1px solid var(--my-pink);
 }
 
 .publication-description h3 {
@@ -115,32 +120,54 @@
 
 .publication-description p {
   margin: 0 0 1rem;
-  font-size: 0.93rem;
+  font-size: 1rem;
   line-height: 1.52;
   color: #2f2f2f;
 }
 
 .publication-gallery-wrap {
+  position: relative;
   min-width: 0;
-  min-height: auto;
+  min-height: auto;  
   margin-top: auto;
+}
+
+.publication-gallery-wrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: clamp(36px, 5vw, 90px);
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(to left, #ffffff 0%, 
+    rgba(255, 255, 255, 0) 100%);
 }
 
 .publication-gallery-label {
   margin: 0 0 10px;
-  font-size: 0.85rem;
+  font-size: clamp(0.5rem, 10vw, 1rem);
   line-height: 1;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #777777;
+  color: var(--my-grey);
 }
 
 .publication-gallery {
   display: flex;
-  gap: 20px;
   overflow-x: auto;
-  padding-bottom: 12px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   scroll-snap-type: x proximity;
+  cursor: grab;
+}
+
+.publication-gallery.is-dragging {
+  cursor: grabbing;
+}
+
+.publication-gallery::-webkit-scrollbar {
+  display: none;
 }
 
 .publication-gallery-item {
@@ -155,6 +182,40 @@
   width: auto;
   height: clamp(420px, 70vh, 760px);
   max-width: none;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.design-publication-page .project-sequence-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--my-pink);
+}
+
+.design-publication-page .project-sequence-slot {
+  min-height: 1px;
+}
+
+.design-publication-page .project-sequence-slot-next {
+  text-align: right;
+}
+
+.design-publication-page .project-sequence-link {
+  display: inline-block;
+  color: #2f2f2f;
+  text-decoration: none;
+  font-size: clamp(1.06rem, 1.65vw, 1.35rem);
+  line-height: 1.24;
+  font-weight: 300;
+  transition: color 180ms ease;
+}
+
+.design-publication-page .project-sequence-link:hover,
+.design-publication-page .project-sequence-link:focus-visible {
+  color: var(--my-pink);
 }
 
 @media (max-width: 980px) {
@@ -164,6 +225,10 @@
 
   .publication-page-sidebar {
     position: static;
+  }
+
+  .design-publication-page .project-sequence-link {
+    font-size: clamp(1.02rem, 3.8vw, 1.2rem);
   }
 }
 
