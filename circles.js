@@ -29,7 +29,7 @@ P5.toggle(0) // hide p5
 
 src(s0)
 .add(src(o0).scale(3), 0.4) // controls the "glow"
-.modulateScale(noize(2), 0.5, 1 , 10) 
+.modulateScale(noize(3), 0.5, 1 , 10) 
 .out()
 
 
@@ -59,7 +59,7 @@ function randomizeScene() {
 
     maxCircle = windowHeight / 10;
     minCircle = windowHeight / 20;
-    mouseCircleSize = height / 14;
+    mouseCircleSize = height / 10;
 
     randShade = random(100);
     randShade1 = random(100);
@@ -136,6 +136,7 @@ function draw() {
             new movingObject(random(1000), random(1000), fontSize/2, 'photographer'),
             new movingObject(random(1000), random(1000), fontSize/2, 'creative\ncoder'),
             new movingObject(random(1000), random(1000), fontSize/2, 'an artist?'),
+            new movingObject(random(1000), random(1000), fontSize/3, '#openToWork'),
         ];
     }
 
