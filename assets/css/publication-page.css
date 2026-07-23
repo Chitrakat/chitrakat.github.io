@@ -223,7 +223,12 @@
     grid-template-columns: 1fr;
   }
 
+  .publication-content-column {
+    order: 1;
+  }
+
   .publication-page-sidebar {
+    order: 2;
     position: static;
   }
 
