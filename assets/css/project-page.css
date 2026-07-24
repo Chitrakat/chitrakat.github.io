@@ -419,7 +419,7 @@
 .gen-art-page .gen-art-item:hover .gen-art-image,
 .gen-art-page .gen-art-item:focus-visible .gen-art-image {
   transform: scale(1.012);
-  filter: blur(1px);
+  /* filter: blur(1px); */
 }
 
 .gen-art-page .project-sequence-nav {

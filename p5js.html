@@ -42,6 +42,10 @@
       'Senior Finals': 'Plotter-driven generative compositions developed for a senior exhibition.'
     };
 
+    const projectImageOverrides = {
+      'No Meaning Required': 'assets/img/gen-art/circles/circle-grid-(1).png'
+    };
+
     async function loadP5jsProjects() {
       try {
         const response = await fetch('p5js-projects-data.json');
@@ -55,7 +59,7 @@
           return {
             href: slug ? `p5js/${slug}.html` : '',
             title: project.title,
-            image: project.img,
+            image: projectImageOverrides[project.title] || project.img,
             description: projectDescriptions[project.title] || '',
             tag: `${project.year} | p5.js`
           };
