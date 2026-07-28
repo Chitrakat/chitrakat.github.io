@@ -20,7 +20,7 @@ body.photo-project-page {
   position: sticky;
   top: 38px;
   height: calc(100vh - 38px);
-  overflow-y: auto;
+  /* overflow-y: auto; */
   background: #ffffff;
 }
 
@@ -64,7 +64,7 @@ body.photo-project-page {
 .photo-project-title {
   margin: 0 0 10px;
   font-size: 4rem;
-  font-weight: 7;
+  font-weight: 200;
   line-height: 1.1;
   color: #111111;
 }
@@ -72,7 +72,7 @@ body.photo-project-page {
 .photo-project-desc {
   margin: 0 0 28px;
   max-width: 77vw;
-  text-align: justify;
+  text-align: justify-all;
   /* max-width: 560px; */
   font-size: 1rem;
   line-height: 1.6;
@@ -86,12 +86,13 @@ body.photo-project-page .photo-grid {
   gap: 8px;
   align-items: start;
   max-width: none;
-  margin: 0;
 }
 
 body.photo-project-page .photo-grid-img {
   width: 100%;
   display: block;
+  margin: 0;
+  /* rotate: 34; */
   margin: 0;
   cursor: zoom-in;
 }
