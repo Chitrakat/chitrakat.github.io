@@ -462,7 +462,7 @@ body.landing-page #page3 {
   }
 
   body.landing-page #page2 {
-    margin-top: 32px;
+    margin-top: 0;
   }
 
   body.landing-page #p2-scroll .project-row {
