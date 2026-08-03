@@ -280,9 +280,9 @@ body.landing-page #arrow-up {
 body.landing-page .arrow-label {
   font-size: 0.8rem;
   line-height: 1;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   text-align: center;
-  letter-spacing: 0.04em;
+  /* letter-spacing: 0.04em; */
 }
 
 body.landing-page #page1-tools {
@@ -450,6 +450,7 @@ body.landing-page #page3 {
 
 @media (max-width: 900px) {
   body.landing-page #fixed-left {
+    visibility: hidden;
     position: static;
     width: 100%;
     height: auto;

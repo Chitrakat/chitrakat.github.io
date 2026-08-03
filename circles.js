@@ -24,6 +24,9 @@ let value = 100;
 
 let n1;
 
+let pressStart = null;
+let pressEnd = null;
+
 s0.initP5() // send p5 to hydra
 P5.toggle(0) // hide p5
 
@@ -76,10 +79,11 @@ function setup() {
     const heroCanvas = createCanvas(windowWidth, windowHeight);
     heroCanvas.parent('page1');
     background(255);
-    // frameRate(60);
+    // frameRate(1);
 
     applyHydraDisplayResolution();
 
+    strokeCap(SQUARE);
     rectMode(CENTER);
     textAlign(CENTER, CENTER);
 
@@ -99,10 +103,17 @@ function draw() {
     //     mouseBoo = !mouseBoo;
     // }
 
-    if(mouseIsPressed){
-        millis(500);
-        clear();
-        background(255);
+    // if(mouseIsPressed){
+        
+    //     // millis(1000);
+    //     // clear();
+    //     // background(255);
+    // }
+
+    if (pressStart && pressEnd) {
+        stroke(0);
+        strokeWeight(random(10,30));
+        line(pressStart.x, pressStart.y, pressEnd.x, pressEnd.y);
     }
     
     // ==================== Colors for mouse circles ==========================
@@ -119,7 +130,6 @@ function draw() {
     let rSize = (sin(frameCount * 0.9)) * maxCircle + minCircle;
     fill(180-b2, (b2*200)%70, (b2*200)%180, 10);
     noStroke();
-    // circle(width/2, height/2, random3 + rSize);
     square(width/2, height/2, random3 + rSize);
     
     // Moving texts
@@ -129,13 +139,17 @@ function draw() {
     if (!window.movingObjs) {
         window.movingObjs = [
             new movingObject(random(1000), random(1000), fontSize/2, 'hi, i\'m Suyash'),
-            new movingObject(random(1000), random(1000), fontSize/2, 'kinda lost'),
-            new movingObject(random(1000), random(1000), fontSize/2, 'a graphic\ndesigner'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'lost'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'designer'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'technologist'),
             new movingObject(random(1000), random(1000), fontSize/4, 'overstimulated'),
             new movingObject(random(1000), random(1000), fontSize/4, 'caffeinated'),
+            new movingObject(random(1000), random(1000), fontSize/4, 'anxious'),
             new movingObject(random(1000), random(1000), fontSize/2, 'photographer'),
             new movingObject(random(1000), random(1000), fontSize/2, 'creative\ncoder'),
-            new movingObject(random(1000), random(1000), fontSize/2, 'an artist?'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'artist?'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'hopeful?'),
+            new movingObject(random(1000), random(1000), fontSize/3, 'immigrant'),
             new movingObject(random(1000), random(1000), fontSize/3, '#openToWork'),
         ];
     }
@@ -144,6 +158,19 @@ function draw() {
         obj.update();
         obj.display();
     }
+}
+
+function mousePressed() {
+    if (!pressStart || pressEnd) {
+        pressStart = { x: mouseX, y: mouseY };
+        pressEnd = null;
+    } else {
+        pressEnd = { x: mouseX, y: mouseY };
+    }
+}
+
+function mouseReleased() {
+    // handled by click-to-click logic in mousePressed
 }
 
 class movingObject{

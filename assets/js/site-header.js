@@ -22,7 +22,7 @@
     return {
       root,
       section,
-      menuLabel: body.dataset.siteHeaderLabel || 'All Works'
+      menuLabel: body.dataset.siteHeaderLabel || 'Selected Works'
     };
   }
 
