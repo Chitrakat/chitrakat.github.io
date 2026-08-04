@@ -13,7 +13,6 @@
     const href = item.href || '#';
     const kicker = item.kicker ? '<p class="work-row-kicker">' + escapeHtml(item.kicker) + '</p>' : '';
     const desc = item.description ? '<p class="work-row-desc">' + escapeHtml(item.description) + '</p>' : '';
-    const tag = item.tag ? '<span class="work-row-tag">' + escapeHtml(item.tag) + '</span>' : '';
 
     return [
       '<a class="work-row" href="' + href + '"' + disabledAttrs + '>',
@@ -21,7 +20,6 @@
       '    ' + kicker,
       '    <h2 class="work-row-title">' + escapeHtml(item.title) + '</h2>',
       '    ' + desc,
-      '    ' + tag,
       '  </div>',
       '  <div class="work-row-thumb">',
       '    <img src="' + escapeHtml(item.image) + '" alt="' + escapeHtml(item.title) + '" loading="lazy">',

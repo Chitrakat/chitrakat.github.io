@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Motion | Suyash Chitrakar</title>
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="icon" type="image/png" href="./assets/img/circle-128.png">
+</head>
+<body class="work-list-page" data-site-root=".">
+  <main class="work-list-main">
+    <section class="work-list-intro">
+      <nav class="work-list-desktop-nav" aria-label="Work categories">
+        <a href="about.html">about</a>
+        <a href="design.html">publications</a>
+        <a href="photography.html">photography</a>
+        <a href="motion.html" aria-current="page">motion</a>
+        <a href="product-design.html">product design</a>
+        <a href="image-making.html">image making</a>
+        <a href="poster.html">poster</a>
+      </nav>
+      <div class="work-list-mobile-copy">
+        <h1 class="work-list-title">Motion</h1>
+        <p class="work-list-subtitle">Interactive identity and motion-led systems.</p>
+      </div>
+    </section>
+    <div id="loading" class="loading-state">Loading projects...</div>
+    <section id="motion-grid" class="work-list-rows"></section>
+  </main>
+
+  <script src="assets/js/work-listings.js"></script>
+  <script src="assets/js/site-header.js"></script>
+  <script src="assets/js/header-dropdown.js"></script>
+
+  <script>
+    const motionItems = [
+      {
+        href: 'p5js/p5js1.html',
+        title: 'Interactive Identity for X-Journal I',
+        image: 'assets/img/p5x1/HEADER-(2).png',
+        description: 'Motion-led publication identity experiments built with p5.js and responsive visual behaviors.'
+      },
+      {
+        href: 'p5js/p5js4.html',
+        title: 'Hierarchy',
+        image: 'assets/img/p5class/P5U-DISRUPT-(1).png',
+        description: 'A particle system built from three random words - triangle, bright, tired - about systems designed for you to never escape.'
+      },
+      {
+        href: 'p5js/p5js3.html',
+        title: 'Interactive Identity for X-Journal II',
+        image: 'assets/img/p5x2/P5-HEADER.png',
+        description: 'A second round of interactive identity studies extending the journal system into new visual logic.'
+      }
+    ];
+
+    document.addEventListener('DOMContentLoaded', function () {
+      window.renderWorkListing({
+        containerId: 'motion-grid',
+        loadingId: 'loading',
+        items: motionItems
+      });
+    });
+  </script>
+</body>
+</html>

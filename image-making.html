@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Image Making | Suyash Chitrakar</title>
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="icon" type="image/png" href="./assets/img/circle-128.png">
+</head>
+<body class="work-list-page" data-site-root=".">
+  <main class="work-list-main">
+    <section class="work-list-intro">
+      <nav class="work-list-desktop-nav" aria-label="Work categories">
+        <a href="about.html">about</a>
+        <a href="design.html">publications</a>
+        <a href="photography.html">photography</a>
+        <a href="motion.html">motion</a>
+        <a href="product-design.html">product design</a>
+        <a href="image-making.html" aria-current="page">image making</a>
+        <a href="poster.html">poster</a>
+      </nav>
+      <div class="work-list-mobile-copy">
+        <h1 class="work-list-title">Image Making</h1>
+        <p class="work-list-subtitle">Generative image systems and plotter studies.</p>
+      </div>
+    </section>
+    <div id="loading" class="loading-state">Loading projects...</div>
+    <section id="image-making-grid" class="work-list-rows"></section>
+  </main>
+
+  <script src="assets/js/work-listings.js"></script>
+  <script src="assets/js/site-header.js"></script>
+  <script src="assets/js/header-dropdown.js"></script>
+
+  <script>
+    const imageMakingItems = [
+      {
+        href: 'p5js/interrupting-the-grid.html',
+        title: 'No Meaning Required',
+        image: 'assets/img/gen-art/circles/circle-grid-(1).png',
+        description: 'Circles placed across a strict grid, their position and size driven by randomness, but never enough to break the structure holding them.'
+      },
+      {
+        href: 'p5js/photographing-particles.html',
+        title: 'Photographing Particles',
+        image: 'assets/img/gen-art/particles/1.jpg',
+        description: 'A particle-based generative system where cursor movement and clicks capture moments in motion, then made permanent by the plotter.'
+      },
+      {
+        href: 'p5js/senior-finals.html',
+        title: 'Senior Finals',
+        image: 'assets/img/gen-art/senior-final/1267_001.png',
+        description: 'Plotter-driven generative compositions developed for a senior exhibition.'
+      }
+    ];
+
+    document.addEventListener('DOMContentLoaded', function () {
+      window.renderWorkListing({
+        containerId: 'image-making-grid',
+        loadingId: 'loading',
+        items: imageMakingItems
+      });
+    });
+  </script>
+</body>
+</html>

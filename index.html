@@ -23,11 +23,19 @@
       <p class="label">Suyash Chitrakar</p>
     </div>
     <div class="fl-bottom">
-      <!-- <p class="footer-desktop" id="infos-btn">
-        <span class="infos-trigger">Infos</span>
-      </p> -->
+      <nav class="fl-bottom-nav" aria-label="Secondary">
+        <a class="fl-bottom-primary" href="about.html">about</a>
+        <div class="fl-bottom-links">
+          <a href="design.html">publications</a>
+          <a href="photography.html">photography</a>
+          <a href="motion.html">motion</a>
+          <a href="product-design.html">product design</a>
+          <a href="image-making.html">image making</a>
+          <a href="poster.html">poster</a>
+        </div>
+      </nav>
       <div class="footer-right">
-        <p>contact me :<br><a href="mailto:suyash.chitrakar@gmail.com">@email</a></p>
+        <p><a href="mailto:suyash.chitrakar@gmail.com">@email</a></p>
       </div>
     </div>
   </div>
@@ -167,11 +175,20 @@
       const worksBtn = document.getElementById("selected-works-btn");
       const page1Tools = document.getElementById("page1-tools");
       const refreshBtn = document.getElementById("refresh-btn");
+      const fixedLeft = document.getElementById("fixed-left");
       const pages = [page1, page2];
+      const mobileQuery = window.matchMedia("(max-width: 900px)");
 
       function currentPageIndex() {
         const midY = window.scrollY + window.innerHeight / 2;
         return midY >= page2.offsetTop ? 1 : 0;
+      }
+
+      function fixedLeftProgress() {
+        const start = page2.offsetTop;
+        const travel = Math.max(window.innerHeight * 0.35, 1);
+        const raw = (window.scrollY - start/2) / travel;
+        return Math.min(Math.max(raw, 0), 1);
       }
 
       function goTo(index) {
@@ -186,6 +203,17 @@
         worksBtn.style.display = i >= 1 ? "none" : "flex";
       }
 
+      function updateFixedLeftMotion() {
+        if (!fixedLeft) return;
+
+        if (mobileQuery.matches) {
+          fixedLeft.style.removeProperty("--fl-bottom-progress");
+          return;
+        }
+
+        fixedLeft.style.setProperty("--fl-bottom-progress", fixedLeftProgress().toFixed(3));
+      }
+
       refreshBtn.addEventListener("click", () => {
         if (typeof window.refreshCircleSketch === "function") {
           window.refreshCircleSketch();
@@ -195,8 +223,14 @@
       up.addEventListener("click", () => goTo(0));
       worksBtn.addEventListener("click", () => goTo(1));
       window.addEventListener("scroll", updateArrows, { passive: true });
+      window.addEventListener("scroll", updateFixedLeftMotion, { passive: true });
       window.addEventListener("resize", updateArrows);
+      window.addEventListener("resize", updateFixedLeftMotion);
+      if (typeof mobileQuery.addEventListener === "function") {
+        mobileQuery.addEventListener("change", updateFixedLeftMotion);
+      }
       updateArrows();
+      updateFixedLeftMotion();
     })();
 
     // Hide fixed-left when scrolled into footer

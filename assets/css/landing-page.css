@@ -87,11 +87,14 @@ body.landing-page #fixed-left {
   position: fixed;
   top: 0;
   left: 0;
+  --fl-bottom-progress: 0;
   width: clamp(240px, 28vw, 360px);
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1.5rem;
   padding: 22px 20px;
   z-index: 20;
   pointer-events: none;
@@ -129,6 +132,48 @@ body.landing-page #fixed-left .footer-right a {
   text-decoration: underline;
 }
 
+body.landing-page #fixed-left .fl-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.9rem;
+  margin-top: 0.5rem;
+  transform: translateY(calc((1 - var(--fl-bottom-progress)) * 96px));
+  opacity: var(--fl-bottom-progress);
+  transition: transform 180ms linear, opacity 180ms linear;
+}
+
+body.landing-page #fixed-left .fl-bottom-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+
+body.landing-page #fixed-left .fl-bottom-nav a {
+  color: #111;
+  text-decoration: none;
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+
+body.landing-page #fixed-left .fl-bottom-nav a:hover,
+body.landing-page #fixed-left .fl-bottom-nav a:focus-visible {
+  color: #ff004c;
+}
+
+body.landing-page #fixed-left .fl-bottom-primary {
+  margin-bottom: 1rem;
+}
+
+body.landing-page #fixed-left .fl-bottom-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  max-width: none;
+}
+
 /* Page 2: Works Grid */
 body.landing-page #page2 {
   position: relative;
@@ -140,8 +185,8 @@ body.landing-page #page2 {
 body.landing-page #p2-scroll {
   margin-left: clamp(220px, 24vw, 320px);
   padding: 8px 0.7rem 2.2rem 0.7rem;
-  -webkit-column-count: 2;
-  column-count: 2;
+  -webkit-column-count: 3;
+  column-count: 3;
   -webkit-column-gap: 0.7rem;
   column-gap: 0.7rem;
   -webkit-column-fill: balance;
@@ -435,10 +480,8 @@ body.landing-page #page3 {
   }
 
   body.landing-page #p2-scroll {
-    -webkit-column-count: 1;
-    column-count: 1;
-    -webkit-column-gap: 0;
-    column-gap: 0;
+    -webkit-column-count: 2;
+    column-count: 2;
     padding: 0.8rem;
   }
 
@@ -450,11 +493,10 @@ body.landing-page #page3 {
 
 @media (max-width: 900px) {
   body.landing-page #fixed-left {
+    display: none !important;
     visibility: hidden;
-    position: static;
-    width: 100%;
-    height: auto;
-    padding: 14px 12px;
+    opacity: 0;
+    pointer-events: none;
   }
 
   body.landing-page #p2-scroll {

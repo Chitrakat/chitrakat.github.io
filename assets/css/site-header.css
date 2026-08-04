@@ -7,8 +7,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 14px 18px;
-  background: rgba(255, 255, 255, 0.96);
-  border-bottom: 1px solid #ff004c;
+  background: none;
   z-index: 80;
   box-sizing: border-box;
 }
