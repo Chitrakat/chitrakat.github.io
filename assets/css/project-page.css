@@ -403,7 +403,7 @@
   margin: 0 0 1rem;
   padding: 0;
   border: none;
-  background: transparent;
+  /* background: transparent; */
   cursor: zoom-in;
   break-inside: avoid;
 }

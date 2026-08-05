@@ -156,14 +156,18 @@
       collaborators: 'Urvi Bohra \u201926, Drishti Shrestha \u201926, Sania Shetty \u201926',
       website: 'https://xjournal.work/issues',
       images: [
-        '../assets/img/design-popup/x-journal/xj-journal (1).jpg',
-        '../assets/img/design-popup/x-journal/xj-journal (2).jpg',
-        '../assets/img/design-popup/x-journal/xj-journal (3).jpg',
-        '../assets/img/design-popup/x-journal/xj-journal (4).jpg',
-        '../assets/img/design-popup/x-journal/xj-journal (5).jpg',
-        '../assets/img/design-popup/x-journal/xj-journal (6).jpg',
-        '../assets/img/design-popup/x-journal/xj-journal (7).jpg',
-        '../assets/img/design-popup/x-journal/xj-journal (8).jpg'
+        '../assets/img/design-popup/x-journal/x-journal-(1).jpg',
+        '../assets/img/design-popup/x-journal/x-journal-(2).jpg',
+        '../assets/img/design-popup/x-journal/x-journal-(3).jpg',
+        '../assets/img/design-popup/x-journal/x-journal-(4).jpg',
+        '../assets/img/design-popup/x-journal/x-journal-(5).jpg',
+        '../assets/img/design-popup/x-journal/x-journal-(6).jpg',
+        '../assets/img/design-popup/x-journal/x-journal-(7).jpg',
+        '../assets/img/design-popup/x-journal/x-journal-(8).jpg',
+        '../assets/img/design-popup/x-journal/x-journal-(9).jpg',
+        '../assets/img/design-popup/x-journal/x-journal-(10).jpg',
+        '../assets/img/design-popup/x-journal/x-journal-(11).jpg',
+        '../assets/img/design-popup/x-journal/x-journal-(12).jpg'
       ],
       descriptionHtml: `
         <p>x journal is an annual visual arts publication created to publish, share, and archive student work at Knox College.</p>
@@ -205,6 +209,13 @@
   };
 
   const publicationSequence = ['vol55-2', 'vol56-1', 'vol56-2', 'x-journal', 'lines'];
+  const publicationTitleByKey = {
+    'vol55-2': 'Catch Magazine: VOL. 55 NO. 2',
+    'vol56-1': 'Catch Magazine: VOL. 56 NO. 1',
+    'vol56-2': 'Catch Magazine: VOL. 56 NO. 2',
+    'x-journal': 'X-JOURNAL',
+    'lines': 'Lines in The Shed, Ryan Tracy'
+  };
 
   function escapeHtml(value) {
     return String(value)
@@ -256,7 +267,57 @@
     ].join('');
   }
 
-  function renderPage() {
+  function normalizeImagePath(src) {
+    if (!src) {
+      return '';
+    }
+
+    const value = String(src).trim();
+    if (!value) {
+      return '';
+    }
+
+    if (value.indexOf('http://') === 0 || value.indexOf('https://') === 0 || value.indexOf('data:') === 0 || value.indexOf('../') === 0 || value.indexOf('/') === 0) {
+      return value;
+    }
+
+    return '../' + value;
+  }
+
+  async function resolveProjectImages(key, fallbackImages) {
+    const publicationTitle = publicationTitleByKey[key];
+    if (!publicationTitle) {
+      return fallbackImages || [];
+    }
+
+    try {
+      const response = await fetch('../design-popup/carousel-data.json', { cache: 'no-store' });
+      if (!response.ok) {
+        return fallbackImages || [];
+      }
+
+      const projects = await response.json();
+      if (!Array.isArray(projects)) {
+        return fallbackImages || [];
+      }
+
+      const matchingProject = projects.find(function (project) {
+        return project && project.title === publicationTitle;
+      });
+
+      if (!matchingProject || !Array.isArray(matchingProject.images) || matchingProject.images.length === 0) {
+        return fallbackImages || [];
+      }
+
+      return matchingProject.images
+        .map(normalizeImagePath)
+        .filter(Boolean);
+    } catch (error) {
+      return fallbackImages || [];
+    }
+  }
+
+  async function renderPage() {
     const target = document.getElementById('publication-page');
     const key = document.body.dataset.publicationKey;
     const project = publicationData[key];
@@ -264,13 +325,17 @@
       return;
     }
 
-    const gallery = project.images.map(function (src, index) {
+    const images = await resolveProjectImages(key, project.images || []);
+
+    const gallery = images.map(function (src, index) {
       return [
         '<figure class="publication-gallery-item">',
         '  <img src="' + escapeHtml(src) + '" alt="' + escapeHtml(project.title) + ' image ' + (index + 1) + '" loading="lazy" draggable="false">',
         '</figure>'
       ].join('');
     }).join('');
+
+    const galleryHtml = gallery || '<p class="publication-gallery-empty">No project images are available yet.</p>';
 
     target.innerHTML = [
       '<section class="publication-page-layout">',
@@ -293,7 +358,7 @@
       '    </section>',
       '    <div class="publication-gallery-wrap">',
       '      <p class="publication-gallery-label">Book spreads</p>',
-      '      <div class="publication-gallery">' + gallery + '</div>',
+      '      <div class="publication-gallery">' + galleryHtml + '</div>',
       '    </div>',
       '  </div>',
       '</section>',

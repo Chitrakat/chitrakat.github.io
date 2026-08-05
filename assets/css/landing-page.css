@@ -101,8 +101,7 @@ body.landing-page #fixed-left {
   transition: opacity 300ms ease;
 }
 
-body.landing-page #fixed-left a,
-body.landing-page #fixed-left .infos-trigger {
+body.landing-page #fixed-left a {
   pointer-events: auto;
 }
 
@@ -119,8 +118,7 @@ body.landing-page #fixed-left .footer-right {
   margin-top: 8px;
 }
 
-body.landing-page #fixed-left .footer-right p,
-body.landing-page #fixed-left .infos-trigger {
+body.landing-page #fixed-left .footer-right p {
   margin: 0;
   font-size: 1.05rem;
   line-height: 1.35;
@@ -449,31 +447,13 @@ body.landing-page .footer-col:first-child {
 }
 
 body.landing-page #bio-overlay,
-body.landing-page #poster-preview,
-body.landing-page #page3 {
+body.landing-page #poster-preview {
   display: none;
   /* font-weight: 400; */
 }
 
 /* Responsive */
 @media (max-width: 980px) {
-  body.landing-page .works-layout {
-    grid-template-columns: 1fr;
-    padding: 1.4rem 1rem 2.8rem;
-    gap: 1.25rem;
-  }
-
-  body.landing-page .works-sticky {
-    position: sticky;
-    top: 0.6rem;
-    height: fit-content;
-    padding-top: 0.4rem;
-  }
-
-  body.landing-page .works-sticky p {
-    max-width: none;
-  }
-
   body.landing-page .project-row {
     display: block;
     margin-bottom: 0.9rem;

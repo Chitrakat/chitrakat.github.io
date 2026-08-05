@@ -173,8 +173,8 @@
 .publication-gallery-item {
   flex: 0 0 auto;
   scroll-snap-align: start;
-  background: #efefef;
-  border: 1px solid #e3e3e3;
+  background: none;
+  border: none;
 }
 
 .publication-gallery-item img {
@@ -240,6 +240,13 @@
 @media (max-width: 700px) {
   .publication-page-main {
     padding: calc(var(--site-header-offset, 56px) + 16px) 12px 22px;
+  }
+
+  .publication-page-title {
+    font-size: clamp(2.1rem, 12vw, 3.25rem);
+    line-height: 1.02;
+    max-width: 100%;
+    overflow-wrap: anywhere;
   }
 
   .publication-gallery {

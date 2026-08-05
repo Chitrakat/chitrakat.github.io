@@ -57,7 +57,9 @@ body.photo-project-page {
 
 /* ── Main content ────────────────────────────────────── */
 .photo-main {
-  padding: 45px 36px 15vh;
+  /* padding: 45px 36px; */
+  padding-left: 36px;
+  padding-right: 36px;
   min-width: 0;
 }
 

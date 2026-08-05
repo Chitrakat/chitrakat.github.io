@@ -83,25 +83,64 @@
   <script src="../assets/js/site-header.js"></script>
   <script src="../assets/js/header-dropdown.js"></script>
   <script>
-    const projectImages = [
-      "../assets/img/design-popup/vol57-1/vol57-1-01.jpg",
-      "../assets/img/design-popup/vol57-1/vol57-1-02.jpg"
-    ];
+    const projectImages = [];
+    const imageManifestPath = '../assets/img/design-popup/vol57-double/images.json';
+    const imageBasePath = '../assets/img/design-popup/vol57-double/';
 
     let currentImageIndex = 0;
 
-    function loadImages() {
+    function normalizeImagePath(src) {
+      if (!src) return '';
+      const value = String(src).trim();
+      if (!value) return '';
+      if (value.startsWith('http://') || value.startsWith('https://') || value.startsWith('../') || value.startsWith('/')) {
+        return value;
+      }
+      return imageBasePath + value;
+    }
+
+    function renderImageGrid() {
       const grid = document.getElementById('imageGrid');
-      const imagesHTML = projectImages.map((img, index) => `
-        <div class="image-item" onclick="openModal(${index})">
-          <img src="${img}" alt="Project image ${index + 1}" loading="lazy">
-        </div>
-      `).join('');
-      
-      grid.innerHTML = imagesHTML;
+      if (!projectImages.length) {
+        grid.innerHTML = '<p class="publication-gallery-empty">No project images are available yet.</p>';
+        return;
+      }
+
+      grid.innerHTML = projectImages.map((src, index) => {
+        return [
+          '<button class="image-item" type="button" onclick="openModal(' + index + ')" aria-label="Open project image ' + (index + 1) + '">',
+          '  <img src="' + src + '" alt="Catch Magazine Vol. 57 image ' + (index + 1) + '" loading="lazy" draggable="false">',
+          '</button>'
+        ].join('');
+      }).join('');
+    }
+
+    async function loadImages() {
+      try {
+        const response = await fetch(imageManifestPath, { cache: 'no-store' });
+        if (!response.ok) {
+          renderImageGrid();
+          return;
+        }
+
+        const payload = await response.json();
+        const imageList = Array.isArray(payload) ? payload : payload.images;
+        if (!Array.isArray(imageList)) {
+          renderImageGrid();
+          return;
+        }
+
+        const normalized = imageList.map(normalizeImagePath).filter(Boolean);
+        projectImages.splice(0, projectImages.length, ...normalized);
+      } catch (error) {
+        // Keep a graceful empty state when manifest is not present.
+      }
+
+      renderImageGrid();
     }
 
     function openModal(index) {
+      if (!projectImages.length) return;
       currentImageIndex = index;
       const modal = document.getElementById('imageModal');
       const modalImg = document.getElementById('modalImage');
@@ -118,11 +157,13 @@
     }
 
     function nextImage() {
+      if (!projectImages.length) return;
       currentImageIndex = (currentImageIndex + 1) % projectImages.length;
       document.getElementById('modalImage').src = projectImages[currentImageIndex];
     }
 
     function previousImage() {
+      if (!projectImages.length) return;
       currentImageIndex = (currentImageIndex - 1 + projectImages.length) % projectImages.length;
       document.getElementById('modalImage').src = projectImages[currentImageIndex];
     }
