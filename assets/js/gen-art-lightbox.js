@@ -1,14 +1,18 @@
 (function () {
   'use strict';
 
-  var p5ProjectSequence = [
-    { file: 'p5js1.html', title: 'Interactive Identity for X-Journal I' },
-    { file: 'p5js3.html', title: 'Interactive Identity for X-Journal II' },
-    { file: 'p5js4.html', title: 'Hierarchy' },
-    { file: 'interrupting-the-grid.html', title: 'No Meaning Required' },
-    { file: 'photographing-particles.html', title: 'Photographing Particles' },
-    { file: 'senior-finals.html', title: 'Senior Finals' }
-  ];
+  var p5ProjectSequences = {
+    motion: [
+      { file: 'p5js1.html', title: 'Interactive Identity for X-Journal I' },
+      { file: 'p5js4.html', title: 'Hierarchy' },
+      { file: 'p5js3.html', title: 'Interactive Identity for X-Journal II' }
+    ],
+    'image-making': [
+      { file: 'interrupting-the-grid.html', title: 'No Meaning Required' },
+      { file: 'photographing-particles.html', title: 'Photographing Particles' },
+      { file: 'senior-finals.html', title: 'Senior Finals' }
+    ]
+  };
 
   function onReady(fn) {
     if (document.readyState === 'loading') {
@@ -34,6 +38,21 @@
     return link;
   }
 
+  function getSequenceForFile(currentFile) {
+    var groups = Object.keys(p5ProjectSequences);
+    for (var i = 0; i < groups.length; i += 1) {
+      var sequence = p5ProjectSequences[groups[i]];
+      var match = sequence.find(function (project) {
+        return project.file === currentFile;
+      });
+      if (match) {
+        return sequence;
+      }
+    }
+
+    return null;
+  }
+
   function renderProjectSequenceNav() {
     var body = document.body;
     var layout = document.querySelector('.gen-art-layout');
@@ -47,7 +66,12 @@
     }
 
     var currentFile = getCurrentFileName();
-    var currentIndex = p5ProjectSequence.findIndex(function (project) {
+    var projectSequence = getSequenceForFile(currentFile);
+    if (!projectSequence) {
+      return;
+    }
+
+    var currentIndex = projectSequence.findIndex(function (project) {
       return project.file === currentFile;
     });
 
@@ -55,8 +79,8 @@
       return;
     }
 
-    var previousProject = currentIndex > 0 ? p5ProjectSequence[currentIndex - 1] : null;
-    var nextProject = currentIndex < p5ProjectSequence.length - 1 ? p5ProjectSequence[currentIndex + 1] : null;
+    var previousProject = currentIndex > 0 ? projectSequence[currentIndex - 1] : null;
+    var nextProject = currentIndex < projectSequence.length - 1 ? projectSequence[currentIndex + 1] : null;
 
     var nav = document.createElement('nav');
     nav.className = 'project-sequence-nav';

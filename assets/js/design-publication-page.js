@@ -64,6 +64,34 @@
   }
 
   const publicationData = {
+    'vol57-2': {
+      title: 'Catch Magazine VOL. 57 NO.2',
+      year: '2026',
+      kind: 'Book Design, Spread Design, Typography, Layout, Cyanotype Collage, Postcards',
+      tools: 'InDesign, Photoshop, Illustrator',
+      collaborators: 'None',
+      website: '',
+      images: [
+        '../assets/img/design-popup/vol57-2/catch-vol57-2-1.jpg',
+        '../assets/img/design-popup/vol57-2/catch-vol57-2-2.jpg',
+        '../assets/img/design-popup/vol57-2/catch-vol57-2-3.jpg',
+        '../assets/img/design-popup/vol57-2/catch-vol57-2-4.jpg',
+        '../assets/img/design-popup/vol57-2/catch-vol57-2-5.jpg',
+        '../assets/img/design-popup/vol57-2/catch-vol57-2-6.jpg',
+        '../assets/img/design-popup/vol57-2/catch-vol57-2-7.jpg',
+        '../assets/img/design-popup/vol57-2/catch-vol57-2-8.jpg',
+        '../assets/img/design-popup/vol57-2/catch-vol57-2-9.jpg',
+        '../assets/img/design-popup/vol57-2/catch-vol57-2-10.jpg',
+        '../assets/img/design-popup/vol57-2/catch-vol57-2-11.jpg'
+      ],
+      descriptionHtml: `
+        <p>This edition centers on process as much as final image. Using the cyanotype technique, we captured plants, branches, flowers, and other found objects gathered around Knox College, letting the sun and chemistry do the design work.</p>
+        <h3>Behind the Design</h3>
+        <p>The resulting prints were layered into a collage that runs throughout the issue. While the book keeps its familiar small-format scale, we added a new tactile element: perforated postcards featuring artwork from the college, made to be torn out, written on, and mailed.</p>
+        <h3>Recognition</h3>
+        <p>This edition was awarded 3rd place in the AWP 2026 Prize for Undergraduate Literary Magazines.</p>
+      `
+    },
     'vol55-2': {
       title: 'Catch Magazine: VOL. 55 NO. 2',
       year: '2023',
@@ -208,8 +236,9 @@
     }
   };
 
-  const publicationSequence = ['vol55-2', 'vol56-1', 'vol56-2', 'x-journal', 'lines'];
+  const publicationSequence = ['vol55-2', 'vol56-1', 'vol56-2', 'vol57-2', 'x-journal', 'lines'];
   const publicationTitleByKey = {
+    'vol57-2': 'Catch Magazine VOL. 57 NO.2',
     'vol55-2': 'Catch Magazine: VOL. 55 NO. 2',
     'vol56-1': 'Catch Magazine: VOL. 56 NO. 1',
     'vol56-2': 'Catch Magazine: VOL. 56 NO. 2',

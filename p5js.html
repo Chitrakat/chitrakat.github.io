@@ -46,6 +46,11 @@
       'No Meaning Required': 'assets/img/gen-art/circles/circle-grid-(1).png'
     };
 
+    const projectVideoOverrides = {
+      'Interactive Identity for X-Journal I': 'assets/video/p5js1-thumbnail.mp4',
+      'Interactive Identity for X-Journal II': 'assets/video/p5js3-thumbnail.mp4'
+    };
+
     async function loadP5jsProjects() {
       try {
         const response = await fetch('p5js-projects-data.json');
@@ -60,6 +65,7 @@
             href: slug ? `p5js/${slug}.html` : '',
             title: project.title,
             image: projectImageOverrides[project.title] || project.img,
+            video: projectVideoOverrides[project.title] || '',
             description: projectDescriptions[project.title] || '',
             tag: `${project.year} | p5.js`
           };
