@@ -9,6 +9,7 @@
     ],
     'image-making': [
       { file: 'interrupting-the-grid.html', title: 'No Meaning Required' },
+      { file: 'x-journal-submissions-call.html', title: 'X-Journal Submissions Call' },
       { file: 'photographing-particles.html', title: 'Photographing Particles' },
       { file: 'senior-finals.html', title: 'Senior Finals' }
     ]
