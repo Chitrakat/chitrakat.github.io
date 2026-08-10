@@ -17,13 +17,48 @@
   function getConfig() {
     const body = document.body;
     const root = body.dataset.siteRoot || '.';
-    const section = body.dataset.siteSection || '';
 
     return {
-      root,
-      section,
-      menuLabel: body.dataset.siteHeaderLabel || 'Selected Works'
+      root
     };
+  }
+
+  function getCurrentDivisionSlug() {
+    const pathname = (window.location.pathname || '').toLowerCase();
+
+    if (pathname.endsWith('/about.html')) {
+      return 'about';
+    }
+
+    if (pathname.endsWith('/design.html') || pathname.indexOf('/design/') !== -1) {
+      return 'publications';
+    }
+
+    if (pathname.endsWith('/photography.html') || pathname.indexOf('/photography/') !== -1) {
+      return 'photography';
+    }
+
+    if (pathname.endsWith('/motion.html')) {
+      return 'motion';
+    }
+
+    if (pathname.endsWith('/product-design.html')) {
+      return 'product-design';
+    }
+
+    if (
+      pathname.endsWith('/image-making.html') ||
+      pathname.indexOf('/p5js/') !== -1 ||
+      pathname.endsWith('/p5js.html')
+    ) {
+      return 'image-making';
+    }
+
+    if (pathname.endsWith('/poster.html')) {
+      return 'poster';
+    }
+
+    return '';
   }
 
   function ensureProjectPagerStyles() {
@@ -125,11 +160,16 @@
     main.parentNode.insertBefore(pager, main.nextSibling);
   }
 
-  function buildLinks(root, activeSection) {
+  function buildLinks(root) {
+    const activeSection = getCurrentDivisionSlug();
     const links = [
-      { slug: 'design', href: root + '/design.html', label: 'design' },
+      { slug: 'about', href: root + '/about.html', label: 'about' },
+      { slug: 'publications', href: root + '/design.html', label: 'publications' },
       { slug: 'photography', href: root + '/photography.html', label: 'photography' },
-      { slug: 'p5js', href: root + '/p5js.html', label: 'p5.js' }
+      { slug: 'motion', href: root + '/motion.html', label: 'motion' },
+      { slug: 'product-design', href: root + '/product-design.html', label: 'product design' },
+      { slug: 'image-making', href: root + '/image-making.html', label: 'image making' },
+      { slug: 'poster', href: root + '/poster.html', label: 'poster' }
     ];
 
     return links.map(function (link) {
@@ -149,10 +189,10 @@
     header.setAttribute('data-site-header-mounted', 'true');
     header.innerHTML = [
       '<a href="' + config.root + '/index.html" class="site-shell-header__title">Suyash Chitrakar</a>',
-      '<div class="site-shell-header__right">',
+      '<div class="site-shell-header__right site-shell-header__right--mobile-nav">',
       '  <div class="dropdown" data-dropdown-root>',
-      '    <button class="dropdown-toggle" type="button" aria-expanded="false">' + config.menuLabel + '</button>',
-      '    <div class="dropdown-menu">' + buildLinks(config.root, config.section) + '</div>',
+      '    <button class="dropdown-toggle" type="button" aria-expanded="false">menu</button>',
+      '    <div class="dropdown-menu">' + buildLinks(config.root) + '</div>',
       '  </div>',
       '</div>'
     ].join('');

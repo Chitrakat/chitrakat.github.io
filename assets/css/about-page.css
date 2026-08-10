@@ -9,6 +9,16 @@
   padding: 18px 0 24px;
 }
 
+.about-page .about-portrait {
+  display: block;
+  /* justify-content: center; */
+  /* margin: 0 0 14px; */
+  /* margin: auto; */
+  width: 50%;
+  height: auto;
+  margin: 0 0 14px;
+}
+
 .about-page .about-title,
 .about-page .about-heading {
   margin: 0 0 14px;
