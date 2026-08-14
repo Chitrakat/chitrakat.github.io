@@ -150,6 +150,14 @@
             <h2 class="project-title">Catch Magazine: VOL. 55 NO. 2</h2>
           </div>
         </a>
+
+        <a class="project-row" href="p5js/x-journal-submissions-call.html">
+          <div class="project-thumb">
+            <img src="assets/img/submit2x/submit2x-(9).jpg" alt="X-Journal Submissions Call thumbnail" loading="lazy">
+            <h2 class="project-title">X-Journal Submissions Call</h2>
+          </div>
+        </a>
+        
       </div>
     </div>
 
@@ -229,6 +237,8 @@
 
       function updateArrows() {
         const i = currentPageIndex();
+        document.body.classList.toggle("page1-active", i === 0);
+        document.body.classList.toggle("page2-active", i >= 1);
         up.style.display = i <= 0 ? "none" : "flex";
         worksBtn.style.display = i >= 1 ? "none" : "flex";
       }

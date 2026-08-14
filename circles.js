@@ -10,7 +10,7 @@ edited by Suyash Chitrakar
 let libs = ['https://unpkg.com/hydra-synth', 'includes/libs/hydra-synth.js', 'https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js', 'includes/libs/hy5.js']
 
 // sandbox - start
-const DISPLAY_HYDRA_DENSITY = 0.4;
+const DISPLAY_HYDRA_DENSITY = 0.5;
 H.pixelDensity(DISPLAY_HYDRA_DENSITY) 
 
 let random1, random2, random3;
@@ -83,7 +83,7 @@ function setup() {
 
     applyHydraDisplayResolution();
 
-    strokeCap(SQUARE);
+    strokeCap(ROUND);
     rectMode(CENTER);
     textAlign(CENTER, CENTER);
 
@@ -110,11 +110,7 @@ function draw() {
     //     // background(255);
     // }
 
-    if (pressStart && pressEnd) {
-        stroke(0);
-        strokeWeight(random(10,30));
-        line(pressStart.x, pressStart.y, pressEnd.x, pressEnd.y);
-    }
+    
     
     // ==================== Colors for mouse circles ==========================
     let r = (sin(frameCount * 0.01) * 1.5 + 0.5) * randShade;
@@ -123,6 +119,15 @@ function draw() {
     fill(r, g, b, 150); 
     blendMode(DIFFERENCE);
     circle(mouseX, mouseY, mouseCircleSize);
+
+    // Click Interaction  
+    if (pressStart && pressEnd) {
+        // let tr
+        blendMode(SUBTRACT);
+        stroke(r, b,g, 150);
+        strokeWeight(random(10,30));
+        line(pressStart.x, pressStart.y, pressEnd.x, pressEnd.y);
+    }
 
     // Middle SHAPE
     blendMode(HARD_LIGHT);
@@ -135,7 +140,7 @@ function draw() {
     // Moving texts
     let tx, ty;
     let fontSize = height/5;
-    tx = constrain(noise(100 + frameCount * 0.0006) * width, 0, width);
+    tx = constrain(noise(100 + frameCount * 0.06) * width, 0, width);
     if (!window.movingObjs) {
         window.movingObjs = [
             new movingObject(random(1000), random(1000), fontSize/2, 'hi, i\'m Suyash'),

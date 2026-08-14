@@ -155,6 +155,10 @@ body.landing-page #fixed-left .fl-bottom-nav a {
   line-height: 1.35;
 }
 
+body.landing-page.page1-active #fixed-left .fl-bottom-nav a {
+  pointer-events: none;
+}
+
 body.landing-page #fixed-left .fl-bottom-nav a:hover,
 body.landing-page #fixed-left .fl-bottom-nav a:focus-visible {
   color: #ff004c;
