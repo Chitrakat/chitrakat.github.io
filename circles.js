@@ -83,7 +83,7 @@ function setup() {
 
     applyHydraDisplayResolution();
 
-    strokeCap(ROUND);
+    strokeCap(SQUARE);
     rectMode(CENTER);
     textAlign(CENTER, CENTER);
 
@@ -123,8 +123,9 @@ function draw() {
     // Click Interaction  
     if (pressStart && pressEnd) {
         // let tr
-        blendMode(SUBTRACT);
-        stroke(r, b,g, 150);
+        blendMode(HARD_LIGHT);
+        // stroke(r, b,g, 150);
+        stroke(255);
         strokeWeight(random(10,30));
         line(pressStart.x, pressStart.y, pressEnd.x, pressEnd.y);
     }
@@ -133,7 +134,7 @@ function draw() {
     blendMode(HARD_LIGHT);
     let b2 = ((sin(frameCount * 0.025) * 0.5 + 0.5) * random(randShade));
     let rSize = (sin(frameCount * 0.9)) * maxCircle + minCircle;
-    fill(180-b2, (b2*200)%70, (b2*200)%180, 10);
+    fill(180-b2, (b2*20)%100, (b2*200)%180, 7);
     noStroke();
     square(width/2, height/2, random3 + rSize);
     

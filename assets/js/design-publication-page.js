@@ -177,7 +177,7 @@
       `
     },
     'x-journal': {
-      title: 'X-JOURNAL',
+      title: 'x journal',
       year: '2025',
       kind: 'Art Photography, Book Design, Spread Design, Typography, Layout Design',
       tools: 'Sketch',

@@ -27,6 +27,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  font-size: 1.o5rem;
   gap: 0.18rem;
   margin-top: 0.5rem;
 }
