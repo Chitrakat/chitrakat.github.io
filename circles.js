@@ -10,7 +10,7 @@ edited by Suyash Chitrakar
 let libs = ['https://unpkg.com/hydra-synth', 'includes/libs/hydra-synth.js', 'https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js', 'includes/libs/hy5.js']
 
 // sandbox - start
-const DISPLAY_HYDRA_DENSITY = 0.5;
+const DISPLAY_HYDRA_DENSITY = 0.6;
 H.pixelDensity(DISPLAY_HYDRA_DENSITY) 
 
 let random1, random2, random3;
@@ -24,8 +24,8 @@ let value = 100;
 
 let n1;
 
-let pressStart = null;
-let pressEnd = null;
+// let pressStart = null;
+// let pressEnd = null;
 
 s0.initP5() // send p5 to hydra
 P5.toggle(0) // hide p5
@@ -60,9 +60,9 @@ function randomizeScene() {
     random2 = random(width / 3);
     random3 = random(width / 3);
 
-    maxCircle = windowHeight / 10;
+    maxCircle = windowHeight / 5;
     minCircle = windowHeight / 20;
-    mouseCircleSize = height / 10;
+    mouseCircleSize = height / 6;
 
     randShade = random(100);
     randShade1 = random(100);
@@ -121,14 +121,14 @@ function draw() {
     circle(mouseX, mouseY, mouseCircleSize);
 
     // Click Interaction  
-    if (pressStart && pressEnd) {
-        // let tr
-        blendMode(HARD_LIGHT);
-        // stroke(r, b,g, 150);
-        stroke(255);
-        strokeWeight(random(10,30));
-        line(pressStart.x, pressStart.y, pressEnd.x, pressEnd.y);
-    }
+    // if (pressStart && pressEnd) {
+    //     // let tr
+    //     blendMode(HARD_LIGHT);
+    //     // stroke(r, b,g, 150);
+    //     stroke(255);
+    //     strokeWeight(random(10,30));
+    //     line(pressStart.x, pressStart.y, pressEnd.x, pressEnd.y);
+    // }
 
     // Middle SHAPE
     blendMode(HARD_LIGHT);
@@ -156,6 +156,7 @@ function draw() {
             new movingObject(random(1000), random(1000), fontSize/2, 'artist?'),
             new movingObject(random(1000), random(1000), fontSize/2, 'hopeful?'),
             new movingObject(random(1000), random(1000), fontSize/3, 'immigrant'),
+            new movingObject(random(1000), random(1000), fontSize/3, 'Nepali'),
             new movingObject(random(1000), random(1000), fontSize/3, '#openToWork'),
         ];
     }
@@ -177,6 +178,12 @@ function mousePressed() {
 
 function mouseReleased() {
     // handled by click-to-click logic in mousePressed
+}
+
+function mouseDragged() {
+    // handled by click-to-click logic in mousePressed
+    stroke(255);
+    line(random(width), random(height), mouseX, mouseY);
 }
 
 class movingObject{
@@ -205,7 +212,8 @@ class movingObject{
         fill(255);
         stroke(0);
         strokeWeight(3);
-        this.xval = 0.003;
+        this.xval = 0.006;
+        // this.xval = random(0.003);
         this.yval = 0.0065;
         textAlign(CENTER, CENTER);
         text(this.label, this.x, this.y);
