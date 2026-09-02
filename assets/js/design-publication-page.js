@@ -63,6 +63,24 @@
     }, true);
   }
 
+  function enableScrollProgress(container, fill) {
+    if (!container || !fill || container.dataset.scrollProgressBound === 'true') {
+      return;
+    }
+
+    container.dataset.scrollProgressBound = 'true';
+
+    function update() {
+      const maxScroll = container.scrollWidth - container.clientWidth;
+      const progress = maxScroll > 0 ? container.scrollLeft / maxScroll : 0;
+      fill.style.width = (Math.min(1, Math.max(0, progress)) * 100) + '%';
+    }
+
+    container.addEventListener('scroll', update);
+    window.addEventListener('resize', update);
+    update();
+  }
+
   const publicationData = {
     'vol57-2': {
       title: 'Catch Magazine VOL. 57 NO.2',
@@ -388,6 +406,7 @@
       '    <div class="publication-gallery-wrap">',
       '      <p class="publication-gallery-label">Book spreads</p>',
       '      <div class="publication-gallery">' + galleryHtml + '</div>',
+      '      <div class="publication-gallery-scrollbar"><div class="publication-gallery-scrollbar-fill"></div></div>',
       '    </div>',
       '  </div>',
       '</section>',
@@ -395,6 +414,7 @@
     ].join('');
 
     enableDragScroll(target.querySelector('.publication-gallery'));
+    enableScrollProgress(target.querySelector('.publication-gallery'), target.querySelector('.publication-gallery-scrollbar-fill'));
   }
 
   if (document.readyState === 'loading') {

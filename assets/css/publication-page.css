@@ -187,6 +187,21 @@
   user-select: none;
 }
 
+.publication-gallery-scrollbar {
+  width: 100%;
+  height: 6px;
+  margin-top: 10px;
+  background: #e6e6e6;
+  border-radius: 0;
+}
+
+.publication-gallery-scrollbar-fill {
+  width: 0%;
+  height: 100%;
+  background: var(--my-pink);
+  border-radius: 0;
+}
+
 .design-publication-page .project-sequence-nav {
   display: grid;
   grid-template-columns: 1fr 1fr;
