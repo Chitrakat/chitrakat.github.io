@@ -94,6 +94,21 @@
   color: #ff004c;
 }
 
+.site-shell-header .dropdown-subitem {
+  padding-left: 30px;
+  font-size: 0.86rem;
+  color: #777777;
+}
+
+.site-shell-header .dropdown-subitem:hover,
+.site-shell-header .dropdown-subitem:focus {
+  color: #111111;
+}
+
+.site-shell-header .dropdown-subitem[aria-current="page"] {
+  color: #ff004c;
+}
+
 .has-site-header {
   --site-header-offset: 64px;
 }

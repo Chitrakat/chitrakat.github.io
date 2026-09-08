@@ -24,20 +24,37 @@ body.photo-project-page {
   background: #ffffff;
 }
 
-.photo-sidebar-section {
-  margin-bottom: 28px;
-}
-
-.photo-sidebar-category {
-  margin: 0 0 6px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
+/* ── Sidebar nav (mirrors .work-list-desktop-nav) ────── */
+.photo-sidebar-nav-link {
+  display: block;
   color: #111111;
+  text-decoration: none;
+  font-size: 1.05rem;
+  line-height: 1.35;
+  font-weight: 400;
+  padding: 3px 0;
 }
 
-.photo-sidebar-link {
+.photo-sidebar-nav-link:hover,
+.photo-sidebar-nav-link:focus-visible {
+  color: #ff004c;
+}
+
+.photo-sidebar-nav-link[aria-current="page"] {
+  color: #ff004c;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+/* Only rendered while photography is the active section */
+.photo-sidebar-subnav {
+  display: flex;
+  flex-direction: column;
+  padding: 4px 0 10px 14px;
+  gap: 2px;
+}
+
+.photo-sidebar-subnav-link {
   display: block;
   padding: 2px 0;
   color: #888888;
@@ -46,12 +63,13 @@ body.photo-project-page {
   line-height: 1.6;
 }
 
-.photo-sidebar-link:hover {
+.photo-sidebar-subnav-link:hover,
+.photo-sidebar-subnav-link:focus-visible {
   color: #111111;
 }
 
-.photo-sidebar-link.active {
-  color: #ff008c;
+.photo-sidebar-subnav-link[aria-current="page"] {
+  color: #ff004c;
   font-weight: 600;
 }
 
@@ -236,11 +254,7 @@ body.photo-project-page .photo-grid--horizontal .photo-grid-img {
   }
 
   .photo-sidebar {
-    position: static;
-    height: auto;
-    border-right: none;
-    border-bottom: 1px solid #ddd;
-    padding: 16px;
+    display: none;
   }
 
   .photo-main {

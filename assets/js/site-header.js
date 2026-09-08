@@ -160,6 +160,21 @@
     main.parentNode.insertBefore(pager, main.nextSibling);
   }
 
+  function getPhotographyProjects() {
+    return [
+      { href: 'photography/america.html', label: 'Empty America' },
+      { href: 'photography/stills-from-an-unmade-movie.html', label: 'Still from an unmade film' },
+      { href: 'photography/gai-jatra.html', label: 'Gai Jatra' },
+      { href: 'photography/nepals-street.html', label: "Nepal's Streets" },
+      { href: 'photography/swoyambhu.html', label: 'Swoyambhu' }
+    ];
+  }
+
+  function isCurrentPage(path) {
+    const pathname = (window.location.pathname || '').toLowerCase();
+    return pathname.endsWith('/' + path.toLowerCase());
+  }
+
   function buildLinks(root) {
     const activeSection = getCurrentDivisionSlug();
     const links = [
@@ -174,7 +189,20 @@
 
     return links.map(function (link) {
       const current = link.slug === activeSection ? ' aria-current="page"' : '';
-      return '<a href="' + link.href + '" class="dropdown-item"' + current + '>' + link.label + '</a>';
+      const item = '<a href="' + link.href + '" class="dropdown-item"' + current + '>' + link.label + '</a>';
+
+      // Only photography has sub-projects, and only while it's the active section.
+      if (link.slug !== 'photography' || activeSection !== 'photography') {
+        return item;
+      }
+
+      const subItems = getPhotographyProjects().map(function (project) {
+        const projectHref = root + '/' + project.href;
+        const projectCurrent = isCurrentPage(project.href) ? ' aria-current="page"' : '';
+        return '<a href="' + projectHref + '" class="dropdown-item dropdown-subitem"' + projectCurrent + '>' + project.label + '</a>';
+      }).join('');
+
+      return item + subItems;
     }).join('');
   }
 

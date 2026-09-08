@@ -24,11 +24,48 @@
         <p class="work-list-subtitle">Archive in progress.</p>
       </div>
     </section>
-    <div class="loading-state">Coming soon.</div>
+    <div id="loading" class="loading-state">Loading projects...</div>
+    <section id="photography-grid" class="work-list-rows"></section>
   </main>
 
+  <script src="assets/js/work-listings.js"></script>
   <script src="assets/js/site-header.js"></script>
   <script src="assets/js/header-dropdown.js"></script>
+
+  <script>
+    const photographyItems = [
+      {
+        href: 'photography/america.html',
+        title: 'Empty America',
+        image: 'assets/img/photography/america/ununited-04.jpg',
+        description: 'A study on America\'s society, modern culture and religion.'
+      },
+      {
+        href: 'photography/swoyambhu.html',
+        title: 'Swoyambhu',
+        image: 'assets/img/photography/swoyambhu/sammy-112.jpg',
+        description: 'Photography from the sacred Buddhist temple of Swayambhunath.'
+      },
+      {
+        href: 'photography/gai-jatra.html',
+        title: 'Gai Jatra',
+        image: 'assets/img/photography/gai-jatra/gai-jatra-33.jpg',
+        description: 'Gai Jatra is a festival celebrated by the Newari people of Kathmandu Valley in honour of their deceased relatives.'
+      },
+      {
+        href: 'photography/nepals-street.html',
+        title: 'Nepal\'s Streets',
+        image: 'assets/img/photography/nepals-street/sammy-073.jpg',
+        description: 'Photographs taken during my visits home. This ongoing project captures the dichotomy of age seen in the streets of Kathmandu.'
+      }
+    ];
+
+    window.renderWorkListing({
+      containerId: 'photography-grid',
+      loadingId: 'loading',
+      items: photographyItems
+    });
+  </script>
 </body>
 </html>
 

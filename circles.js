@@ -116,7 +116,7 @@ function draw() {
     let r = (sin(frameCount * 0.01) * 1.5 + 0.5) * randShade;
     let g = (sin(frameCount * 0.03) * 0.5 + 0.5) * random(50, 100) + random(randShade1);
     let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100 + randShade;
-    fill(r, g, b, 150); 
+    fill(r, g, b, 80); 
     blendMode(DIFFERENCE);
     circle(mouseX, mouseY, mouseCircleSize);
 
@@ -134,7 +134,7 @@ function draw() {
     blendMode(HARD_LIGHT);
     let b2 = ((sin(frameCount * 0.025) * 0.5 + 0.5) * random(randShade));
     let rSize = (sin(frameCount * 0.9)) * maxCircle + minCircle;
-    fill(180-b2, (b2*20)%100, (b2*200)%180, 7);
+    fill(180-b2, (b2*20)%100, (b2*200)%180, 10);
     noStroke();
     square(width/2, height/2, random3 + rSize);
     
@@ -145,7 +145,7 @@ function draw() {
     if (!window.movingObjs) {
         window.movingObjs = [
             new movingObject(random(1000), random(1000), fontSize/2, 'hi, i\'m Suyash'),
-            new movingObject(random(1000), random(1000), fontSize/2, 'lost'),
+            // new movingObject(random(1000), random(1000), fontSize/2, 'lost'),
             new movingObject(random(1000), random(1000), fontSize/2, 'designer'),
             new movingObject(random(1000), random(1000), fontSize/2, 'technologist'),
             new movingObject(random(1000), random(1000), fontSize/4, 'overstimulated'),
@@ -156,7 +156,7 @@ function draw() {
             new movingObject(random(1000), random(1000), fontSize/2, 'artist?'),
             new movingObject(random(1000), random(1000), fontSize/2, 'hopeful?'),
             new movingObject(random(1000), random(1000), fontSize/3, 'immigrant'),
-            new movingObject(random(1000), random(1000), fontSize/3, 'Nepali'),
+            // new movingObject(random(1000), random(1000), fontSize/3, 'nepali'),
             new movingObject(random(1000), random(1000), fontSize/3, '#openToWork'),
         ];
     }
@@ -183,6 +183,7 @@ function mouseReleased() {
 function mouseDragged() {
     // handled by click-to-click logic in mousePressed
     stroke(255);
+    strokeWeight(3);
     line(random(width), random(height), mouseX, mouseY);
 }
 
@@ -210,8 +211,8 @@ class movingObject{
         // Draw text
         rectMode(CENTER);
         fill(255);
-        stroke(0);
-        strokeWeight(3);
+        stroke(0, 120);
+        strokeWeight(6);
         this.xval = 0.006;
         // this.xval = random(0.003);
         this.yval = 0.0065;

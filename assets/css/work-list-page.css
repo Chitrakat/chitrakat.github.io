@@ -3,6 +3,7 @@
   background: #ffffff;
   color: #111111;
   --my-pink: #ff004c;
+  --my-grey: #8e8e8e;
   /* min-height: 100vh; */
 }
 
@@ -70,7 +71,7 @@
 .work-list-page .work-list-title {
   margin: 0;
   /* font-size: clamp(2rem, 5vw, 5rem); */
-  font-size: 4rem;
+  font-size: 3rem;
   overflow-wrap: break-word;
   line-height: 1.04;
   font-weight: 200;
@@ -82,10 +83,10 @@
   margin: 20px 0 0;
   max-width: 64ch;
   /* background: #f7f7f7; */
-  font-size: 1.4rem;
+  font-size: 1rem;
   /* font-size: clamp(1.1rem, 1.5vw, 1.5rem); */
   line-height: 1.45;
-  padding: 8px;
+  /* padding: 8px; */
   padding-bottom: 14px;
   color: #444444;
 }
@@ -113,7 +114,7 @@
   vertical-align: top;
   break-inside: avoid;
   margin: 0 0 2rem;
-  border-top: 3px dotted var(--my-pink);
+  border-top: 3px dotted var(--my-grey);
   background: transparent;
   padding: 10px 0 0;
   overflow: hidden;
@@ -270,6 +271,6 @@
   }
 
   .work-list-page .work-list-subtitle {
-    margin-top: 8px;
+    /* margin-top: 8px; */
   }
 }
