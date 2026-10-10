@@ -116,7 +116,7 @@ function draw() {
     let r = (sin(frameCount * 0.01) * 1.5 + 0.5) * randShade;
     let g = (sin(frameCount * 0.03) * 0.5 + 0.5) * random(50, 100) + random(randShade1);
     let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100 + randShade;
-    fill(r, g, b, 80); 
+    fill(g, r, b, 130); 
     blendMode(DIFFERENCE);
     circle(mouseX, mouseY, mouseCircleSize);
 
@@ -134,7 +134,7 @@ function draw() {
     blendMode(HARD_LIGHT);
     let b2 = ((sin(frameCount * 0.025) * 0.5 + 0.5) * random(randShade));
     let rSize = (sin(frameCount * 0.9)) * maxCircle + minCircle;
-    fill(180-b2, (b2*20)%100, (b2*200)%180, 10);
+    fill(180-b2, (b2*20)%100, (b2*200)%180, 7);
     noStroke();
     square(width/2, height/2, random3 + rSize);
     
@@ -144,9 +144,11 @@ function draw() {
     tx = constrain(noise(100 + frameCount * 0.06) * width, 0, width);
     if (!window.movingObjs) {
         window.movingObjs = [
-            new movingObject(random(1000), random(1000), fontSize/2, 'hi, i\'m Suyash'),
-            // new movingObject(random(1000), random(1000), fontSize/2, 'lost'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'Hi, I\'m Suyash'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'kinda lost'),
             new movingObject(random(1000), random(1000), fontSize/2, 'designer'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'seeking security'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'who am i?'),
             new movingObject(random(1000), random(1000), fontSize/2, 'technologist'),
             new movingObject(random(1000), random(1000), fontSize/4, 'overstimulated'),
             new movingObject(random(1000), random(1000), fontSize/4, 'caffeinated'),
@@ -161,9 +163,52 @@ function draw() {
         ];
     }
 
+    updateWordSchedule(window.movingObjs);
+
     for (let obj of window.movingObjs) {
+        if (obj.state === 'hidden') continue;
         obj.update();
         obj.display();
+    }
+}
+
+const WORD_INTERVAL = 3000;
+const MAX_WORDS = 10; // how many words are on screen at once
+const WORD_LIFETIME = 6000; // how long each word stays before it is censored and disappears
+const WORD_BLACK_MS = 0;
+let nextAppear = 0;
+
+function updateWordSchedule(objs) {
+    const now = millis();
+    if (!objs[0].initialized) {
+        objs.forEach(o => { o.state = 'hidden'; o.initialized = true; });
+        objs[0].state = 'visible';
+        objs[0].shownAt = now;
+        nextAppear = now + WORD_INTERVAL;
+    }
+
+    // finish words that have been black long enough
+    for (let o of objs) {
+        if (o.state === 'fading' && now - o.fadeStart >= WORD_BLACK_MS) o.state = 'hidden';
+    }
+
+    // censor words whose lifetime is up
+    for (let o of objs) {
+        if (o.state === 'visible' && now - o.shownAt >= WORD_LIFETIME) {
+            o.state = 'fading';
+            o.fadeStart = now;
+        }
+    }
+
+    if (now >= nextAppear) {
+        const visibleCount = objs.filter(o => o.state === 'visible').length;
+        const pool = objs.filter(o => o.state === 'hidden');
+        if (visibleCount < MAX_WORDS && pool.length) {
+            const o = random(pool);
+            o.state = 'visible';
+            o.shownAt = now;
+        }
+        nextAppear = now + WORD_INTERVAL;
     }
 }
 
@@ -183,7 +228,7 @@ function mouseReleased() {
 function mouseDragged() {
     // handled by click-to-click logic in mousePressed
     stroke(255);
-    strokeWeight(3);
+    strokeWeight(random(5,30));
     line(random(width), random(height), mouseX, mouseY);
 }
 
@@ -196,7 +241,7 @@ class movingObject{
         this.x = 0;
         this.y = 0;
         this.xval = 0.006;
-        this.yval = 0.00065;
+        this.yval = 0.0065;
     }
 
     update() {
@@ -213,10 +258,20 @@ class movingObject{
         fill(255);
         stroke(0, 120);
         strokeWeight(6);
-        this.xval = 0.006;
+        this.xval = 0.009;
         // this.xval = random(0.003);
         this.yval = 0.0065;
         textAlign(CENTER, CENTER);
+        if (this.state === 'fading') {
+            // censor bar over the word's bounding box
+            const lines = this.label.split('\n');
+            const w = Math.max(...lines.map(l => textWidth(l))) + 24;
+            const h = lines.length * textSize() * 1.2 + 12;
+            fill(0);
+            noStroke();
+            rect(this.x, this.y, w, h);
+            return;
+        }
         text(this.label, this.x, this.y);
     }
 }

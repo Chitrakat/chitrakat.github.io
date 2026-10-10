@@ -313,6 +313,19 @@ body.landing-page #selected-works-btn {
   top: 18px;
   border-radius: 999px;
   height: 34px;
+  gap: 5px;
+  padding: 0 10px;
+}
+
+body.landing-page .selected-works-label {
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+body.landing-page .selected-works-arrow {
+  font-size: 1rem;
+  line-height: 1;
 }
 
 body.landing-page #arrow-up {
@@ -498,6 +511,11 @@ body.landing-page #poster-preview {
 
   body.landing-page .arrow-btn {
     right: 8px;
+  }
+
+  body.landing-page .selected-works-arrow {
+    font-size: 1.45rem;
+    line-height: 0.8;
   }
 
   body.landing-page #page1-tools {
