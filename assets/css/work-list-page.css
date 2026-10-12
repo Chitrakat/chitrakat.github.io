@@ -45,6 +45,12 @@
   margin-bottom: 0.85rem;
 }
 
+.work-list-page .work-list-desktop-nav a.work-list-subitem {
+  padding-left: 1rem;
+  font-size: 0.9rem;
+  color: #777777;
+}
+
 .work-list-page .work-list-desktop-nav a:hover,
 .work-list-page .work-list-desktop-nav a:focus-visible {
   color: var(--my-pink);

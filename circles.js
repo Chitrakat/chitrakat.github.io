@@ -79,7 +79,7 @@ function setup() {
     const heroCanvas = createCanvas(windowWidth, windowHeight);
     heroCanvas.parent('page1');
     background(255);
-    // frameRate(1);
+    frameRate(20);
 
     applyHydraDisplayResolution();
 
