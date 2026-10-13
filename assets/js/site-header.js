@@ -182,9 +182,7 @@
       { slug: 'publications', href: root + '/design.html', label: 'publications' },
       { slug: 'photography', href: root + '/photography.html', label: 'photography' },
       { slug: 'motion', href: root + '/motion.html', label: 'motion' },
-      { slug: 'product-design', href: root + '/product-design.html', label: 'product design' },
       { slug: 'image-making', href: root + '/image-making.html', label: 'image making' },
-      { slug: 'poster', href: root + '/poster.html', label: 'poster' }
     ];
 
     return links.map(function (link) {
