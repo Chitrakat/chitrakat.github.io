@@ -5,7 +5,7 @@
       { slug: 'about', href: root + '/about.html', label: 'about' },
       { slug: 'publications', href: root + '/design.html', label: 'publications' },
       { slug: 'photography', href: root + '/photography.html', label: 'photography' },
-      { slug: 'motion', href: root + '/motion.html', label: 'motion' },
+      { slug: 'motion', href: root + '/motion.html', label: 'creative coding' },
       { slug: 'image-making', href: root + '/image-making.html', label: 'image making' },
     ];
   }
@@ -16,7 +16,7 @@
       { href: 'stills-from-an-unmade-movie.html', label: 'Still from an unmade film' },
       { href: 'gai-jatra.html', label: 'Gai Jatra' },
       { href: 'nepals-street.html', label: "Nepal's Streets" },
-      { href: 'swoyambhu.html', label: 'Swoyambhu' }
+      { href: 'swoyambhu.html', label: 'Swayambhu' }
     ];
   }
 
