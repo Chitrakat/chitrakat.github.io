@@ -53,6 +53,7 @@ function applyHydraDisplayResolution() {
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
     applyHydraDisplayResolution();
+    initSquares();
 }
 
 function randomizeScene() {
@@ -69,6 +70,7 @@ function randomizeScene() {
     randShade2 = random(100);
 
     window.movingObjs = null;
+    decoys = null;
     clear();
     background(255);
 }
@@ -88,12 +90,14 @@ function setup() {
     textAlign(CENTER, CENTER);
 
     randomizeScene();
+    initSquares();
     blendMode(HARD_LIGHT);
     // blendMode(REMOVE);
 }
 
 
 function draw() {
+    drawSquares();
     noStroke();
     // if(mouseBoo){
     //     clear();
@@ -119,6 +123,7 @@ function draw() {
     fill(g, r, b, 130); 
     blendMode(DIFFERENCE);
     circle(mouseX, mouseY, mouseCircleSize);
+    drawDecoyCircles(g, r, b);
 
     // Click Interaction  
     // if (pressStart && pressEnd) {
@@ -169,6 +174,60 @@ function draw() {
         if (obj.state === 'hidden') continue;
         obj.update();
         obj.display();
+    }
+}
+
+// Decoy circles: each reacts to the mouse in its own unpredictable way
+const DECOY_COUNT = 9;
+let decoys = null;
+
+function makeDecoys() {
+    decoys = [];
+    for (let i = 0; i < DECOY_COUNT; i++) {
+        decoys.push({
+            x: random(width), y: random(height),
+            mode: floor(random(5)),
+            lag: random(0.02, 0.12),
+            seed: random(1000),
+            orbit: random(80, min(width, height) / 2),
+            dir: random() < 0.5 ? -1 : 1,
+            size: random(0.3, 1.4),
+            flip: random(0.3, 1)
+        });
+    }
+}
+
+function drawDecoyCircles(g, r, b) {
+    if (!decoys) makeDecoys();
+    const t = frameCount;
+    const speed = dist(mouseX, mouseY, pmouseX, pmouseY);
+    for (let i = 0; i < decoys.length; i++) {
+        const d = decoys[i];
+        let tx, ty;
+        switch (d.mode) {
+            case 0: // mirrored through the center
+                tx = width - mouseX; ty = height - mouseY; break;
+            case 1: // orbits the cursor, radius pulses with speed
+                tx = mouseX + cos(t * 0.03 * d.dir + d.seed) * (d.orbit + speed * 3);
+                ty = mouseY + sin(t * 0.03 * d.dir + d.seed) * (d.orbit + speed * 3);
+                break;
+            case 2: // drawn to a drifting point, mouse only nudges it
+                tx = noise(d.seed, t * 0.004) * width * 0.7 + mouseX * 0.3;
+                ty = noise(d.seed + 50, t * 0.004) * height * 0.7 + mouseY * 0.3;
+                break;
+            case 3: // swapped axes
+                tx = mouseY / height * width; ty = mouseX / width * height; break;
+            default: // flees the cursor, then wanders
+                tx = d.x + (d.x - mouseX) * 0.05 + (noise(d.seed, t * 0.02) - 0.5) * 60;
+                ty = d.y + (d.y - mouseY) * 0.05 + (noise(d.seed + 9, t * 0.02) - 0.5) * 60;
+        }
+        // behaviour reshuffles now and then so it can't be learned
+        if (random() < 0.002) d.mode = floor(random(5));
+        d.x = constrain(lerp(d.x, tx, d.lag * (0.5 + noise(d.seed, t * 0.01))), 0, width);
+        d.y = constrain(lerp(d.y, ty, d.lag * (0.5 + noise(d.seed + 7, t * 0.01))), 0, height);
+
+        fill((i % 2 ? g : b) + random(30), (i % 3 ? r : g), (i % 2 ? b : r), 90);
+        circle(d.x, d.y, mouseCircleSize * d.size * (0.6 + noise(d.seed, t * 0.02)));
     }
 }
 
