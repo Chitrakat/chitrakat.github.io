@@ -11,10 +11,10 @@ const DISPLAY_HYDRA_DENSITY = 2;
 
 const DECOY_COUNT = 2;
 
-const WORD_INTERVAL = 3000;
+const WORD_INTERVAL = 1000;
 const MAX_WORDS = 10;
-const WORD_LIFETIME = 6000;
-const WORD_BLACK_MS = 0;
+const WORD_LIFETIME = 4000;
+const WORD_BLACK_MS = 300;
 
 let libs = ['https://unpkg.com/hydra-synth', 'includes/libs/hydra-synth.js', 'https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js', 'includes/libs/hy5.js']
 
@@ -149,7 +149,8 @@ function draw() {
     let rSize = (sin(frameCount * 0.9)) * maxCircle + minCircle;
     fill(180-b2, (b2*20)%100, (b2*200)%180, 7);
     noStroke();
-    square(width/2, height/2, random3 + rSize);
+    // square(width/2, height/2, random3 + rSize);s
+    circle(width/2 +rSize, height/2, random3 + rSize);
     
     // Moving texts
     let tx, ty;
