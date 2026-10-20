@@ -7,10 +7,18 @@ made with hydra-synth.js + hy5.js + p5.js
 edited by Suyash Chitrakar
 */
 
+const DISPLAY_HYDRA_DENSITY = 2;
+
+const DECOY_COUNT = 2;
+
+const WORD_INTERVAL = 3000;
+const MAX_WORDS = 10;
+const WORD_LIFETIME = 6000;
+const WORD_BLACK_MS = 0;
+
 let libs = ['https://unpkg.com/hydra-synth', 'includes/libs/hydra-synth.js', 'https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js', 'includes/libs/hy5.js']
 
 // sandbox - start
-const DISPLAY_HYDRA_DENSITY = 0.6;
 H.pixelDensity(DISPLAY_HYDRA_DENSITY) 
 
 let random1, random2, random3;
@@ -31,7 +39,7 @@ s0.initP5() // send p5 to hydra
 P5.toggle(0) // hide p5
 
 src(s0)
-.add(src(o0).scale(3), 0.4) // controls the "glow"
+.add(src(o0).scale(3), 0.2) // controls the "glow"
 .modulateScale(noize(3), 0.5, 1 , 10) 
 .out()
 
@@ -120,7 +128,7 @@ function draw() {
     let r = (sin(frameCount * 0.01) * 1.5 + 0.5) * randShade;
     let g = (sin(frameCount * 0.03) * 0.5 + 0.5) * random(50, 100) + random(randShade1);
     let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100 + randShade;
-    fill(g, r, b, 130); 
+    fill(g, r, b, 100); 
     blendMode(DIFFERENCE);
     circle(mouseX, mouseY, mouseCircleSize);
     drawDecoyCircles(g, r, b);
@@ -178,7 +186,6 @@ function draw() {
 }
 
 // Decoy circles: each reacts to the mouse in its own unpredictable way
-const DECOY_COUNT = 9;
 let decoys = null;
 
 function makeDecoys() {
@@ -226,15 +233,11 @@ function drawDecoyCircles(g, r, b) {
         d.x = constrain(lerp(d.x, tx, d.lag * (0.5 + noise(d.seed, t * 0.01))), 0, width);
         d.y = constrain(lerp(d.y, ty, d.lag * (0.5 + noise(d.seed + 7, t * 0.01))), 0, height);
 
-        fill((i % 2 ? g : b) + random(30), (i % 3 ? r : g), (i % 2 ? b : r), 90);
+        fill((i % 2 ? g : b) + random(30), (i % 3 ? r : g), (i % 2 ? b : r), 30);
         circle(d.x, d.y, mouseCircleSize * d.size * (0.6 + noise(d.seed, t * 0.02)));
     }
 }
 
-const WORD_INTERVAL = 3000;
-const MAX_WORDS = 10; // how many words are on screen at once
-const WORD_LIFETIME = 6000; // how long each word stays before it is censored and disappears
-const WORD_BLACK_MS = 0;
 let nextAppear = 0;
 
 function updateWordSchedule(objs) {
@@ -316,8 +319,8 @@ class movingObject{
         rectMode(CENTER);
         fill(255);
         stroke(0, 120);
-        strokeWeight(6);
-        this.xval = 0.009;
+        strokeWeight(10);
+        this.xval = 0.006;
         // this.xval = random(0.003);
         this.yval = 0.0065;
         textAlign(CENTER, CENTER);
