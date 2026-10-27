@@ -7,14 +7,14 @@ made with hydra-synth.js + hy5.js + p5.js
 edited by Suyash Chitrakar
 */
 
-const DISPLAY_HYDRA_DENSITY = 0.45;
+const DISPLAY_HYDRA_DENSITY = 0.6;
 
 const DECOY_COUNT = 2;
 
 const WORD_INTERVAL = 3000;
 const MAX_WORDS = 10;
 const WORD_LIFETIME = 8000;
-const WORD_BLACK_MS = 300;
+const WORD_BLACK_MS = 500;
 
 let libs = ['https://unpkg.com/hydra-synth', 'includes/libs/hydra-synth.js', 'https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js', 'includes/libs/hy5.js']
 
@@ -37,13 +37,13 @@ P5.toggle(0) // hide p5
 
 src(s0)
 .add(src(o0).scale(0.07), 0.2) // controls the "glow", how intense reapet happens
-.modulateScale(noize(3), 0.5, 1 , 10) 
+.modulateScale(noize(3), 0.7, 1 , 10) 
 .out()
 
-src(s0)
-.add(src(o0).scale(0.07), 0.2) // controls the "glow", how intense reapet happens
-.modulateScale(noize(5), 0.5, 1 , 10) 
-.out()
+// src(s0)
+// .add(src(o0).scale(0.07), 0.2) // controls the "glow", how intense reapet happens
+// .modulateScale(noize(5), 0.5, 1 , 10) 
+// .out()
 
 
 function applyHydraDisplayResolution() {
@@ -134,9 +134,9 @@ function draw() {
 
     
     if (width>1040) {
-        mouseCircleSize = height / 6;
+        mouseCircleSize = height / 4;
         
-        fill(g, r, b, 240); 
+        fill(g, r, b, 30); 
     } else {
         mouseCircleSize = height / 10;
         fill(g, r, b, 70); 
@@ -145,7 +145,8 @@ function draw() {
     let mouseWavePhase = frameCount * 0.03;
     let mouseWaveX = sin(mouseWavePhase) * mouseCircleSize * mouseCircleWaveAmount;
     let mouseWaveY = cos(mouseWavePhase) * mouseCircleSize * mouseCircleWaveAmount;
-    circle(mouseX + mouseWaveX, mouseY + mouseWaveY, mouseCircleSize);
+    // circle(mouseX + mouseWaveX, mouseY + mouseWaveY, mouseCircleSize);
+    rect(mouseX + mouseWaveX, mouseY + mouseWaveY, mouseCircleSize);
     drawDecoyCircles(g, r, b);
 
 
@@ -164,11 +165,12 @@ function draw() {
 
 
 
-    // Middle SHAPE
+    // ======================= Middle CICRLE =========================
     blendMode(HARD_LIGHT);
-    let b2 = ((sin(frameCount * 0.025) * 0.5 + 0.5) * random(randShade));
-    let rSize = (sin(frameCount * 0.9)) * maxCircle + minCircle;
-    fill(180-b2, (b2*20)%100, (b2*200)%180, 7);
+    let b2 = ((sin(frameCount * 0.05) * 0.5 + 0.5) * random(randShade));
+    let rSize = (sin(frameCount * 0.009)) * maxCircle + minCircle;
+    print   (rSize);
+    fill(180-b2, (b2*20)%100, (b2*200)%180, 10);
     noStroke();
     circle(width/2 +rSize, height/2, random3 + rSize);
     
@@ -232,7 +234,9 @@ function makeDecoys() {
             orbit: random(80, min(width, height) / 2),
             dir: random() < 0.5 ? -1 : 1,
             size: random(0.3, 1.4),
-            flip: random(0.3, 1)
+            chaos: random(0.2, 0.5),
+            vx: random(-3, 3),
+            vy: random(-3, 3)
         });
     }
 }
@@ -240,6 +244,8 @@ function makeDecoys() {
 function drawDecoyCircles(g, r, b) {
     if (!decoys) makeDecoys();
     const t = frameCount;
+    const mouseDX = mouseX - pmouseX;
+    const mouseDY = mouseY - pmouseY;
     const speed = dist(mouseX, mouseY, pmouseX, pmouseY);
     for (let i = 0; i < decoys.length; i++) {
         const d = decoys[i];
@@ -261,10 +267,33 @@ function drawDecoyCircles(g, r, b) {
                 tx = d.x + (d.x - mouseX) * 0.05 + (noise(d.seed, t * 0.02) - 0.5) * 60;
                 ty = d.y + (d.y - mouseY) * 0.05 + (noise(d.seed + 9, t * 0.02) - 0.5) * 60;
         }
-        // behaviour reshuffles now and then so it can't be learned
-        if (random() < 0.002) d.mode = floor(random(5));
-        d.x = constrain(lerp(d.x, tx, d.lag * (0.5 + noise(d.seed, t * 0.01))), 0, width);
-        d.y = constrain(lerp(d.y, ty, d.lag * (0.5 + noise(d.seed + 7, t * 0.01))), 0, height);
+
+        const wobbleX = (noise(d.seed + 100, t * 0.07) - 0.5) * 18 * d.chaos;
+        const wobbleY = (noise(d.seed + 200, t * 0.07) - 0.5) * 18 * d.chaos;
+        const pull = d.lag * (0.35 + noise(d.seed, t * 0.04));
+        d.vx = d.vx * 0.78 + (tx - d.x) * pull + wobbleX;
+        d.vy = d.vy * 0.78 + (ty - d.y) * pull + wobbleY;
+
+        if (speed > 8 && random() < 0.12) {
+            d.vx += mouseDX * random(0.4, 1.2);
+            d.vy += mouseDY * random(0.4, 1.2);
+        }
+        if (random() < 0.025) {
+            d.vx += random(-12, 12) * d.chaos;
+            d.vy += random(-12, 12) * d.chaos;
+        }
+        if (random() < 0.008) d.mode = floor(random(5));
+
+        d.x += d.vx;
+        d.y += d.vy;
+        if (d.x < 0 || d.x > width) {
+            d.x = constrain(d.x, 0, width);
+            d.vx *= -0.8;
+        }
+        if (d.y < 0 || d.y > height) {
+            d.y = constrain(d.y, 0, height);
+            d.vy *= -0.8;
+        }
 
         fill((i % 2 ? g : b) + random(30), (i % 3 ? r : g), (i % 2 ? b : r), 30);
         circle(d.x, d.y, mouseCircleSize * d.size * (0.6 + noise(d.seed, t * 0.02)));
@@ -308,10 +337,34 @@ function updateWordSchedule(objs) {
 }
 
 
+// Block text selection while dragging inside the hero (canvas or anything over it)
+(function () {
+    let dragging = false;
+    document.addEventListener('mousedown', (e) => {
+        const hero = document.getElementById('page1');
+        if (hero && hero.contains(e.target)) {
+            dragging = true;
+            document.body.style.userSelect = 'none';
+            document.body.style.webkitUserSelect = 'none';
+        }
+    });
+    document.addEventListener('mouseup', () => {
+        dragging = false;
+        document.body.style.userSelect = '';
+        document.body.style.webkitUserSelect = '';
+    });
+    document.addEventListener('selectstart', (e) => {
+        if (dragging) e.preventDefault();
+    });
+    document.addEventListener('dragstart', (e) => {
+        if (dragging) e.preventDefault();
+    });
+})();
+
 function mouseDragged() {
-    stroke(255);
+    stroke(255, random(90,190));
     if(width>1040){
-        strokeWeight(random(7,45));
+        strokeWeight(random(7,15));
     } else {
         strokeWeight(random(1,5));
     }

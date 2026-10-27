@@ -18,13 +18,15 @@ function drawSquares() {
     push();
     // blendMode(BLEND);
     translate(width / 2, height / 2);
-    rotate(mouseX);
-    translate(mouseY, mouseY);
+    rotate(mouseX*0.3);
+    // translate(mouseY, mouseY);
 
     noFill();
     strokeWeight(1);
+
     // stroke(255, 64, 129);
-    stroke(random(255), 50);
+    stroke(random(255), 40);
+    // stroke(255, random(10,100))
 
     for (let i = 0; i < sqAngles.length; i++) {
         const y = map(i, 0, sqAngles.length - 1, -height / 2, height / 2);
