@@ -3,21 +3,22 @@ const SQ_R = 50;
 let sqAngles = [];
 let sqAnglesV = [];
 let sqRot = 0;
-let sqWeight = 1;
+let sqWeight = 2;
 let sqSize = SQ_R * 8;
+let sqStroke;
 
 function initSquares() {
-    const div = random(100, 1000);
-    const r = random(30, 80); // randomized radius
-    sqWeight = random(0.5, 3);
-    sqSize = r * random(4, 10);
+    const r = random(35, 65);
+    sqWeight = random(0.7, 1.4);
+    sqSize = r * random(4, 7);
+    sqStroke = color(random(100, 200), random(25, 45));
     sqRot = 0;
-    const total = floor(width / (r * 2));
+    const total = floor(width / (r * 2.5));
     sqAngles = [];
     sqAnglesV = [];
     for (let i = 0; i < total; i++) {
         sqAngles[i] = 0;
-        sqAnglesV[i] = 1 + i / div;
+        sqAnglesV[i] = 0.004 + i * 0.0002;
     }
 }
 
@@ -25,17 +26,13 @@ function drawSquares() {
     push();
     // blendMode(BLEND);
     translate(width / 2, height / 2);
-    // smooth rotation: ease toward the mouse target instead of jumping
-    sqRot = lerp(sqRot, mouseX * 0.3, 0.05);
+    sqRot = lerp(sqRot, map(mouseX, 0, width, -0.12, 0.12), 0.04);
     rotate(sqRot);
     // translate(mouseY, mouseY);
 
     noFill();
     strokeWeight(sqWeight);
-
-    // stroke(255, 64, 129);
-    stroke(random(255), random(20, 80));
-    // stroke(255, random(10,100))
+    stroke(sqStroke);
 
     for (let i = 0; i < sqAngles.length; i++) {
         const y = map(i, 0, sqAngles.length - 1, -height / 2, height / 2);

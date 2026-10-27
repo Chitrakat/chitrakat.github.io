@@ -7,14 +7,15 @@ made with hydra-synth.js + hy5.js + p5.js
 edited by Suyash Chitrakar
 */
 
-const DISPLAY_HYDRA_DENSITY = 0.5;
+const DISPLAY_HYDRA_DENSITY = 0.65;
 
 const DECOY_COUNT = 2;
 
 const WORD_INTERVAL = 3000;
 const MAX_WORDS = 10;
 const WORD_LIFETIME = 8000;
-const WORD_BLACK_MS = 1200;
+const WORD_BLACK_MS = 1080;
+const MOUSE_TRAIL_INTERVAL = 400;
 
 let libs = ['https://unpkg.com/hydra-synth', 'includes/libs/hydra-synth.js', 'https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js', 'includes/libs/hy5.js']
 
@@ -22,8 +23,9 @@ H.pixelDensity(DISPLAY_HYDRA_DENSITY)
 
 let random1, random2, random3;
 let mouseBoo = false;
+let lastMouseTrailAt = 0;
 window.mouseDraggedEnabled = true;
-window.mouseMovedEnabled = true;
+window.mouseMovedEnabled = false;
 
 let maxCircle, minCircle;
 let mouseCircleSize;
@@ -39,7 +41,7 @@ P5.toggle(0) // hide p5
 
 src(s0)
 .add(src(o0).scale(0.07), 0.2) // controls the "glow", how intense reapet happens
-.modulateScale(noize(2.5), 0.7, 1 , 10) 
+.modulateScale(noize(2.5), 0.5, 1 , 10) 
 .out()
 
 // src(s0)
@@ -103,7 +105,7 @@ function setup() {
     const heroCanvas = createCanvas(windowWidth, windowHeight);
     heroCanvas.parent('page1');
     background(255);
-    frameRate(14);
+    frameRate(12);
 
     applyHydraDisplayResolution();
 
@@ -135,16 +137,14 @@ function draw() {
 
 
 
-    // ==================== Colors for mouse circles ==========================
+    // ==================== Mouse Circles ==========================
+    blendMode(DIFFERENCE);
     let r = (sin(frameCount * 0.01) * 1.5 + 0.5) * randShade;
     let g = (sin(frameCount * 0.03) * 0.5 + 0.5) * random(50, 100) + random(randShade1);
     let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100 + randShade;
-    blendMode(DIFFERENCE);
-
-
     
-    if (width>1040) {
-        mouseCircleSize = height / 4;
+    if (width>1080) {
+        mouseCircleSize = 1.5*height / 4;
         
         fill(g, r, b, 30); 
     } else {
@@ -364,7 +364,9 @@ function updateWordSchedule(objs) {
     let dragging = false;
     document.addEventListener('mousedown', (e) => {
         const hero = document.getElementById('page1');
-        if (hero && hero.contains(e.target)) {
+        const startedInHero = hero && hero.contains(e.target);
+        const startedOnDragToggle = e.target instanceof Element && e.target.closest('#drag-toggle-btn');
+        if (startedInHero || startedOnDragToggle) {
             dragging = true;
             document.body.style.userSelect = 'none';
             document.body.style.webkitUserSelect = 'none';
@@ -384,14 +386,31 @@ function updateWordSchedule(objs) {
 })();
 
 function drawMouseTrail() {
+    const now = millis();
+    if (lastMouseTrailAt && now - lastMouseTrailAt < MOUSE_TRAIL_INTERVAL) return;
+    lastMouseTrailAt = now;
+
+    blendMode(SCREEN);
     // stroke(random(0,255), random(90,210));
-    stroke(random(100,255));
-    if(width>1040){
-        strokeWeight(random(7,25));
+    // stroke(random(30, 255));
+    
+    stroke(255, random (90,210));
+    strokeWeight(1);
+    noFill();
+
+
+    if(width>1080){
+        strokeWeight(random(0,100));
     } else {
         strokeWeight(random(1,5));
     }
+
+
+    rotate(random(-0.2,0.2));
+    // RectMode(CENTER);
+    rect(mouseX, mouseY, random(width), random(height));
     line(random(width), random(height), mouseX, mouseY);
+
 }
 
 function mouseMoved() {
@@ -412,8 +431,8 @@ class movingObject{
         this.x = random(width + 100, width - 100);
         this.y = random(height + 100, height - 100);
         
-        this.yval = 0.007;
-        this.xval = 0.007;
+        this.yval = 0.009;
+        this.xval = 0.009;
     }
 
     update() {
