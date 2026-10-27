@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -81,12 +81,16 @@
     <div id="page1">
       <main class="content"><p></p></main>
       <div id="page1-tools" aria-label="Page 1 tools">
+        <button id="drag-toggle-btn" class="arrow-btn page1-tool-btn" type="button" aria-label="Toggle mouse-move trail" aria-pressed="true">
+          1.
+          <span class="drag-tooltip" role="tooltip">1.</span>
+        </button>
         <button id="refresh-btn" class="arrow-btn page1-tool-btn" type="button" aria-label="Refresh artwork">
           <svg class="page1-tool-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path d="M20 12a8 8 0 1 1-2.34-5.66" />
             <path d="M20 4v6h-6" />
           </svg>
-          <span class="refresh-tooltip" role="tooltip">pressing (r) also resets the scene</span>
+          <span class="refresh-tooltip" role="tooltip">(r)andomize</span>
         </button>
       </div>
     </div>
@@ -224,6 +228,7 @@
       const worksBtn = document.getElementById("selected-works-btn");
       const page1Tools = document.getElementById("page1-tools");
       const refreshBtn = document.getElementById("refresh-btn");
+      const dragToggleBtn = document.getElementById("drag-toggle-btn");
       const fixedLeft = document.getElementById("fixed-left");
       const pages = [page1, page2];
       const mobileQuery = window.matchMedia("(max-width: 900px)");
@@ -295,6 +300,11 @@
         if (typeof window.refreshCircleSketch === "function") {
           window.refreshCircleSketch();
         }
+      });
+
+      dragToggleBtn.addEventListener("click", () => {
+        window.mouseMovedEnabled = !window.mouseMovedEnabled;
+        dragToggleBtn.setAttribute("aria-pressed", String(window.mouseMovedEnabled));
       });
 
       up.addEventListener("click", () => goTo(0));

@@ -14,7 +14,7 @@ const DECOY_COUNT = 2;
 const WORD_INTERVAL = 3000;
 const MAX_WORDS = 10;
 const WORD_LIFETIME = 8000;
-const WORD_BLACK_MS = 500;
+const WORD_BLACK_MS = 1200;
 
 let libs = ['https://unpkg.com/hydra-synth', 'includes/libs/hydra-synth.js', 'https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js', 'includes/libs/hy5.js']
 
@@ -22,6 +22,8 @@ H.pixelDensity(DISPLAY_HYDRA_DENSITY)
 
 let random1, random2, random3;
 let mouseBoo = false;
+window.mouseDraggedEnabled = true;
+window.mouseMovedEnabled = true;
 
 let maxCircle, minCircle;
 let mouseCircleSize;
@@ -37,7 +39,7 @@ P5.toggle(0) // hide p5
 
 src(s0)
 .add(src(o0).scale(0.07), 0.2) // controls the "glow", how intense reapet happens
-.modulateScale(noize(3), 0.7, 1 , 10) 
+.modulateScale(noize(2.5), 0.7, 1 , 10) 
 .out()
 
 // src(s0)
@@ -56,6 +58,9 @@ function applyHydraDisplayResolution() {
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
     applyHydraDisplayResolution();
+    // Re-bind the source so its texture is reallocated at the new canvas size
+    s0.initP5();
+    P5.toggle(0);
     initSquares();
 }
 
@@ -82,8 +87,13 @@ function randomizeScene() {
 window.refreshCircleSketch = randomizeScene;
 
 function keyPressed() {
-    if (key !== 'r' && key !== 'R') return;
     if (event && (event.ctrlKey || event.metaKey || event.altKey)) return;
+    if (key === '1') {
+        const btn = document.getElementById('drag-toggle-btn');
+        if (btn) btn.click();
+        return;
+    }
+    if (key !== 'r' && key !== 'R') return;
     // Only reset while the hero page is in view
     if (window.scrollY > windowHeight / 2) return;
     randomizeScene();
@@ -93,7 +103,7 @@ function setup() {
     const heroCanvas = createCanvas(windowWidth, windowHeight);
     heroCanvas.parent('page1');
     background(255);
-    frameRate(25);
+    frameRate(14);
 
     applyHydraDisplayResolution();
 
@@ -169,8 +179,8 @@ function draw() {
     blendMode(HARD_LIGHT);
     let b2 = ((sin(frameCount * 0.05) * 0.5 + 40) * random(randShade));
     let rSize = (sin(frameCount * 0.009)) * maxCircle + minCircle;
-    print   (rSize);
-    fill(180-b2, (b2*20)%100, (b2*200)%180, 3);
+    // print   (rSize);
+    fill(180-b2, (b2*20)%100, (b2*200)%180, 10);
     noStroke();
     circle(width/2 +rSize, height/2, random3 + rSize);
     
@@ -373,7 +383,7 @@ function updateWordSchedule(objs) {
     });
 })();
 
-function mouseDragged() {
+function drawMouseTrail() {
     // stroke(random(0,255), random(90,210));
     stroke(random(100,255));
     if(width>1040){
@@ -382,6 +392,15 @@ function mouseDragged() {
         strokeWeight(random(1,5));
     }
     line(random(width), random(height), mouseX, mouseY);
+}
+
+function mouseMoved() {
+    if (!window.mouseMovedEnabled) return;
+    drawMouseTrail();
+}
+
+function mouseDragged() {
+    drawMouseTrail();
 }
 
 class movingObject{
@@ -393,8 +412,8 @@ class movingObject{
         this.x = random(width + 100, width - 100);
         this.y = random(height + 100, height - 100);
         
-        this.yval = 0.005;
-        this.xval = 0.005;
+        this.yval = 0.007;
+        this.xval = 0.007;
     }
 
     update() {
@@ -409,14 +428,18 @@ class movingObject{
         rectMode(CENTER);
         fill(255);
         stroke(0, 120);
-        strokeWeight(10);
+        strokeWeight(5);
         textAlign(CENTER, CENTER);
         if (this.state === 'fading') {
-            // censor bar over the word's bounding box
+            // censor bar fades in over the word's bounding box while the text fades out
+            const k = constrain((millis() - this.fadeStart) / (WORD_BLACK_MS / 2), 0, 1);
             const lines = this.label.split('\n');
             const w = Math.max(...lines.map(l => textWidth(l))) + 24;
             const h = lines.length * textSize() * 1.2 + 12;
-            fill(0);
+            fill(255, 255 * (1 - k));
+            stroke(0, 120 * (1 - k));
+            text(this.label, this.x, this.y);
+            fill(0, 255 * k);
             noStroke();
             rect(this.x, this.y, w, h);
             return;

@@ -373,6 +373,48 @@ body.landing-page #refresh-btn {
   top: auto;
 }
 
+body.landing-page #drag-toggle-btn {
+  position: relative;
+  right: auto;
+  top: auto;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+body.landing-page #drag-toggle-btn[aria-pressed="true"] {
+  background: #111;
+  color: #f3f3f3;
+}
+
+body.landing-page .drag-tooltip {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #111;
+  border-radius: 999px;
+  background: #f3f3f3;
+  color: #111;
+  font-size: 0.8rem;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+body.landing-page #drag-toggle-btn:hover .drag-tooltip,
+body.landing-page #drag-toggle-btn:focus-visible .drag-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 body.landing-page .refresh-tooltip {
   position: absolute;
   right: 0;
@@ -408,6 +450,12 @@ body.landing-page .page1-tool-icon {
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+@media (min-width: 901px) and (hover: hover) and (pointer: fine) {
+  body.landing-page #drag-toggle-btn {
+    display: flex;
+  }
 }
 
 /* Footer */
