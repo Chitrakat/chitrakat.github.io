@@ -81,11 +81,12 @@
     <div id="page1">
       <main class="content"><p></p></main>
       <div id="page1-tools" aria-label="Page 1 tools">
-        <button id="refresh-btn" class="arrow-btn page1-tool-btn" type="button" title="Refresh artwork">
+        <button id="refresh-btn" class="arrow-btn page1-tool-btn" type="button" aria-label="Refresh artwork">
           <svg class="page1-tool-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path d="M20 12a8 8 0 1 1-2.34-5.66" />
             <path d="M20 4v6h-6" />
           </svg>
+          <span class="refresh-tooltip" role="tooltip">pressing (r) also resets the scene</span>
         </button>
       </div>
     </div>
@@ -209,8 +210,8 @@
   <script src="https://unpkg.com/hydra-synth"></script>
   <script src="https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js"></script>
   <!-- Custom sketch -->
-  <script src="squares.js"></script>
-  <script src="circles.js"></script>
+  <script src="assets/js/squares.js"></script>
+  <script src="assets/js/landing.js"></script>
   <!-- Footer generative sketch -->
   <script src="assets/js/footer2.js"></script>
 
@@ -362,6 +363,3 @@
   </script>
 </body>
 </html>
-
-
-

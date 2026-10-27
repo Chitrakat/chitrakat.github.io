@@ -1,10 +1,10 @@
 // Tangent-square sketch, drawn on top of the hero canvas by circles.js
-const SQ_R = 100;
+const SQ_R = 50;
 let sqAngles = [];
 let sqAnglesV = [];
 
 function initSquares() {
-    const div = random(100, 10000);
+    const div = random(100, 1000);
     const total = floor(width / (SQ_R * 2));
     sqAngles = [];
     sqAnglesV = [];

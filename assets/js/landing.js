@@ -7,18 +7,17 @@ made with hydra-synth.js + hy5.js + p5.js
 edited by Suyash Chitrakar
 */
 
-const DISPLAY_HYDRA_DENSITY = 2;
+const DISPLAY_HYDRA_DENSITY = 0.45;
 
 const DECOY_COUNT = 2;
 
-const WORD_INTERVAL = 1000;
+const WORD_INTERVAL = 3000;
 const MAX_WORDS = 10;
-const WORD_LIFETIME = 4000;
+const WORD_LIFETIME = 8000;
 const WORD_BLACK_MS = 300;
 
 let libs = ['https://unpkg.com/hydra-synth', 'includes/libs/hydra-synth.js', 'https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js', 'includes/libs/hy5.js']
 
-// sandbox - start
 H.pixelDensity(DISPLAY_HYDRA_DENSITY) 
 
 let random1, random2, random3;
@@ -26,30 +25,26 @@ let mouseBoo = false;
 
 let maxCircle, minCircle;
 let mouseCircleSize;
+let mouseCircleWaveAmount = 0.5;
 
 let randShade, randShade1, randShade2;
 let value = 100;
 
 let n1;
 
-// let pressStart = null;
-// let pressEnd = null;
-
 s0.initP5() // send p5 to hydra
 P5.toggle(0) // hide p5
 
 src(s0)
-.add(src(o0).scale(3), 0.2) // controls the "glow"
+.add(src(o0).scale(0.07), 0.2) // controls the "glow", how intense reapet happens
 .modulateScale(noize(3), 0.5, 1 , 10) 
 .out()
 
+src(s0)
+.add(src(o0).scale(0.07), 0.2) // controls the "glow", how intense reapet happens
+.modulateScale(noize(5), 0.5, 1 , 10) 
+.out()
 
-// src(s0)
-// .add(src(o0).scale(1), 0.01) // controls the "glow"
-// .modulateScale(noize(1), 400, 2 , 100) 
-// .out()
-// 1, 0.1, (0.05), 0.08, 1 and 1 
-// sandbox - end
 
 function applyHydraDisplayResolution() {
     H.pixelDensity(DISPLAY_HYDRA_DENSITY);
@@ -76,6 +71,7 @@ function randomizeScene() {
     randShade = random(100);
     randShade1 = random(100);
     randShade2 = random(100);
+    mouseCircleWaveAmount = random(0.3, 0.7);
 
     window.movingObjs = null;
     decoys = null;
@@ -85,11 +81,19 @@ function randomizeScene() {
 
 window.refreshCircleSketch = randomizeScene;
 
+function keyPressed() {
+    if (key !== 'r' && key !== 'R') return;
+    if (event && (event.ctrlKey || event.metaKey || event.altKey)) return;
+    // Only reset while the hero page is in view
+    if (window.scrollY > windowHeight / 2) return;
+    randomizeScene();
+}
+
 function setup() {
     const heroCanvas = createCanvas(windowWidth, windowHeight);
     heroCanvas.parent('page1');
     background(255);
-    frameRate(20);
+    frameRate(25);
 
     applyHydraDisplayResolution();
 
@@ -100,48 +104,65 @@ function setup() {
     randomizeScene();
     initSquares();
     blendMode(HARD_LIGHT);
-    // blendMode(REMOVE);
 }
 
 
 function draw() {
     drawSquares();
     noStroke();
-    // if(mouseBoo){
-    //     clear();
-    //     background(255);
-    // }
-    // if(mouseIsPressed){
-    //     mouseBoo = !mouseBoo;
-    // }
 
-    // if(mouseIsPressed){
-        
-    //     // millis(1000);
-    //     // clear();
-    //     // background(255);
-    // }
 
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
     // ==================== Colors for mouse circles ==========================
     let r = (sin(frameCount * 0.01) * 1.5 + 0.5) * randShade;
     let g = (sin(frameCount * 0.03) * 0.5 + 0.5) * random(50, 100) + random(randShade1);
     let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100 + randShade;
-    fill(g, r, b, 100); 
     blendMode(DIFFERENCE);
-    circle(mouseX, mouseY, mouseCircleSize);
+
+
+    
+    if (width>1040) {
+        mouseCircleSize = height / 6;
+        
+        fill(g, r, b, 240); 
+    } else {
+        mouseCircleSize = height / 10;
+        fill(g, r, b, 70); 
+    }
+    
+    let mouseWavePhase = frameCount * 0.03;
+    let mouseWaveX = sin(mouseWavePhase) * mouseCircleSize * mouseCircleWaveAmount;
+    let mouseWaveY = cos(mouseWavePhase) * mouseCircleSize * mouseCircleWaveAmount;
+    circle(mouseX + mouseWaveX, mouseY + mouseWaveY, mouseCircleSize);
     drawDecoyCircles(g, r, b);
 
-    // Click Interaction  
-    // if (pressStart && pressEnd) {
-    //     // let tr
-    //     blendMode(HARD_LIGHT);
-    //     // stroke(r, b,g, 150);
-    //     stroke(255);
-    //     strokeWeight(random(10,30));
-    //     line(pressStart.x, pressStart.y, pressEnd.x, pressEnd.y);
-    // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Middle SHAPE
     blendMode(HARD_LIGHT);
@@ -149,12 +170,15 @@ function draw() {
     let rSize = (sin(frameCount * 0.9)) * maxCircle + minCircle;
     fill(180-b2, (b2*20)%100, (b2*200)%180, 7);
     noStroke();
-    // square(width/2, height/2, random3 + rSize);s
     circle(width/2 +rSize, height/2, random3 + rSize);
     
+
+
+
+
     // Moving texts
     let tx, ty;
-    let fontSize = height/5;
+    let fontSize = height/4;
     tx = constrain(noise(100 + frameCount * 0.06) * width, 0, width);
     if (!window.movingObjs) {
         window.movingObjs = [
@@ -172,12 +196,20 @@ function draw() {
             new movingObject(random(1000), random(1000), fontSize/2, 'artist?'),
             new movingObject(random(1000), random(1000), fontSize/2, 'hopeful?'),
             new movingObject(random(1000), random(1000), fontSize/3, 'immigrant'),
-            // new movingObject(random(1000), random(1000), fontSize/3, 'nepali'),
             new movingObject(random(1000), random(1000), fontSize/3, '#openToWork'),
         ];
     }
 
+
+
+
+
+
     updateWordSchedule(window.movingObjs);
+
+
+
+
 
     for (let obj of window.movingObjs) {
         if (obj.state === 'hidden') continue;
@@ -275,23 +307,14 @@ function updateWordSchedule(objs) {
     }
 }
 
-function mousePressed() {
-    if (!pressStart || pressEnd) {
-        pressStart = { x: mouseX, y: mouseY };
-        pressEnd = null;
-    } else {
-        pressEnd = { x: mouseX, y: mouseY };
-    }
-}
-
-function mouseReleased() {
-    // handled by click-to-click logic in mousePressed
-}
 
 function mouseDragged() {
-    // handled by click-to-click logic in mousePressed
     stroke(255);
-    strokeWeight(random(5,30));
+    if(width>1040){
+        strokeWeight(random(7,45));
+    } else {
+        strokeWeight(random(1,5));
+    }
     line(random(width), random(height), mouseX, mouseY);
 }
 
@@ -301,17 +324,17 @@ class movingObject{
         this.yNoiseSeed = yNoiseSeed;
         this.size = size;
         this.label = label;
-        this.x = 0;
-        this.y = 0;
-        this.xval = 0.006;
-        this.yval = 0.0065;
+        this.x = random(width + 100, width - 100);
+        this.y = random(height + 100, height - 100);
+        
+        this.yval = 0.005;
+        this.xval = 0.005;
     }
 
     update() {
         // Use the same logic as the text movement
         this.x = constrain(noise(this.xNoiseSeed + frameCount * this.xval) * width, 0, width);
         this.y = constrain(noise(this.yNoiseSeed + frameCount * this.yval) * height, 0, height);
-        // separateAll();
     }
 
     display() {
@@ -321,9 +344,6 @@ class movingObject{
         fill(255);
         stroke(0, 120);
         strokeWeight(10);
-        this.xval = 0.006;
-        // this.xval = random(0.003);
-        this.yval = 0.0065;
         textAlign(CENTER, CENTER);
         if (this.state === 'fading') {
             // censor bar over the word's bounding box

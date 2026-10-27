@@ -367,6 +367,37 @@ body.landing-page .page1-tool-btn {
   cursor: pointer;
 }
 
+body.landing-page #refresh-btn {
+  position: relative;
+}
+
+body.landing-page .refresh-tooltip {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 8px);
+  display: flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 12px;
+  border: 1px solid #111;
+  border-radius: 999px;
+  background: #f3f3f3;
+  color: #111;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+body.landing-page #refresh-btn:hover .refresh-tooltip,
+body.landing-page #refresh-btn:focus-visible .refresh-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 body.landing-page .page1-tool-icon {
   width: 18px;
   height: 18px;
