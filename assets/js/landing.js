@@ -7,7 +7,7 @@ made with hydra-synth.js + hy5.js + p5.js
 edited by Suyash Chitrakar
 */
 
-const DISPLAY_HYDRA_DENSITY = 0.6;
+const DISPLAY_HYDRA_DENSITY = 0.5;
 
 const DECOY_COUNT = 2;
 
@@ -145,8 +145,8 @@ function draw() {
     let mouseWavePhase = frameCount * 0.03;
     let mouseWaveX = sin(mouseWavePhase) * mouseCircleSize * mouseCircleWaveAmount;
     let mouseWaveY = cos(mouseWavePhase) * mouseCircleSize * mouseCircleWaveAmount;
-    // circle(mouseX + mouseWaveX, mouseY + mouseWaveY, mouseCircleSize);
-    rect(mouseX + mouseWaveX, mouseY + mouseWaveY, mouseCircleSize);
+    circle(mouseX + mouseWaveX, mouseY + mouseWaveY, mouseCircleSize);
+    // rect(mouseX + mouseWaveX, mouseY + mouseWaveY, mouseCircleSize);
     drawDecoyCircles(g, r, b);
 
 
@@ -167,13 +167,25 @@ function draw() {
 
     // ======================= Middle CICRLE =========================
     blendMode(HARD_LIGHT);
-    let b2 = ((sin(frameCount * 0.05) * 0.5 + 0.5) * random(randShade));
+    let b2 = ((sin(frameCount * 0.05) * 0.5 + 40) * random(randShade));
     let rSize = (sin(frameCount * 0.009)) * maxCircle + minCircle;
     print   (rSize);
-    fill(180-b2, (b2*20)%100, (b2*200)%180, 10);
+    fill(180-b2, (b2*20)%100, (b2*200)%180, 3);
     noStroke();
     circle(width/2 +rSize, height/2, random3 + rSize);
     
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -362,9 +374,10 @@ function updateWordSchedule(objs) {
 })();
 
 function mouseDragged() {
-    stroke(255, random(90,190));
+    // stroke(random(0,255), random(90,210));
+    stroke(random(100,255));
     if(width>1040){
-        strokeWeight(random(7,15));
+        strokeWeight(random(7,25));
     } else {
         strokeWeight(random(1,5));
     }
