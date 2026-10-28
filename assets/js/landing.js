@@ -7,15 +7,15 @@ made with hydra-synth.js + hy5.js + p5.js
 edited by Suyash Chitrakar
 */
 
-const DISPLAY_HYDRA_DENSITY = 0.9;
+const DISPLAY_HYDRA_DENSITY = 0.9; // 1.0 for normal, 2.0 for retina, 4.0 for super-retina
 
 const DECOY_COUNT = 2;
 
-const WORD_INTERVAL = 2000;
-const MAX_WORDS = 10;
+const WORD_INTERVAL = 4000;
+const MAX_WORDS = 5;
 const WORD_LIFETIME = 8000;
-const WORD_BLACK_MS = 1580;
-const MOUSE_TRAIL_INTERVAL = 50;
+const WORD_BLACK_MS = 4000;
+const MOUSE_TRAIL_INTERVAL = 200;
 
 let libs = ['https://unpkg.com/hydra-synth', 'includes/libs/hydra-synth.js', 'https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js', 'includes/libs/hy5.js']
 
@@ -71,13 +71,13 @@ function randomizeScene() {
     random2 = random(width / 3);
     random3 = random(width / 3);
 
-    maxCircle = windowHeight / 5;
-    minCircle = windowHeight / 20;
-    mouseCircleSize = height / 6;
+    maxCircle = windowHeight / 2;
+    minCircle = windowHeight / 15;
+    mouseCircleSize = height / 4;
 
-    randShade = random(100);
-    randShade1 = random(100);
-    randShade2 = random(100);
+    randShade = random(10,100);
+    randShade1 = random(50,100);
+    randShade2 = random(30,100);
     mouseCircleWaveAmount = random(0.3, 0.7);
 
     window.movingObjs = null;
@@ -120,7 +120,6 @@ function setup() {
 
 
 function draw() {
-    drawSquares();
     noStroke();
 
 
@@ -143,13 +142,12 @@ function draw() {
     let g = (sin(frameCount * 0.03) * 0.5 + 0.5) * random(50, 100) + random(randShade1);
     let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100 + randShade;
     
+    fill(g, r, b, 70); 
+
     if (width>1080) {
         mouseCircleSize = 1.5*height / 4;
-        
-        fill(g, r, b, 20); 
     } else {
         mouseCircleSize = height / 10;
-        fill(g, r, b, 20); 
     }
     
     let mouseWavePhase = frameCount * 0.03;
@@ -242,6 +240,8 @@ function draw() {
         obj.update();
         obj.display();
     }
+
+    drawSquares();
 }
 
 // Decoy circles: each reacts to the mouse in its own unpredictable way
@@ -397,7 +397,7 @@ function drawMouseTrail() {
     // stroke(random(0,255), random(90,210));
     // stroke(random(30, 255));
     
-    stroke(255, 130);
+    stroke(255, 190);
     // strokeWeight(1);
     noFill();
 
@@ -436,7 +436,7 @@ class movingObject{
         this.x = random(width + 100, width - 100);
         this.y = random(height + 100, height - 100);
         
-        this.yval = 0.007;
+        this.yval = 0.01;
         this.xval = 0.007;
     }
 
@@ -447,12 +447,12 @@ class movingObject{
     }
 
     display() {
-        textSize(this.size);
+        textSize(this.size/1.2);
         // Draw text
         rectMode(CENTER);
         fill(255);
         stroke(0, 120);
-        strokeWeight(3);
+        strokeWeight(5);
         textAlign(CENTER, CENTER);
         if (this.state === 'fading') {
             // censor bar fades in over the word's bounding box while the text fades out

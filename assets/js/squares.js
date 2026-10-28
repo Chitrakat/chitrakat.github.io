@@ -1,36 +1,42 @@
 // Tangent-square sketch, drawn on top of the hero canvas by circles.js
-const SQ_R = 50;
+const SQ_R = 30;
 let sqAngles = [];
 let sqAnglesV = [];
 let sqRot = 0;
 let sqWeight = 2;
-let sqSize = SQ_R * 8;
+let sqSize = SQ_R ;
 let sqStroke;
 
 function initSquares() {
     const r = random(35, 65);
     sqWeight = random(0.7, 1.4);
     sqSize = r * random(4, 7);
-    sqStroke = color(random(100, 200), random(25, 45));
+    // sqStroke = color(random(255), random(50,100));
+    // sqStroke = color(random(255));
+    sqStroke = 255;
     sqRot = 0;
-    const total = floor(width / (r * 2.5));
+    const total = floor(height / (r * 1.5));
     sqAngles = [];
     sqAnglesV = [];
     for (let i = 0; i < total; i++) {
         sqAngles[i] = 0;
-        sqAnglesV[i] = 0.004 + i * 0.0002;
+        sqAnglesV[i] = 0.0005 + i * random(0.02, 0.0002);
+        sqAnglesV[i] = 0.008 + i * 0.001;
+        // sqAnglesV[i] = 0.005 + i * random(0.02, 0.0002) * (random() < 0.5 ? -1 : 1);
     }
 }
 
 function drawSquares() {
     push();
-    blendMode(MULTIPLY);
+    // blendMode(MULTIPLY);
+    blendMode(BLEND);
     translate(width / 2, height / 2);
     sqRot = lerp(sqRot, map(mouseX, 0, width, -0.12, 0.12), 0.04);
     rotate(sqRot);
     // translate(mouseY, mouseY);
 
-    noFill();
+    // noFill();
+    fill(255, 30);
     strokeWeight(sqWeight);
     stroke(sqStroke);
 
