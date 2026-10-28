@@ -24,7 +24,7 @@ function initSquares() {
 
 function drawSquares() {
     push();
-    // blendMode(BLEND);
+    blendMode(MULTIPLY);
     translate(width / 2, height / 2);
     sqRot = lerp(sqRot, map(mouseX, 0, width, -0.12, 0.12), 0.04);
     rotate(sqRot);

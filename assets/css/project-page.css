@@ -422,6 +422,61 @@
   /* filter: blur(1px); */
 }
 
+.gen-art-story-page .gen-art-layout {
+  display: block;
+  max-width: 1600px;
+}
+
+.gen-art-story-page .gen-art-intro {
+  position: static;
+  max-width: 760px;
+  margin-bottom: 2.5rem;
+}
+
+.gen-art-story-page .gen-art-lead {
+  max-width: 62ch;
+  margin-top: 1.25rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+}
+
+.gen-art-story-page .gen-art-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3.5rem 0;
+}
+
+.gen-art-story-page .gen-art-story-figure {
+  margin: 0;
+  min-width: 0;
+}
+
+.gen-art-story-page .gen-art-story-hero {
+  grid-column: 1 / -1;
+}
+
+.gen-art-story-page .gen-art-caption {
+  max-width: 62ch;
+  margin: 0.9rem 0 0;
+  color: #2f2f2f;
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+
+.gen-art-story-page .gen-art-credit {
+  display: block;
+  margin-top: 0.8rem;
+  font-size: 0.92rem;
+}
+
+.gen-art-story-page .gen-art-credit a {
+  display: inline-block;
+  margin-left: 0.35rem;
+  color: inherit;
+}
+
 .gen-art-page .project-sequence-nav {
   max-width: 1600px;
   margin: 0 auto 24px;
@@ -533,6 +588,15 @@
   .gen-art-page .gen-art-gallery {
     -webkit-column-count: 1;
     column-count: 1;
+  }
+
+  .gen-art-story-page .gen-art-gallery {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .gen-art-story-page .gen-art-story-hero {
+    grid-column: auto;
   }
 
   .gen-art-page .project-sequence-nav {

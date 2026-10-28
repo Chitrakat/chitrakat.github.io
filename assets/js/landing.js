@@ -7,15 +7,15 @@ made with hydra-synth.js + hy5.js + p5.js
 edited by Suyash Chitrakar
 */
 
-const DISPLAY_HYDRA_DENSITY = 0.65;
+const DISPLAY_HYDRA_DENSITY = 0.9;
 
 const DECOY_COUNT = 2;
 
-const WORD_INTERVAL = 3000;
+const WORD_INTERVAL = 2000;
 const MAX_WORDS = 10;
 const WORD_LIFETIME = 8000;
-const WORD_BLACK_MS = 1080;
-const MOUSE_TRAIL_INTERVAL = 400;
+const WORD_BLACK_MS = 1580;
+const MOUSE_TRAIL_INTERVAL = 50;
 
 let libs = ['https://unpkg.com/hydra-synth', 'includes/libs/hydra-synth.js', 'https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js', 'includes/libs/hy5.js']
 
@@ -41,7 +41,7 @@ P5.toggle(0) // hide p5
 
 src(s0)
 .add(src(o0).scale(0.07), 0.2) // controls the "glow", how intense reapet happens
-.modulateScale(noize(2.5), 0.5, 1 , 10) 
+.modulateScale(noize(3.2), 0.8, 1 , 10) 
 .out()
 
 // src(s0)
@@ -105,7 +105,7 @@ function setup() {
     const heroCanvas = createCanvas(windowWidth, windowHeight);
     heroCanvas.parent('page1');
     background(255);
-    frameRate(12);
+    frameRate(14);
 
     applyHydraDisplayResolution();
 
@@ -146,10 +146,10 @@ function draw() {
     if (width>1080) {
         mouseCircleSize = 1.5*height / 4;
         
-        fill(g, r, b, 30); 
+        fill(g, r, b, 20); 
     } else {
         mouseCircleSize = height / 10;
-        fill(g, r, b, 70); 
+        fill(g, r, b, 20); 
     }
     
     let mouseWavePhase = frameCount * 0.03;
@@ -202,18 +202,20 @@ function draw() {
 
     // Moving texts
     let tx, ty;
-    let fontSize = height/4;
+    let fontSize = height/3.5;
     tx = constrain(noise(100 + frameCount * 0.06) * width, 0, width);
     if (!window.movingObjs) {
         window.movingObjs = [
             new movingObject(random(1000), random(1000), fontSize/2, 'Hi, I\'m Suyash'),
             new movingObject(random(1000), random(1000), fontSize/2, 'kinda lost'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'in the surreal'),
             new movingObject(random(1000), random(1000), fontSize/2, 'designer'),
             new movingObject(random(1000), random(1000), fontSize/2, 'seeking security'),
             new movingObject(random(1000), random(1000), fontSize/2, 'who am i?'),
             new movingObject(random(1000), random(1000), fontSize/2, 'technologist'),
             new movingObject(random(1000), random(1000), fontSize/4, 'overstimulated'),
             new movingObject(random(1000), random(1000), fontSize/4, 'caffeinated'),
+            new movingObject(random(1000), random(1000), fontSize/4, 'photographer?'),
             new movingObject(random(1000), random(1000), fontSize/4, 'anxious'),
             new movingObject(random(1000), random(1000), fontSize/2, 'photographer'),
             new movingObject(random(1000), random(1000), fontSize/2, 'creative\ncoder'),
@@ -389,26 +391,29 @@ function drawMouseTrail() {
     const now = millis();
     if (lastMouseTrailAt && now - lastMouseTrailAt < MOUSE_TRAIL_INTERVAL) return;
     lastMouseTrailAt = now;
+    // strokeCap(ROUND);
 
     blendMode(SCREEN);
     // stroke(random(0,255), random(90,210));
     // stroke(random(30, 255));
     
-    stroke(255, random (90,210));
-    strokeWeight(1);
+    stroke(255, 130);
+    // strokeWeight(1);
     noFill();
 
 
-    if(width>1080){
-        strokeWeight(random(0,100));
+    if(width>720){
+        strokeWeight(random(1,30));
     } else {
-        strokeWeight(random(1,5));
+        strokeWeight(random(1,30));
     }
 
 
-    rotate(random(-0.2,0.2));
+    // rotate(random(-0.06,0.06));
     // RectMode(CENTER);
-    rect(mouseX, mouseY, random(width), random(height));
+    rect(mouseX, mouseY, random(width-100 ), random(height-100));
+    
+    // strokeWeight(random(1, 10));
     line(random(width), random(height), mouseX, mouseY);
 
 }
@@ -431,8 +436,8 @@ class movingObject{
         this.x = random(width + 100, width - 100);
         this.y = random(height + 100, height - 100);
         
-        this.yval = 0.009;
-        this.xval = 0.009;
+        this.yval = 0.007;
+        this.xval = 0.007;
     }
 
     update() {
@@ -442,12 +447,12 @@ class movingObject{
     }
 
     display() {
-        textSize(this.size/1.5);
+        textSize(this.size);
         // Draw text
         rectMode(CENTER);
         fill(255);
         stroke(0, 120);
-        strokeWeight(5);
+        strokeWeight(3);
         textAlign(CENTER, CENTER);
         if (this.state === 'fading') {
             // censor bar fades in over the word's bounding box while the text fades out
@@ -458,7 +463,7 @@ class movingObject{
             fill(255, 255 * (1 - k));
             stroke(0, 120 * (1 - k));
             text(this.label, this.x, this.y);
-            fill(0, 255 * k);
+            fill(200, 255 * k);
             noStroke();
             rect(this.x, this.y, w, h);
             return;
