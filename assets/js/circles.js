@@ -9,7 +9,7 @@ edited by Suyash Chitrakar
 
 const DISPLAY_HYDRA_DENSITY = 0.8;
 
-const DECOY_COUNT = 2;
+const DECOY_COUNT = 4;
 
 const WORD_INTERVAL = 3000;
 const MAX_WORDS = 10;
