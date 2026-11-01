@@ -7,9 +7,9 @@ made with hydra-synth.js + hy5.js + p5.js
 edited by Suyash Chitrakar
 */
 
-const DISPLAY_HYDRA_DENSITY = 0.9; // 1.0 for normal, 2.0 for retina, 4.0 for super-retina
+const DISPLAY_HYDRA_DENSITY = 0.78; // 1.0 for normal, 2.0 for retina, 4.0 for super-retina
 
-const DECOY_COUNT = 2;
+const DECOY_COUNT = 8;
 
 const WORD_INTERVAL = 4000;
 const MAX_WORDS = 5;
@@ -447,12 +447,12 @@ class movingObject{
     }
 
     display() {
-        textSize(this.size/1.2);
+        textSize(this.size/1.5);
         // Draw text
         rectMode(CENTER);
         fill(255);
-        stroke(0, 120);
-        strokeWeight(5);
+        stroke(0);
+        strokeWeight(6);
         textAlign(CENTER, CENTER);
         if (this.state === 'fading') {
             // censor bar fades in over the word's bounding box while the text fades out
