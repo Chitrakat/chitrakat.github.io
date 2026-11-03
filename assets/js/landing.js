@@ -9,6 +9,8 @@ edited by Suyash Chitrakar
 
 const DISPLAY_HYDRA_DENSITY = 0.78; // 1.0 for normal, 2.0 for retina, 4.0 for super-retina
 
+const IS_MOBILE = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
+
 const DECOY_COUNT = 8;
 
 const WORD_INTERVAL = 4000;
@@ -41,7 +43,7 @@ P5.toggle(0) // hide p5
 
 src(s0)
 .add(src(o0).scale(0.07), 0.2) // controls the "glow", how intense reapet happens
-.modulateScale(noize(3.2), 0.8, 1 , 10) 
+.modulateScale(noize(IS_MOBILE ? 2 : 3.2), IS_MOBILE ? 0.3 : 0.8, 1 , 10) 
 .out()
 
 // src(s0)
@@ -91,6 +93,7 @@ window.refreshCircleSketch = randomizeScene;
 function keyPressed() {
     if (event && (event.ctrlKey || event.metaKey || event.altKey)) return;
     if (key === '1') {
+        if (IS_MOBILE) return;
         const btn = document.getElementById('drag-toggle-btn');
         if (btn) btn.click();
         return;
@@ -200,7 +203,7 @@ function draw() {
 
     // Moving texts
     let tx, ty;
-    let fontSize = height/3.5;
+    let fontSize = IS_MOBILE ? height/6 : height/3.5;
     tx = constrain(noise(100 + frameCount * 0.06) * width, 0, width);
     if (!window.movingObjs) {
         window.movingObjs = [
@@ -221,6 +224,7 @@ function draw() {
             new movingObject(random(1000), random(1000), fontSize/2, 'hopeful?'),
             new movingObject(random(1000), random(1000), fontSize/3, 'immigrant'),
             new movingObject(random(1000), random(1000), fontSize/3, '#openToWork'),
+            new movingObject(random(1000), random(1000), fontSize/1.5, 'it doesnt matter \n too much.')
         ];
     }
 
@@ -419,11 +423,12 @@ function drawMouseTrail() {
 }
 
 function mouseMoved() {
-    if (!window.mouseMovedEnabled) return;
+    if (IS_MOBILE || !window.mouseMovedEnabled) return;
     drawMouseTrail();
 }
 
 function mouseDragged() {
+    if (IS_MOBILE) return;
     drawMouseTrail();
 }
 
