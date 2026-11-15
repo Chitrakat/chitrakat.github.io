@@ -3,7 +3,7 @@ const SQ_R = 20;
 let sqAngles = [];
 let sqAnglesV = [];
 let sqRot = 0;
-let sqWeight = 2;
+let sqWeight = 3;
 let sqSize = SQ_R ;
 let sqStroke;
 
@@ -28,15 +28,14 @@ function initSquares() {
 
 function drawSquares() {
     push();
-    // blendMode(MULTIPLY);
-    blendMode(BLEND);
+    // blendMode(MULTIPLTY);
     translate(width / 2, height / 2);
     sqRot = lerp(sqRot, map(mouseX, 0, width, -0.12, 0.12), 0.04);
     rotate(sqRot);
     // translate(mouseY, mouseY);
 
     // noFill();
-    fill(255, 10);
+    fill(255, 40    );
     strokeWeight(sqWeight);
     stroke(sqStroke);
 

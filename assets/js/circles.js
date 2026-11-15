@@ -7,9 +7,8 @@ made with hydra-synth.js + hy5.js + p5.js
 edited by Suyash Chitrakar
 */
 
-const DISPLAY_HYDRA_DENSITY = 0.8;
-
-const DECOY_COUNT = 4;
+const DISPLAY_HYDRA_DENSITY = 0.4;
+const DECOY_COUNT = 2;
 
 const WORD_INTERVAL = 3000;
 const MAX_WORDS = 10;
@@ -38,14 +37,14 @@ let n1;
 s0.initP5() // send p5 to hydra
 P5.toggle(0) // hide p5
 
-src(s0)
-.add(src(o0).scale(0.07), 0.2) // controls the "glow", how intense reapet happens
-.modulateScale(noize(3), 0.5, 1 , 10) 
-.out()
+// src(s0)
+// .add(src(o0).scale(0.07), 0.2) // controls the "glow", how intense reapet happens
+// .modulateScale(noize(3), 0.5, 1 , 10) 
+// .out()
 
 src(s0)
-.add(src(o0).scale(0.07), 0.2) // controls the "glow", how intense reapet happens
-.modulateScale(noize(3), 0.5, 1 , 10) 
+.add(src(o0).scale(100), 0.5) // controls the "glow", how intense reapet happens
+.modulateScale(noize(1000), 0.5, 1 , 10) 
 .out()
 
 
@@ -76,7 +75,7 @@ function randomizeScene() {
 
     maxCircle = windowHeight / 5;
     minCircle = windowHeight / 20;
-    mouseCircleSize = height / 6;
+    mouseCircleSize = height / 10;
 
     randShade = random(100);
     randShade1 = random(100);
@@ -104,7 +103,7 @@ function setup() {
 
     randomizeScene();
     initSquares();
-    blendMode(HARD_LIGHT);
+    // blendMode(SOFT_LIGHT);
     // blendMode(REMOVE);
 }
 
@@ -112,44 +111,20 @@ function setup() {
 function draw() {
     drawSquares();
     noStroke();
-    // if(mouseBoo){
-    //     clear();
-    //     background(255);
-    // }
-    // if(mouseIsPressed){
-    //     mouseBoo = !mouseBoo;
-    // }
-
-    // if(mouseIsPressed){
-        
-    //     // millis(1000);
-    //     // clear();
-    //     // background(255);
-    // }
-
-    
     
     // ==================== Colors for mouse circles ==========================
     let r = (sin(frameCount * 0.01) * 1.5 + 0.5) * randShade;
     let g = (sin(frameCount * 0.03) * 0.5 + 0.5) * random(50, 100) + random(randShade1);
     let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100 + randShade;
     fill(g, r, b, 100); 
-    blendMode(DIFFERENCE);
+    // blendMode(HARD_LIGHT);
     circle(mouseX, mouseY, mouseCircleSize);
     drawDecoyCircles(g, r, b);
 
-    // Click Interaction  
-    // if (pressStart && pressEnd) {
-    //     // let tr
-    //     blendMode(HARD_LIGHT);
-    //     // stroke(r, b,g, 150);
-    //     stroke(255);
-    //     strokeWeight(random(10,30));
-    //     line(pressStart.x, pressStart.y, pressEnd.x, pressEnd.y);
-    // }
 
-    // Middle SHAPE
-    blendMode(HARD_LIGHT);
+    // ==================== Middle SHAPE
+    
+    // blendMode(HARD_LIGHT);
     let b2 = ((sin(frameCount * 0.025) * 0.5 + 0.5) * random(randShade));
     let rSize = (sin(frameCount * 0.9)) * maxCircle + minCircle;
     fill(180-b2, (b2*20)%100, (b2*200)%180, 7);
@@ -159,13 +134,13 @@ function draw() {
     
     // Moving texts
     let tx, ty;
-    let fontSize = height/5;
+    let fontSize = height/8;
     tx = constrain(noise(100 + frameCount * 0.06) * width, 0, width);
     if (!window.movingObjs) {
         window.movingObjs = [
             new movingObject(random(1000), random(1000), fontSize/2, 'Hi, I\'m Suyash'),
-            new movingObject(random(1000), random(1000), fontSize/2, 'kinda lost'),
-            new movingObject(random(1000), random(1000), fontSize/2, 'designer'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'lost.'),
+            new movingObject(random(1000), random(1000), fontSize/2, 'designer?'),
             new movingObject(random(1000), random(1000), fontSize/2, 'seeking security'),
             new movingObject(random(1000), random(1000), fontSize/2, 'who am i?'),
             new movingObject(random(1000), random(1000), fontSize/2, 'technologist'),
@@ -179,6 +154,7 @@ function draw() {
             new movingObject(random(1000), random(1000), fontSize/3, 'immigrant'),
             // new movingObject(random(1000), random(1000), fontSize/3, 'nepali'),
             new movingObject(random(1000), random(1000), fontSize/3, '#openToWork'),
+            new movingObject(random(1000), random(1000), fontSize/3, 'why must I choose?'),
         ];
     }
 
@@ -296,7 +272,7 @@ function mouseReleased() {
 function mouseDragged() {
     // handled by click-to-click logic in mousePressed
     stroke(255);
-    strokeWeight(random(5,30));
+    strokeWeight(random(5,50));
     line(random(width), random(height), mouseX, mouseY);
 }
 
@@ -313,8 +289,8 @@ class movingObject{
         // this.yval = 0.0065;
         
         
-        this.yval = 0.005;
-        this.xval = 0.005;
+        this.yval = 0.009;
+        this.xval = 0.009;
     }
 
     update() {
@@ -325,15 +301,9 @@ class movingObject{
     }
 
     display() {
-        textSize(this.size/1.5);
+        textSize(this.size);
         // Draw text
         rectMode(CENTER);
-        fill(255);
-        stroke(0, 120);
-        strokeWeight(10);
-        // this.xval = 0.006;
-        // this.xval = random(0.003);
-        // this.yval = 0.0065;
         textAlign(CENTER, CENTER);
         if (this.state === 'fading') {
             // censor bar over the word's bounding box
@@ -345,6 +315,11 @@ class movingObject{
             rect(this.x, this.y, w, h);
             return;
         }
+
+
+        fill(255);
+        stroke(0, 120);
+        strokeWeight(100);
         text(this.label, this.x, this.y);
     }
 }
