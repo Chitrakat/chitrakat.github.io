@@ -108,7 +108,7 @@ function setup() {
     const heroCanvas = createCanvas(windowWidth, windowHeight);
     heroCanvas.parent('page1');
     background(255);
-    frameRate(14);
+    frameRate(30);
 
     applyHydraDisplayResolution();
 
@@ -351,11 +351,12 @@ function drawMouseTrail() {
     lastMouseTrailAt = now;
     // strokeCap(ROUND);
 
-    blendMode(SCREEN);
+    // blendMode(SCREEN);
     // stroke(random(0,255), random(90,210));
     // stroke(random(30, 255));
     
-    stroke(255, 190);
+    // stroke(255, 190);
+    stroke(0, 190);
     // strokeWeight(1);
     noFill();
 
@@ -395,8 +396,8 @@ class movingObject{
         this.x = random(width + 100, width - 100);
         this.y = random(height + 100, height - 100);
         
-        this.yval = 0.01;
-        this.xval = 0.007;
+        this.yval = 0.007;
+        this.xval = 0.002;
     }
 
     update() {
@@ -411,7 +412,7 @@ class movingObject{
         rectMode(CENTER);
         fill(255);
         stroke(0);
-        strokeWeight(3);
+        strokeWeight(4);
         textAlign(CENTER, CENTER);
         if (this.state === 'fading') {
             // censor bar fades in over the word's bounding box while the text fades out

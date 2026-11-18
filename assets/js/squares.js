@@ -35,7 +35,7 @@ function drawSquares() {
     // translate(mouseY, mouseY);
 
     // noFill();
-    fill(255, 40    );
+    fill(255, 10);
     strokeWeight(sqWeight);
     stroke(sqStroke);
 
