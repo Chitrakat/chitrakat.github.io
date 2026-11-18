@@ -1,9 +1,9 @@
 // Tangent-square sketch, drawn on top of the hero canvas by circles.js
-const SQ_R = 20;
+const SQ_R = 10;
 let sqAngles = [];
 let sqAnglesV = [];
 let sqRot = 0;
-let sqWeight = 3;
+let sqWeight = 5;
 let sqSize = SQ_R ;
 let sqStroke;
 
@@ -28,14 +28,13 @@ function initSquares() {
 
 function drawSquares() {
     push();
-    // blendMode(MULTIPLTY);
     translate(width / 2, height / 2);
     sqRot = lerp(sqRot, map(mouseX, 0, width, -0.12, 0.12), 0.04);
     rotate(sqRot);
-    // translate(mouseY, mouseY);
+    translate(mouseY, mouseY);
 
     // noFill();
-    fill(255, 10);
+    fill(255, 8);
     strokeWeight(sqWeight);
     stroke(sqStroke);
 

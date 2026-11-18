@@ -131,13 +131,17 @@ function draw() {
     let g = (sin(frameCount * 0.03) * 0.5 + 0.5) * random(50, 100) + random(randShade1);
     let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100 + randShade;
     
+    let mouseSize = sin(frameCount * 0.01) * 0.5 + 0.5;
     fill(g, r, b, 70); 
 
-    if (width>1080) {
-        // mouseCircleSize = height / 6;
-    } else {
-        mouseCircleSize = height / 10;
-    }
+    // Scale the circle from phone/1080p sizes up toward 4K proportions.
+    // 1920px is the reference width; keep a small minimum on narrow screens.
+    const referenceWidth = 1920;
+    mouseCircleSize = constrain(
+        (height / 5) * (width / referenceWidth),
+        height / 20,
+        height / 3
+    );
     
     let mouseWavePhase = frameCount * 0.03;
     let mouseWaveX = sin(mouseWavePhase) * mouseCircleSize * mouseCircleWaveAmount;
