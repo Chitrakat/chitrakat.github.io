@@ -1,6 +1,5 @@
-// Tangent-square sketch, drawn on top of the hero canvas by circles.js
+// Tangent-square sketch drawn on top of the hero canvas by landing.js
 const SQ_R = 10;
-let sqAngles = [];
 let sqAnglesV = [];
 let sqRot = 0;
 let sqWeight = 5;
@@ -16,17 +15,14 @@ function initSquares() {
     sqStroke = 255;
     sqRot = 0;
     const total = floor(height / (r * 1.5));
-    sqAngles = [];
     sqAnglesV = [];
     for (let i = 0; i < total; i++) {
-        sqAngles[i] = 0;
-        sqAnglesV[i] = 0.0005 + i * random(0.02, 0.0002);
         sqAnglesV[i] = 0.008 + i * 0.001;
         // sqAnglesV[i] = 0.005 + i * random(0.02, 0.0002) * (random() < 0.5 ? -1 : 1);
     }
 }
 
-function drawSquares() {
+function drawSquares(artFrame) {
     push();
     translate(width / 2, height / 2);
     sqRot = lerp(sqRot, map(mouseX, 0, width, -0.12, 0.12), 0.04);
@@ -38,11 +34,10 @@ function drawSquares() {
     strokeWeight(sqWeight);
     stroke(sqStroke);
 
-    for (let i = 0; i < sqAngles.length; i++) {
-        const y = map(i, 0, sqAngles.length - 1, -height / 2, height / 2);
-        const x = map(tan(sqAngles[i]), -1, 1, -width / 2, width / 2);
+    for (let i = 0; i < sqAnglesV.length; i++) {
+        const y = map(i, 0, sqAnglesV.length - 1, -height / 2, height / 2);
+        const x = map(tan(sqAnglesV[i] * artFrame), -1, 1, -width / 2, width / 2);
         square(x, y, sqSize);
-        sqAngles[i] += sqAnglesV[i];
     }
     pop();
 }

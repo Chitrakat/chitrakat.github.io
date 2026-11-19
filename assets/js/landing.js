@@ -7,7 +7,7 @@ made with hydra-synth.js + hy5.js + p5.js
 edited by Suyash Chitrakar
 */
 
-const DISPLAY_HYDRA_DENSITY = 0.7; // 1.0 for normal, 2.0 for retina, 4.0 for super-retina
+const DISPLAY_HYDRA_DENSITY = 0.6; // 1.0 for normal, 2.0 for retina, 4.0 for super-retina
 
 const IS_MOBILE = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
 
@@ -18,6 +18,11 @@ const MAX_WORDS = 5;
 const WORD_LIFETIME = 8000;
 const WORD_BLACK_MS = 4000;
 const MOUSE_TRAIL_INTERVAL = 200;
+const TARGET_FRAME_MS = 1000 / 30;
+const FIRST_REWIND_DELAY = [3000, 5000];
+const FORWARD_DURATION = [6000, 10000];
+const REWIND_DURATION = [1200, 2400];
+const REWIND_SPEED = -3;
 
 let libs = ['https://unpkg.com/hydra-synth', 'includes/libs/hydra-synth.js', 'https://cdn.jsdelivr.net/gh/ffd8/hy5@main/hy5.js', 'includes/libs/hy5.js']
 
@@ -37,6 +42,13 @@ let randShade, randShade1, randShade2;
 let value = 100;
 
 let n1;
+let artFrame = 0;
+let artPlaybackSpeed = 1;
+let playbackMode = 'forward';
+let nextPlaybackChangeAt = 0;
+let sceneColorA = 50;
+let sceneColorB = 0;
+let scenePulse = 0;
 
 s0.initP5() // send p5 to hydra
 P5.toggle(0) // hide p5
@@ -75,17 +87,64 @@ function randomizeScene() {
 
     maxCircle = windowHeight / 3;
     minCircle = windowHeight / 15;
-    mouseCircleSize = height / 6;
+    mouseCircleSize = height / 5;
 
     randShade = random(10,100);
     randShade1 = random(50,100);
     randShade2 = random(30,100);
     mouseCircleWaveAmount = random(0.3, 0.7);
+    sceneColorA = random(50, 100);
+    sceneColorB = random(randShade1);
+    scenePulse = random(randShade);
 
     window.movingObjs = null;
     decoys = null;
+    resetArtPlayback();
     clear();
     background(255);
+}
+
+function randomDuration(range) {
+    return random(range[0], range[1]);
+}
+
+function resetArtPlayback() {
+    artFrame = 0;
+    artPlaybackSpeed = 1;
+    playbackMode = 'forward';
+    nextPlaybackChangeAt = millis() + randomDuration(FIRST_REWIND_DELAY);
+}
+
+function updateArtPlayback() {
+    const now = millis();
+    if (now >= nextPlaybackChangeAt) {
+        if (playbackMode === 'forward') {
+            playbackMode = 'rewind';
+            nextPlaybackChangeAt = now + randomDuration(REWIND_DURATION);
+        } else {
+            playbackMode = 'forward';
+            nextPlaybackChangeAt = now + randomDuration(FORWARD_DURATION);
+        }
+    }
+
+    const frameStep = constrain(deltaTime / TARGET_FRAME_MS, 0, 2.5);
+    const targetSpeed = playbackMode === 'rewind' ? REWIND_SPEED : 1;
+    artPlaybackSpeed = lerp(artPlaybackSpeed, targetSpeed, constrain(frameStep * 0.12, 0, 0.3));
+    artFrame = Math.max(0, artFrame + frameStep * artPlaybackSpeed);
+    if (artFrame === 0 && playbackMode === 'rewind') {
+        playbackMode = 'forward';
+        nextPlaybackChangeAt = now + randomDuration(FORWARD_DURATION);
+    }
+}
+
+function drawRewindFade() {
+    if (artPlaybackSpeed >= 0) return;
+    push();
+    blendMode(BLEND);
+    noStroke();
+    fill(255, constrain(-artPlaybackSpeed * 9, 0, 22));
+    rect(width / 2, height / 2, width, height);
+    pop();
 }
 
 window.refreshCircleSketch = randomizeScene;
@@ -124,37 +183,40 @@ function setup() {
 
 function draw() {
     noStroke();
+    updateArtPlayback();
+    // drawRewindFade();
 
     // ==================== Mouse Circles ==========================
     // blendMode(DIFFERENCE);
-    let r = (sin(frameCount * 0.01) * 1.5 + 0.5) * randShade;
-    let g = (sin(frameCount * 0.03) * 0.5 + 0.5) * random(50, 100) + random(randShade1);
-    let b = (sin(frameCount * 0.01) * 0.5 + 0.5) * 100 + randShade;
+    let r = (sin(artFrame * 0.01) * 1.5 + 0.5) * randShade;
+    let g = (sin(artFrame * 0.03) * 0.5 + 0.5) * sceneColorA + sceneColorB;
+    let b = (sin(artFrame * 0.01) * 0.5 + 0.5) * 100 + randShade;
     
-    let mouseSize = sin(frameCount * 0.01) * 0.5 + 0.5;
-    fill(g, r, b, 70); 
-
+    
     // Scale the circle from phone/1080p sizes up toward 4K proportions.
     // 1920px is the reference width; keep a small minimum on narrow screens.
     const referenceWidth = 1920;
     mouseCircleSize = constrain(
-        (height / 5) * (width / referenceWidth),
+        (height / 4) * (width / referenceWidth),
         height / 20,
         height / 3
     );
     
-    let mouseWavePhase = frameCount * 0.03;
+    let mouseWavePhase = artFrame * 0.03;
     let mouseWaveX = sin(mouseWavePhase) * mouseCircleSize * mouseCircleWaveAmount;
     let mouseWaveY = cos(mouseWavePhase) * mouseCircleSize * mouseCircleWaveAmount;
-    circle(mouseX + mouseWaveX, mouseY + mouseWaveY, mouseCircleSize);
+
+    fill(g, r, b, 30); 
+    circle(mouseX + mouseWaveY, mouseY + mouseWaveX, mouseCircleSize);
+    // square(mouseX + mouseWaveX, mouseY + mouseWaveY, mouseCircleSize);
     // rect(mouseX + mouseWaveX, mouseY + mouseWaveY, mouseCircleSize);
     drawDecoyCircles(g, r, b);
 
 
     // ======================= Middle CICRLE =========================
     blendMode(HARD_LIGHT);
-    let b2 = ((sin(frameCount * 0.05) * 0.5 + 40) * random(randShade));
-    let rSize = (sin(frameCount * 0.009)) * maxCircle + minCircle;
+    let b2 = (sin(artFrame * 0.05) * 0.5 + 40) * scenePulse;
+    let rSize = sin(artFrame * 0.009) * maxCircle + minCircle;
     // print   (rSize);
     fill(180-b2, (b2*20)%100, (b2*200)%180, 10);
     noStroke();
@@ -163,7 +225,7 @@ function draw() {
     // Moving texts
     let tx, ty;
     let fontSize = IS_MOBILE ? height/6 : height/5;
-    tx = constrain(noise(100 + frameCount * 0.06) * width, 0, width);
+    tx = constrain(noise(100 + artFrame * 0.06) * width, 0, width);
     if (!window.movingObjs) {
         window.movingObjs = [
             new movingObject(random(1000), random(1000), fontSize/2, 'Hi, I\'m Suyash'),
@@ -203,7 +265,7 @@ function draw() {
         obj.update();
         obj.display();
     }
-    drawSquares();
+    drawSquares(artFrame);
 }
 
 // Decoy circles: each reacts to the mouse in its own unpredictable way
@@ -220,7 +282,7 @@ function makeDecoys() {
             orbit: random(80, min(width, height) / 2),
             dir: random() < 0.5 ? -1 : 1,
             size: random(0.3, 1.4),
-            chaos: random(0.2, 0.5),
+            chaos: random(0.2, 0.7),
             vx: random(-3, 3),
             vy: random(-3, 3)
         });
@@ -229,7 +291,7 @@ function makeDecoys() {
 
 function drawDecoyCircles(g, r, b) {
     if (!decoys) makeDecoys();
-    const t = frameCount;
+    const t = artFrame;
     const mouseDX = mouseX - pmouseX;
     const mouseDY = mouseY - pmouseY;
     const speed = dist(mouseX, mouseY, pmouseX, pmouseY);
@@ -281,7 +343,8 @@ function drawDecoyCircles(g, r, b) {
             d.vy *= -0.8;
         }
 
-        fill((i % 2 ? g : b) + random(30), (i % 3 ? r : g), (i % 2 ? b : r), 30);
+        const colorShift = noise(d.seed + 300, t * 0.02) * 30;
+        fill((i % 2 ? g : b) + colorShift, (i % 3 ? r : g), (i % 2 ? b : r), 30);
         circle(d.x, d.y, mouseCircleSize * d.size * (0.6 + noise(d.seed, t * 0.02)));
     }
 }
@@ -400,14 +463,14 @@ class movingObject{
         this.x = random(width + 100, width - 100);
         this.y = random(height + 100, height - 100);
         
-        this.yval = 0.007;
-        this.xval = 0.002;
+        this.yval = 0.008;
+        this.xval = 0.007;
     }
 
     update() {
         // Use the same logic as the text movement
-        this.x = constrain(noise(this.xNoiseSeed + frameCount * this.xval) * width, 0, width);
-        this.y = constrain(noise(this.yNoiseSeed + frameCount * this.yval) * height, 0, height);
+        this.x = constrain(noise(this.xNoiseSeed + artFrame * this.xval) * width, 0, width);
+        this.y = constrain(noise(this.yNoiseSeed + artFrame * this.yval) * height, 0, height);
     }
 
     display() {
