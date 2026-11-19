@@ -7,7 +7,7 @@ made with hydra-synth.js + hy5.js + p5.js
 edited by Suyash Chitrakar
 */
 
-const DISPLAY_HYDRA_DENSITY = 0.6; // 1.0 for normal, 2.0 for retina, 4.0 for super-retina
+const DISPLAY_HYDRA_DENSITY = 0.78; // 1.0 for normal, 2.0 for retina, 4.0 for super-retina
 
 const IS_MOBILE = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
 
@@ -55,14 +55,8 @@ P5.toggle(0) // hide p5
 
 src(s0)
 .add(src(o0).scale(0.07), 0.2) // controls the "glow", how intense reapet happens
-.modulateScale(noize(IS_MOBILE ? 2 : 1), IS_MOBILE ? 0.3 : 0.8, 1) 
+.modulateScale(noize(IS_MOBILE ? 2 : 1), IS_MOBILE ? 0.3 : 0.5, 1) 
 .out()
-
-// src(s0)
-// .add(src(o0).scale(0.07), 0.2) // controls the "glow", how intense reapet happens
-// .modulateScale(noize(5), 0.5, 1 , 10) 
-// .out()
-
 
 function applyHydraDisplayResolution() {
     H.pixelDensity(DISPLAY_HYDRA_DENSITY);
@@ -463,7 +457,7 @@ class movingObject{
         this.x = random(width + 100, width - 100);
         this.y = random(height + 100, height - 100);
         
-        this.yval = 0.008;
+        this.yval = 0.007;
         this.xval = 0.007;
     }
 
